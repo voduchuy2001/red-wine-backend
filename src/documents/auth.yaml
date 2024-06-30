@@ -1,0 +1,61 @@
+paths:
+  /register:
+    post:
+      tags:
+      - Auth
+      summary: Register
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: sign up
+        description: It enables a user to create an account
+        required: false
+        schema:
+          $ref: '#/definitions/user'
+      responses:
+        201:
+          description: An object with user details
+        422:
+          description: Validation error
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+  /login:
+    post:
+      tags:
+      - Auth
+      summary: Login
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: sign in
+        description: It enables a user to login to account
+        required: false
+        schema:
+          $ref: '#/definitions/user'
+      responses:
+        200:
+          description: An object with user details
+        422:
+          description: Validation error
+        429:
+          description: Too many requests
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+definitions:
+  user:
+    type: object
+    properties:
+      email:
+        type: string
+        example: voduchuy2001@gmail.com
+        description: Email address of the user
+      password:
+        type: string
+        example: admin123
+        description: Password of the user
