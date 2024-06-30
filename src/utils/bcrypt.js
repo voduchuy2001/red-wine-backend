@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs";
+const SALT = 10;
 
 export default class Bcrypt {
     static async hashPassword(password) {
-        return await bcrypt.hash(password, 10);
+        return await bcrypt.hash(password, SALT);
     }
 
     static async comparePassword(password, hashedPassword) {

@@ -35,7 +35,7 @@ export const create = () => [
         .withMessage(MESSAGES.notEmpty)
         .isInt({ min: 1, max: 1000000000 })
         .bail()
-        .withMessage(MESSAGES.isLength(1, 1000000000)),
+        .withMessage(MESSAGES.isInt(1, 1000000000)),
 
     body("description").optional({ nullable: true, checkFalsy: true }),
 
@@ -49,7 +49,7 @@ export const create = () => [
 
     body("content").optional({ nullable: true, checkFalsy: true }),
 
-    body("status").optional({ nullable: true, checkFalsy: true }).isIn(["active", "inactive", "draft"]),
+    body("status").isIn(["active", "inactive", "draft"]),
 
     body("images").optional({ nullable: true, checkFalsy: true }),
 
@@ -61,7 +61,17 @@ export const create = () => [
         .bail()
         .withMessage(MESSAGES.isBoolean),
 
-    body("salePrice").optional({ nullable: true, checkFalsy: true }).isDecimal().bail().withMessage(MESSAGES.isDouble),
+    body("salePrice")
+        .optional({ nullable: true, checkFalsy: true })
+        .isInt({ min: 1, max: 1000000000 })
+        .bail()
+        .withMessage(MESSAGES.isInt(1, 1000000000))
+        .custom((salePrice, { req }) => {
+            const { price } = req.body;
+            if (parseInt(price) <= parseInt(salePrice)) throw new Error(MESSAGES.isValid);
+
+            return true;
+        }),
 
     body("length").optional({ nullable: true, checkFalsy: true }).isFloat().bail().withMessage(MESSAGES.isFloat),
 
