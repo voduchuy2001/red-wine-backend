@@ -16,7 +16,7 @@ export default class ProductService extends BaseService {
         const product = await this.productRepository.create(productData);
 
         const categories = await this.categoryRepository.findByIds(categoryIds);
-        await product.addCategories(categories);
+        await this.productRepository.setCategoriesToProduct(product, categories);
 
         return product;
     }
@@ -24,5 +24,19 @@ export default class ProductService extends BaseService {
     async getProduct(data) {
         const { id } = data;
         return await this.productRepository.findById(id);
+    }
+
+    async updateProduct(data) {
+        const { id, categoryIds, ...productData } = data;
+        const product = await this.productRepository.updateProduct(id, productData);
+        const categories = await this.categoryRepository.findByIds(categoryIds);
+        await this.productRepository.setCategoriesToProduct(product, categories);
+
+        return product;
+    }
+
+    async destroyProduct(data) {
+        const { id } = data;
+        return await this.productRepository.remove(id);
     }
 }

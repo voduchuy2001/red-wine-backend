@@ -23,4 +23,13 @@ export default class ProductRepository extends BaseRepository {
     async createProduct(options) {
         return this.create(options);
     }
+
+    async setCategoriesToProduct(product, categories) {
+        return await product.setCategories(categories);
+    }
+
+    async updateProduct(id, data) {
+        const product = await this.findById(id);
+        return await product.update(data);
+    }
 }
