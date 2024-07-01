@@ -36,7 +36,10 @@ $(document).ready(function () {
                     }
                 }
 
-                $("#login-error").text(messages).removeClass("d-none");
+                if (xhr.status === 429) {
+                    $("#login-error").text(response.message).removeClass("d-none");
+                    return;
+                }
             },
         });
     });
