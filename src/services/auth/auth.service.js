@@ -1,4 +1,5 @@
 import { MESSAGES } from "@constants/message";
+import { generateAvatar } from "@utils/avatar";
 import Bcrypt from "@utils/bcrypt";
 import JWT from "@utils/jwt";
 
@@ -35,7 +36,8 @@ export default class AuthService {
         if (existedUser) throw new Error(MESSAGES.isExisted);
 
         const hashedPassword = await Bcrypt.hashPassword(password);
-        const user = await this.userRepository.create({ email, password: hashedPassword });
+        const avatar = generateAvatar(email, 200) || null;
+        const user = await this.userRepository.create({ email, avatar, password: hashedPassword });
 
         const registerdUser = user.get({ plain: true });
         delete registerdUser.password;
