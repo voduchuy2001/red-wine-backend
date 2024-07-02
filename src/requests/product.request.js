@@ -51,7 +51,17 @@ export const create = () => [
 
     body("status").isIn(["active", "inactive", "draft"]),
 
-    body("images").optional({ nullable: true, checkFalsy: true }),
+    body("images").isArray().withMessage(MESSAGES.isArray(1, 2)),
+
+    body("images.*")
+        .isString()
+        .bail()
+        .withMessage(MESSAGES.isString)
+        .custom((link) => {
+            if (!link.startsWith("http")) throw new Error(MESSAGES.invalidFormat);
+
+            return true;
+        }),
 
     body("order").optional({ nullable: true, checkFalsy: true }).isInt().bail().withMessage(MESSAGES.isInt()),
 
@@ -123,7 +133,17 @@ export const update = () => [
 
     body("status").isIn(["active", "inactive", "draft"]),
 
-    body("images").optional({ nullable: true, checkFalsy: true }),
+    body("images").isArray().withMessage(MESSAGES.isArray()),
+
+    body("images.*")
+        .isString()
+        .bail()
+        .withMessage(MESSAGES.isString)
+        .custom((link) => {
+            if (!link.startsWith("http")) throw new Error(MESSAGES.invalidFormat);
+
+            return true;
+        }),
 
     body("order").optional({ nullable: true, checkFalsy: true }).isInt().bail().withMessage(MESSAGES.isInt()),
 
