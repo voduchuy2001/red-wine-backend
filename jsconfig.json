@@ -1,21 +1,21 @@
 {
-    "compilerOptions": {
-        "baseUrl": "./src",
-        "paths": {
-            "@config/*": ["config/*"],
-            "@constants/*": ["constants/*"],
-            "@controllers/*": ["controllers/*"],
-            "@di/*": ["di/*"],
-            "@documents/*": ["documents/*"],
-            "@middlewares/*": ["middlewares/*"],
-            "@models/*": ["models/*"],
-            "@repositories/*": ["repositories/*"],
-            "@requests/*": ["requests/*"],
-            "@routes/*": ["routes/*"],
-            "@services/*": ["services/*"],
-            "@utils/*": ["utils/*"],
-            "@storage/*": ["storage/*"],
-            "@public/*": ["public/*"]
-        }
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@constants/*": ["constants/*"],
+      "@controllers/*": ["controllers/*"],
+      "@di/*": ["di/*"],
+      "@documents/*": ["documents/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@models/*": ["models/*"],
+      "@repositories/*": ["repositories/*"],
+      "@requests/*": ["requests/*"],
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"],
+      "@utils/*": ["utils/*"],
+      "@storage/*": ["storage/*"],
+      "@public/*": ["public/*"]
     }
+  }
 }
