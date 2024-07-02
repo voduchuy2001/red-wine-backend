@@ -21,13 +21,29 @@ export const retrieve = () => [
 ]
 
 export const create = () => [
-  body('name').notEmpty().bail().withMessage(MESSAGES.notEmpty).isLength({ max: 120 }).bail().withMessage(MESSAGES.isLength(null, 120)),
+  body('name')
+    .notEmpty()
+    .bail()
+    .withMessage(MESSAGES.notEmpty)
+    .isLength({ max: 120 })
+    .bail()
+    .withMessage(MESSAGES.isLength(null, 120)),
 
-  body('price').notEmpty().bail().withMessage(MESSAGES.notEmpty).isInt({ min: 1, max: 1000000000 }).bail().withMessage(MESSAGES.isInt(1, 1000000000)),
+  body('price')
+    .notEmpty()
+    .bail()
+    .withMessage(MESSAGES.notEmpty)
+    .isInt({ min: 1, max: 1000000000 })
+    .bail()
+    .withMessage(MESSAGES.isInt(1, 1000000000)),
 
   body('description').optional({ nullable: true, checkFalsy: true }),
 
-  body('categoryIds').optional({ nullable: true, checkFalsy: true }).bail().isArray({ min: 1 }).withMessage(MESSAGES.isArray(1)),
+  body('categoryIds')
+    .optional({ nullable: true, checkFalsy: true })
+    .bail()
+    .isArray({ min: 1 })
+    .withMessage(MESSAGES.isArray(1)),
 
   body('categoryIds.*').isInt({ min: 1 }).bail().withMessage(MESSAGES.isInt(1)),
 
@@ -71,7 +87,11 @@ export const create = () => [
 
   body('weight').optional({ nullable: true, checkFalsy: true }).isFloat().bail().withMessage(MESSAGES.isFloat),
 
-  body('barcode').optional({ nullable: true, checkFalsy: true }).isLength({ max: 255 }).bail().withMessage(MESSAGES.isLength(null, 255))
+  body('barcode')
+    .optional({ nullable: true, checkFalsy: true })
+    .isLength({ max: 255 })
+    .bail()
+    .withMessage(MESSAGES.isLength(null, 255))
 ]
 
 export const show = () => [param('id').isInt({ min: 1 }).bail().withMessage(MESSAGES.isInt(1))]
@@ -79,13 +99,29 @@ export const show = () => [param('id').isInt({ min: 1 }).bail().withMessage(MESS
 export const update = () => [
   param('id').isInt({ min: 1 }).withMessage(MESSAGES.isInt(1)),
 
-  body('name').notEmpty().bail().withMessage(MESSAGES.notEmpty).isLength({ max: 120 }).bail().withMessage(MESSAGES.isLength(null, 120)),
+  body('name')
+    .notEmpty()
+    .bail()
+    .withMessage(MESSAGES.notEmpty)
+    .isLength({ max: 120 })
+    .bail()
+    .withMessage(MESSAGES.isLength(null, 120)),
 
-  body('price').notEmpty().bail().withMessage(MESSAGES.notEmpty).isInt({ min: 1, max: 1000000000 }).bail().withMessage(MESSAGES.isInt(1, 1000000000)),
+  body('price')
+    .notEmpty()
+    .bail()
+    .withMessage(MESSAGES.notEmpty)
+    .isInt({ min: 1, max: 1000000000 })
+    .bail()
+    .withMessage(MESSAGES.isInt(1, 1000000000)),
 
   body('description').optional({ nullable: true, checkFalsy: true }),
 
-  body('categoryIds').optional({ nullable: true, checkFalsy: true }).bail().isArray({ min: 1 }).withMessage(MESSAGES.isArray(1)),
+  body('categoryIds')
+    .optional({ nullable: true, checkFalsy: true })
+    .bail()
+    .isArray({ min: 1 })
+    .withMessage(MESSAGES.isArray(1)),
 
   body('categoryIds.*').isInt({ min: 1 }).bail().withMessage(MESSAGES.isInt(1)),
 
@@ -129,7 +165,11 @@ export const update = () => [
 
   body('weight').optional({ nullable: true, checkFalsy: true }).isFloat().bail().withMessage(MESSAGES.isFloat),
 
-  body('barcode').optional({ nullable: true, checkFalsy: true }).isLength({ max: 255 }).bail().withMessage(MESSAGES.isLength(null, 255))
+  body('barcode')
+    .optional({ nullable: true, checkFalsy: true })
+    .isLength({ max: 255 })
+    .bail()
+    .withMessage(MESSAGES.isLength(null, 255))
 ]
 
 export const destroy = () => [param('id').isInt({ min: 1 }).withMessage(MESSAGES.isInt(1))]

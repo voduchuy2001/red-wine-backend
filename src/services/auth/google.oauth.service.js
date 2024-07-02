@@ -5,7 +5,11 @@ import { OAuth2Client } from 'google-auth-library'
 export default class GoogleOAuthService {
   constructor(userRepository) {
     this.userRepository = userRepository
-    this.oAuth2Client = new OAuth2Client(GOOGLE_SERVICE.clientID, GOOGLE_SERVICE.clientSecret, GOOGLE_SERVICE.callbackURL)
+    this.oAuth2Client = new OAuth2Client(
+      GOOGLE_SERVICE.clientID,
+      GOOGLE_SERVICE.clientSecret,
+      GOOGLE_SERVICE.callbackURL
+    )
   }
 
   async redirect() {
