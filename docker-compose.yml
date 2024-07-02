@@ -1,35 +1,35 @@
-version: "3.8"
+version: '3.8'
 
 services:
-    app:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        ports:
-            - "9000:9000"
-        environment:
-            NODE_ENV: ${NODE_ENV}
-            DB_CONNECTION: ${DB_CONNECTION}
-            DB_HOST: ${DB_HOST}
-            DB_PORT: ${DB_PORT}
-            DB_DATABASE: ${DB_DATABASE}
-            DB_USERNAME: ${DB_USERNAME}
-            DB_PASSWORD: ${DB_PASSWORD}
-        volumes:
-            - .:/app
-        depends_on:
-            - db
-        command: npm start
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '9000:9000'
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    command: npm start
 
-    db:
-        image: mysql:8
-        environment:
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_DATABASE: ${DB_DATABASE}
-        ports:
-            - "3306:3306"
-        volumes:
-            - mysql-data:/var/lib/mysql
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
 
 volumes:
-    mysql-data:
+  mysql-data:

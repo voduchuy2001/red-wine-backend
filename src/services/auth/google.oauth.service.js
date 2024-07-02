@@ -1,58 +1,54 @@
-import { GOOGLE_SERVICE } from "@config/services";
-import JWT from "@utils/jwt";
-import { OAuth2Client } from "google-auth-library";
+import { GOOGLE_SERVICE } from '@config/services'
+import JWT from '@utils/jwt'
+import { OAuth2Client } from 'google-auth-library'
 
 export default class GoogleOAuthService {
-    constructor(userRepository) {
-        this.userRepository = userRepository;
-        this.oAuth2Client = new OAuth2Client(
-            GOOGLE_SERVICE.clientID,
-            GOOGLE_SERVICE.clientSecret,
-            GOOGLE_SERVICE.callbackURL
-        );
+  constructor(userRepository) {
+    this.userRepository = userRepository
+    this.oAuth2Client = new OAuth2Client(GOOGLE_SERVICE.clientID, GOOGLE_SERVICE.clientSecret, GOOGLE_SERVICE.callbackURL)
+  }
+
+  async redirect() {
+    const scope = ['https://www.googleapis.com/auth/userinfo.profile', 'email']
+
+    return this.oAuth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope,
+      prompt: 'consent'
+    })
+  }
+
+  async callback(code) {
+    try {
+      const tokenResponse = await this.oAuth2Client.getToken(code)
+      const idToken = tokenResponse.tokens.id_token
+
+      const verifiedPayload = await this.oAuth2Client.verifyIdToken({ idToken })
+
+      const socialAccount = verifiedPayload.getPayload()
+      const { email, name, picture } = socialAccount
+
+      const userAccount = await this.registerOrUpdateUser(email, name, picture)
+      const loggedInUser = userAccount.get({ plain: true })
+      delete loggedInUser.password
+
+      const accessToken = JWT.generate(userAccount.id, '7d')
+      loggedInUser.accessToken = accessToken
+
+      return loggedInUser
+    } catch (error) {
+      return false
     }
+  }
 
-    async redirect() {
-        const scope = ["https://www.googleapis.com/auth/userinfo.profile", "email"];
+  async registerOrUpdateUser(email, name, picture) {
+    let user = await this.userRepository.findOne({ where: { email } })
 
-        return this.oAuth2Client.generateAuthUrl({
-            access_type: "offline",
-            scope,
-            prompt: "consent",
-        });
-    }
+    if (!user) user = await this.userRepository.create({ email, name, avatar: picture })
 
-    async callback(code) {
-        try {
-            const tokenResponse = await this.oAuth2Client.getToken(code);
-            const idToken = tokenResponse.tokens.id_token;
+    user.update({ lastLoginAt: new Date() })
+    await user.save()
 
-            const verifiedPayload = await this.oAuth2Client.verifyIdToken({ idToken });
-
-            const socialAccount = verifiedPayload.getPayload();
-            const { email, name, picture } = socialAccount;
-
-            const userAccount = await this.registerOrUpdateUser(email, name, picture);
-            const loggedInUser = userAccount.get({ plain: true });
-            delete loggedInUser.password;
-
-            const accessToken = JWT.generate(userAccount.id, "7d");
-            loggedInUser.accessToken = accessToken;
-
-            return loggedInUser;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async registerOrUpdateUser(email, name, picture) {
-        let user = await this.userRepository.findOne({ where: { email } });
-
-        if (!user) user = await this.userRepository.create({ email, name, avatar: picture });
-
-        user.update({ lastLoginAt: new Date() });
-        await user.save();
-
-        return user;
-    }
+    return user
+  }
 }

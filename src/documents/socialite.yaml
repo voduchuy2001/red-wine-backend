@@ -1,34 +1,34 @@
 paths:
-    /redirect/google:
-        get:
-            tags:
-                - Google OAuth2
-            summary: Redirect to Google OAuth
-            produces:
-                - application/json
-            responses:
-                201:
-                    description: Created redirect URL successfully
-                400:
-                    description: Bad request
-                500:
-                    description: Internal server error
-    /callback/google:
-        get:
-            tags:
-                - Google OAuth2
-            summary: Callback endpoint for Google OAuth2 authentication
-            produces:
-                - application/json
-            parameters:
-                - in: query
-                  name: code
-                  description: Authorization code received from Google OAuth2 callback
-                  required: true
-            responses:
-                200:
-                    description: User authenticated successfully via Google OAuth2
-                401:
-                    description: Unauthorized - Invalid or expired authorization code
-                500:
-                    description: Internal server error - Something went wrong on the server side during authentication
+  /redirect/google:
+    get:
+      tags:
+        - Google OAuth2
+      summary: Redirect to Google OAuth
+      produces:
+        - application/json
+      responses:
+        201:
+          description: Created redirect URL successfully
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+  /callback/google:
+    get:
+      tags:
+        - Google OAuth2
+      summary: Callback endpoint for Google OAuth2 authentication
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: code
+          description: Authorization code received from Google OAuth2 callback
+          required: true
+      responses:
+        200:
+          description: User authenticated successfully via Google OAuth2
+        401:
+          description: Unauthorized - Invalid or expired authorization code
+        500:
+          description: Internal server error - Something went wrong on the server side during authentication

@@ -9,33 +9,33 @@ Docker is used for containerization to ensure consistent environments across dif
 
 ## Features
 
--   **Authentication**: Secure login and registration using JWT.
--   **Role-Based Access Control (RBAC)**: Fine-grained access control for different user roles (admin, end-user).
--   **API Documentation**: Interactive API documentation using Swagger.
--   **Containerization**: Dockerized setup for consistent development and deployment environments.
--   **Validation and Error Handling**: Robust validation using Express Validator and centralized error handling.
--   **Third-Party API Integration**: Seamless integration with various external APIs for extended functionality.
--   **WebSocket Support**: Real-time communication capabilities using WebSockets.
+- **Authentication**: Secure login and registration using JWT.
+- **Role-Based Access Control (RBAC)**: Fine-grained access control for different user roles (admin, end-user).
+- **API Documentation**: Interactive API documentation using Swagger.
+- **Containerization**: Dockerized setup for consistent development and deployment environments.
+- **Validation and Error Handling**: Robust validation using Express Validator and centralized error handling.
+- **Third-Party API Integration**: Seamless integration with various external APIs for extended functionality.
+- **WebSocket Support**: Real-time communication capabilities using WebSockets.
 
 ## Technologies Used
 
--   **Node.js**: JavaScript runtime.
--   **Express.js**: Web framework for Node.js.
--   **Sequelize**: ORM for SQL databases.
--   **MySQL**: Relational database.
--   **Docker**: Containerization platform.
--   **Swagger**: API documentation tool.
--   **JWT**: JSON Web Token for secure authentication.
--   **Express Validator**: Middleware for validation.
--   **Nodemon**: Tool for automatically restarting the server during development.
--   **Babel**: JavaScript compiler for using ES6+ features.
--   **Jest**: Testing frameworks for unit and integration tests.
+- **Node.js**: JavaScript runtime.
+- **Express.js**: Web framework for Node.js.
+- **Sequelize**: ORM for SQL databases.
+- **MySQL**: Relational database.
+- **Docker**: Containerization platform.
+- **Swagger**: API documentation tool.
+- **JWT**: JSON Web Token for secure authentication.
+- **Express Validator**: Middleware for validation.
+- **Nodemon**: Tool for automatically restarting the server during development.
+- **Babel**: JavaScript compiler for using ES6+ features.
+- **Jest**: Testing frameworks for unit and integration tests.
 
 ## Prerequisites
 
--   **Node.js** (v20.10.0 or higher)
--   **Docker** (v26.1.4 or higher)
--   **MySQL** (v8.3 or higher)
+- **Node.js** (v20.10.0 or higher)
+- **Docker** (v26.1.4 or higher)
+- **MySQL** (v8.3 or higher)
 
 ## Getting Started
 
@@ -123,8 +123,8 @@ Swagger UI is available at http://localhost:6969/api-docs.
 
 ## Scripts
 
--   npm start: Start the server.
--   npm test: Run tests with Jest
+- npm start: Start the server.
+- npm test: Run tests with Jest
 
 ## Contribution
 
