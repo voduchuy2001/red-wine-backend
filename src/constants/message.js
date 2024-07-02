@@ -13,13 +13,8 @@ exports.MESSAGES = {
     isObject: "Must be an object",
     isString: "Must be a string",
     equals: "Mismatched",
-    isArray: (min, max) => {
-        if (!min && !max) {
-            return "";
-        }
-
-        return `Must be an array${min && max ? ` between ${min} and ${max} element(s)` : min ? ` greater than or equal to ${min} element(s)` : max ? ` less than or equal to ${max} element(s)` : ""}`;
-    },
+    isArray: (min, max) =>
+        `Must be an array${min && max ? ` between ${min} and ${max} element(s)` : min ? ` greater than or equal to ${min} element(s)` : max ? ` less than or equal to ${max} element(s)` : ""}`,
     notEmpty: "Required",
     priority: "Must be a string containing a single digit from 1 to 9",
     isNumeric: "Must be a number",
