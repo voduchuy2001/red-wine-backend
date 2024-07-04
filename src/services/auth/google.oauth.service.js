@@ -36,11 +36,11 @@ export default class GoogleOAuthService {
       const loggedInUser = userAccount.get({ plain: true })
       delete loggedInUser.password
 
-      const accessToken = JWT.generate(userAccount.id, '7d')
-      loggedInUser.accessToken = accessToken
+      loggedInUser.token = JWT.generate(userAccount.id, '7d')
 
       return loggedInUser
     } catch (error) {
+      console.log(error.message)
       return false
     }
   }

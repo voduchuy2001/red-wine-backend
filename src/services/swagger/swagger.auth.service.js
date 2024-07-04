@@ -6,7 +6,6 @@ export default class SwaggerAuthService {
     const { username, password } = data
     if (username !== swaggerAccount.username) return false
 
-    const passwordMatch = await Bcrypt.comparePassword(password, swaggerAccount.password)
-    return passwordMatch
+    return await Bcrypt.comparePassword(password, swaggerAccount.password)
   }
 }

@@ -1,7 +1,8 @@
 import { MESSAGES } from '@constants/message'
+import { PRODUCT_STATUS } from '@constants/product.status'
 import { body, param, query } from 'express-validator'
 
-export const retrieve = () => [
+export const index = () => [
   query('name').optional({ checkFalsy: true }).bail().isString().withMessage(MESSAGES.isString),
 
   query('categoryIds')
@@ -49,7 +50,9 @@ export const create = () => [
 
   body('content').optional({ nullable: true, checkFalsy: true }),
 
-  body('status').isIn(['active', 'inactive', 'draft']),
+  body('status')
+    .isIn(Object.keys(PRODUCT_STATUS))
+    .withMessage(MESSAGES.isIn(Object.keys(PRODUCT_STATUS))),
 
   body('images').isArray().withMessage(MESSAGES.isArray(1, 2)),
 
@@ -74,7 +77,7 @@ export const create = () => [
     .withMessage(MESSAGES.isInt(1, 1000000000))
     .custom((salePrice, { req }) => {
       const { price } = req.body
-      if (parseInt(price) <= parseInt(salePrice)) throw new Error(MESSAGES.isValid)
+      if (parseInt(price) <= parseInt(salePrice)) throw new Error(MESSAGES.invalid)
 
       return true
     }),
@@ -127,7 +130,9 @@ export const update = () => [
 
   body('content').optional({ nullable: true, checkFalsy: true }),
 
-  body('status').isIn(['active', 'inactive', 'draft']),
+  body('status')
+    .isIn(Object.keys(PRODUCT_STATUS))
+    .withMessage(MESSAGES.isIn(Object.keys(PRODUCT_STATUS))),
 
   body('images').isArray().withMessage(MESSAGES.isArray()),
 

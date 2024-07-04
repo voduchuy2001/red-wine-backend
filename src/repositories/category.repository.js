@@ -1,4 +1,4 @@
-import db from '@models'
+import db from '@models/index'
 import BaseRepository from '@repositories/base.repository'
 
 export default class CategoryRepository extends BaseRepository {
@@ -7,6 +7,6 @@ export default class CategoryRepository extends BaseRepository {
   }
 
   async findByIds(categoryIds) {
-    return await this.findAll({ where: { id: categoryIds } })
+    return this.findAll({ where: { id: categoryIds } })
   }
 }

@@ -1,42 +1,70 @@
+import { PRODUCT_STATUS } from '@constants/product.status'
+import db from '@models/index'
 import BaseService from '@services/base.service'
 
 export default class ProductService extends BaseService {
   constructor(productRepository, categoryRepository) {
-    super()
-    this.productRepository = productRepository
+    super(productRepository)
     this.categoryRepository = categoryRepository
   }
 
-  async getProducts(options = null) {
-    return await this.productRepository.getProducts(options)
+  async index(queryParams = {}) {
+    const { page, paginate, search, categoryIds } = queryParams
+    const whereClause = search ? { name: { [db.Sequelize.Op.like]: `%${search}%` } } : {}
+    const includeCategories = categoryIds?.length
+      ? [
+          {
+            model: db.Category,
+            as: 'categories',
+            where: { id: categoryIds },
+            required: true,
+            through: { attributes: [] }
+          }
+        ]
+      : []
+    const options = {
+      where: { ...whereClause },
+      page,
+      paginate,
+      include: includeCategories
+    }
+
+    const products = await super.paginate(options)
+
+    return products.docs.length ? products : null
   }
 
-  async createProduct(productData, categoryIds) {
+  async setProductCategories(productId, categoryIds) {
+    const categories = await this.categoryRepository.findByIds(categoryIds)
+    await this.repository.setCategoriesToProduct(productId, categories)
+  }
+
+  async create(productDetails, categoryIds = []) {
+    const newProductData = { ...productDetails }
+    const assignedCategoryIds = [...categoryIds]
+
+    newProductData.images = JSON.stringify(newProductData.images)
+    newProductData.status = PRODUCT_STATUS[newProductData.status]
+
+    const createdProduct = await super.create(newProductData)
+
+    const productId = createdProduct.id
+    await this.setProductCategories(productId, assignedCategoryIds)
+
+    return true
+  }
+
+  async update(updateDetails) {
+    const { id, categoryIds = [], ...productData } = updateDetails
+
     productData.images = JSON.stringify(productData.images)
-    const product = await this.productRepository.create(productData)
+    productData.status = PRODUCT_STATUS[productData.status]
 
-    const categories = await this.categoryRepository.findByIds(categoryIds)
-    await this.productRepository.setCategoriesToProduct(product, categories)
+    const [updated] = await super.update(id, productData)
+    if (!updated) return false
 
-    return product
-  }
+    await this.setProductCategories(id, categoryIds)
 
-  async getProduct(data) {
-    const { id } = data
-    return await this.productRepository.findById(id)
-  }
-
-  async updateProduct(data) {
-    const { id, categoryIds, ...productData } = data
-    const product = await this.productRepository.updateProduct(id, productData)
-    const categories = await this.categoryRepository.findByIds(categoryIds)
-    await this.productRepository.setCategoriesToProduct(product, categories)
-
-    return product
-  }
-
-  async destroyProduct(data) {
-    const { id } = data
-    return await this.productRepository.remove(id)
+    return true
   }
 }

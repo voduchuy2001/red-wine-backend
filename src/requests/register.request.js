@@ -17,6 +17,5 @@ export const register = () => [
       return true
     }),
 
-  ,
   body('password').notEmpty().bail().withMessage(MESSAGES.notEmpty).isString().bail().withMessage(MESSAGES.isString)
 ]

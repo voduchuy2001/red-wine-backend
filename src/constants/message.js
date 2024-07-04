@@ -1,4 +1,4 @@
-exports.MESSAGES = {
+const MESSAGES = {
   invalidFormat: 'Invalid format',
   isLength: (min, max) =>
     `${min && max ? `From ${min} - ${max} character(s)` : min ? `Greater than ${min} character(s)` : max ? `Less than ${max} character(s)` : ''}`,
@@ -25,5 +25,8 @@ exports.MESSAGES = {
   isFloat: 'Must be a float',
   isDouble: 'Must be a double',
   isBoolean: 'Must be a boolean',
-  missingToken: 'Missing token'
+  missingToken: 'Missing token',
+  invalid: 'Invalid'
 }
+
+export { MESSAGES }

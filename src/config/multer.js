@@ -1,14 +1,14 @@
-import { ALLOWED_EXTENTIONS } from '@constants/file-extension'
+import { ALLOWED_EXTENSIONS } from '@constants/file.extension'
 import multer from 'multer'
 import path from 'path'
 
 export const multerConfig = {
   storage: multer.memoryStorage(),
 
-  fileFilter: function (req, file, callback) {
+  fileFilter(req, file, callback) {
     const extensions = path.extname(file.originalname)
 
-    if (!ALLOWED_EXTENTIONS.includes(extensions)) callback(new multer.MulterError('LIMIT_UNEXPECTED_FILE'), false)
+    if (!ALLOWED_EXTENSIONS.includes(extensions)) callback(new multer.MulterError('INVALID_EXTENSION'), false)
 
     callback(null, true)
   },
