@@ -1,4 +1,4 @@
-import { FILE_LIMITER } from '@constants/file-extension'
+import { FILE_LIMITER } from '@constants/file.extension'
 import { BAD_REQUEST } from '@constants/http.status.code'
 import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'

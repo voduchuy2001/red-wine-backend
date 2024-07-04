@@ -18,7 +18,7 @@ import cookieParser from 'cookie-parser'
 import { authenticated } from '@middlewares/swagger'
 import { session } from '@config/session'
 
-async function bootstrap() {
+function bootstrap() {
   const app = express()
   const server = http.createServer(app)
   const io = socket(server)

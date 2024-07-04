@@ -1,8 +1,13 @@
-export const ALLOWED_EXTENTIONS = ['.png', '.jpg', '.gif', '.jpeg']
+export const ALLOWED_EXTENSIONS = ['.png', '.jpg', '.gif', '.jpeg']
 
 export const FILE_LIMITER = {
-  LIMIT_FILE_SIZE: 'Limit file size',
-  LIMIT_FILE_MIMETYPE: 'Limit file mimetype',
-  NO_FILE_FIELD: 'No file field',
-  LIMIT_UNEXPECTED_FILE: 'Unexpected field'
+  LIMIT_PART_COUNT: 'Too many parts',
+  LIMIT_FILE_SIZE: 'File too large',
+  LIMIT_FILE_COUNT: 'Too many files',
+  LIMIT_FIELD_KEY: 'Field name too long',
+  LIMIT_FIELD_VALUE: 'Field value too long',
+  LIMIT_FIELD_COUNT: 'Too many fields',
+  LIMIT_UNEXPECTED_FILE: 'Unexpected field',
+  MISSING_FIELD_NAME: 'Field name missing',
+  INVALID_EXTENSION: 'Invalid extension'
 }

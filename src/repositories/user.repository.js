@@ -1,4 +1,4 @@
-import db from '@models'
+import db from '@models/index'
 import BaseRepository from '@repositories/base.repository'
 
 export default class UserRepository extends BaseRepository {

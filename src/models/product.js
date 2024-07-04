@@ -1,12 +1,12 @@
-'use strict'
 import { Model } from 'sequelize'
 import SequelizePaginate from '@utils/paginate'
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
-      Product.belongsToMany(models.Category, {
-        through: models.CategoryProduct,
+      const { Category, CategoryProduct } = models
+      Product.belongsToMany(Category, {
+        through: CategoryProduct,
         foreignKey: 'productId',
         as: 'categories'
       })

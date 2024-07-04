@@ -1,7 +1,6 @@
-'use strict'
 import { Model } from 'sequelize'
 
-module.exports = (sequelize, DataTypes) => {
+const ModelHasRole = (sequelize, DataTypes) => {
   class ModelHasRole extends Model {
     static associate(models) {}
   }
@@ -19,3 +18,5 @@ module.exports = (sequelize, DataTypes) => {
   )
   return ModelHasRole
 }
+
+export default ModelHasRole

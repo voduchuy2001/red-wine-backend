@@ -1,10 +1,10 @@
-import { BAD_REQUEST, CREATED, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from '@constants/http.status.code'
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from '@constants/http.status.code'
 import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'
 
-export default class ProductController {
-  constructor(productService) {
-    this.productService = productService
+export default class CategoryController {
+  constructor(categoryService) {
+    this.categoryService = categoryService
   }
 
   async index(req, res) {
@@ -17,29 +17,29 @@ export default class ProductController {
     }
 
     try {
-      const products = await this.productService.index(options)
+      const categories = await this.categoryService.index(options)
 
-      if (!products) {
+      if (!categories) {
         return HttpHelper.successResponse(res, NOT_FOUND, MESSAGES.failure)
       }
 
-      return HttpHelper.successResponse(res, OK, MESSAGES.success, products)
+      return HttpHelper.successResponse(res, OK, MESSAGES.success, categories)
     } catch (error) {
       return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 
   async create(req, res) {
-    const { categoryIds, ...productData } = req.body
+    const validatedData = req.body
 
     try {
-      const product = await this.productService.create(productData, categoryIds)
+      const category = await this.categoryService.create(validatedData)
 
-      if (!product) {
+      if (!category) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
       }
 
-      return HttpHelper.successResponse(res, CREATED, MESSAGES.success)
+      return HttpHelper.successResponse(res, OK, MESSAGES.success)
     } catch (error) {
       return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
@@ -49,13 +49,13 @@ export default class ProductController {
     const { id } = req.params
 
     try {
-      const product = await this.productService.findById(id)
+      const category = await this.categoryService.findById(id)
 
-      if (!product) {
+      if (!category) {
         return HttpHelper.successResponse(res, NOT_FOUND, MESSAGES.failure)
       }
 
-      return HttpHelper.successResponse(res, OK, MESSAGES.success, product)
+      return HttpHelper.successResponse(res, OK, MESSAGES.success, category)
     } catch (error) {
       return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
@@ -63,9 +63,10 @@ export default class ProductController {
 
   async update(req, res) {
     const validatedData = { ...req.params, ...req.body }
+    const { id, ...categoryData } = validatedData
 
     try {
-      const updated = await this.productService.update(validatedData)
+      const updated = await this.categoryService.update(id, categoryData)
 
       if (!updated) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
@@ -81,9 +82,9 @@ export default class ProductController {
     const { id } = req.params
 
     try {
-      const product = await this.productService.remove(id)
+      const category = await this.categoryService.remove(id)
 
-      if (!product) {
+      if (!category) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
       }
 

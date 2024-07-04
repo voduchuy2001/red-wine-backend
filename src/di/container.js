@@ -10,8 +10,12 @@ import OAuthGoogleService from '@services/auth/google.oauth.service'
 import ProductService from '@services/product.service'
 import SwaggerAuthController from '@controllers/auth/swagger.auth.controller'
 import SwaggerAuthService from '@services/swagger/swagger.auth.service'
+import CategoryService from '@services/category.service'
+import CategoryController from '@controllers/category.controller'
 
 export const categoryRepository = new CategoryRepository()
+export const categoryService = new CategoryService(categoryRepository)
+export const categoryController = new CategoryController(categoryService)
 
 export const productRepository = new ProductRepository()
 export const productService = new ProductService(productRepository, categoryRepository)

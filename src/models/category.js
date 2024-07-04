@@ -1,12 +1,12 @@
-'use strict'
 import SequelizePaginate from '@utils/paginate'
 import { Model } from 'sequelize'
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class Category extends Model {
     static associate(models) {
-      Category.belongsToMany(models.Product, {
-        through: models.CategoryProduct,
+      const { Product, CategoryProduct } = models
+      this.belongsToMany(Product, {
+        through: CategoryProduct,
         foreignKey: 'categoryId',
         as: 'products'
       })
@@ -15,8 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   Category.init(
     {
       name: DataTypes.STRING,
+      image: DataTypes.STRING,
       status: DataTypes.STRING,
-      isFeatured: DataTypes.TINYINT,
+      isFeatured: DataTypes.BOOLEAN,
       order: DataTypes.INTEGER
     },
     {

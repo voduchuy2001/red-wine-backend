@@ -12,10 +12,10 @@ export default class AuthService {
     const { email, password } = data
 
     const findUser = await this.userRepository.findOne({ where: { email } })
-    if (!findUser) throw new Error(MESSAGES.notFound)
+    if (!findUser) return false
 
     const matchedPassword = await Bcrypt.comparePassword(password, findUser.password)
-    if (!matchedPassword) throw new Error(MESSAGES.doesNotMatch)
+    if (!matchedPassword) return false
 
     findUser.update({ lastLoginAt: new Date() })
     await findUser.save()
@@ -23,8 +23,7 @@ export default class AuthService {
     const loggedInUser = findUser.get({ plain: true })
     delete loggedInUser.password
 
-    const accessToken = JWT.generate(findUser.id, '7d')
-    loggedInUser.accessToken = accessToken
+    loggedInUser.token = JWT.generate(findUser.id, '7d')
 
     return loggedInUser
   }
@@ -39,9 +38,9 @@ export default class AuthService {
     const avatar = generateAvatar(email, 200) || null
     const user = await this.userRepository.create({ email, avatar, password: hashedPassword })
 
-    const registerdUser = user.get({ plain: true })
-    delete registerdUser.password
+    const registeredUser = user.get({ plain: true })
+    delete registeredUser.password
 
-    return registerdUser
+    return registeredUser
   }
 }
