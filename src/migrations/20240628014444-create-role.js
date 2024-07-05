@@ -9,10 +9,12 @@ module.exports = {
         type: Sequelize.BIGINT
       },
       name: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        allowNull: false
       },
       code: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        allowNull: false
       },
       description: {
         type: Sequelize.STRING

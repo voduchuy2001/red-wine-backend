@@ -1,9 +1,9 @@
 import { TOO_MANY_REQUESTS } from '@constants/http.status.code'
 import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'
-import rateLimit from 'express-rate-limit'
+import { rateLimit } from 'express-rate-limit'
 
-export const rateLimiter = (windowMs, max) =>
+export const limiter = (windowMs, max) =>
   rateLimit({
     windowMs,
     max,

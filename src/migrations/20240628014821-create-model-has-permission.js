@@ -13,10 +13,12 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       modelType: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        allowNull: false
       },
       modelId: {
-        type: Sequelize.BIGINT
+        type: Sequelize.BIGINT,
+        allowNull: false
       }
     })
   },

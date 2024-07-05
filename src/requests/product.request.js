@@ -68,7 +68,7 @@ export const create = () => [
 
   body('order').optional({ nullable: true, checkFalsy: true }).isInt().bail().withMessage(MESSAGES.isInt()),
 
-  body('isFeatured').optional({ nullable: true, checkFalsy: true }).isBoolean().bail().withMessage(MESSAGES.isBoolean),
+  body('featured').optional({ nullable: true, checkFalsy: true }).isBoolean().bail().withMessage(MESSAGES.isBoolean),
 
   body('salePrice')
     .optional({ nullable: true, checkFalsy: true })
@@ -148,7 +148,7 @@ export const update = () => [
 
   body('order').optional({ nullable: true, checkFalsy: true }).isInt().bail().withMessage(MESSAGES.isInt()),
 
-  body('isFeatured').optional({ nullable: true, checkFalsy: true }).isBoolean().bail().withMessage(MESSAGES.isBoolean),
+  body('featured').optional({ nullable: true, checkFalsy: true }).isBoolean().bail().withMessage(MESSAGES.isBoolean),
 
   body('salePrice')
     .optional({ nullable: true, checkFalsy: true })

@@ -20,7 +20,7 @@ export default (sequelize, DataTypes) => {
       status: DataTypes.STRING,
       images: DataTypes.TEXT,
       order: DataTypes.INTEGER,
-      isFeatured: DataTypes.TINYINT,
+      featured: DataTypes.TINYINT,
       price: DataTypes.DOUBLE,
       salePrice: DataTypes.DOUBLE,
       length: DataTypes.FLOAT,

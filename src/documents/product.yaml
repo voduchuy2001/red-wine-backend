@@ -205,7 +205,7 @@ definitions:
         type: integer
         description: Order of the product
         example: 1
-      isFeatured:
+      featured:
         type: boolean
         example: true
         description: Whether the product is featured

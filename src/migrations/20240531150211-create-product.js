@@ -27,7 +27,7 @@ module.exports = {
       order: {
         type: Sequelize.INTEGER
       },
-      isFeatured: {
+      featured: {
         type: Sequelize.TINYINT
       },
       price: {

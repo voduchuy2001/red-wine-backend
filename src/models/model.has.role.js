@@ -1,6 +1,6 @@
 import { Model } from 'sequelize'
 
-const ModelHasRole = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class ModelHasRole extends Model {
     static associate(models) {}
   }
@@ -18,5 +18,3 @@ const ModelHasRole = (sequelize, DataTypes) => {
   )
   return ModelHasRole
 }
-
-export default ModelHasRole

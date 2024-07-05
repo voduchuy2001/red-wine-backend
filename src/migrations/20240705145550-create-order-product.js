@@ -1,31 +1,41 @@
+'use strict'
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Permissions', {
+    await queryInterface.createTable('OrderProducts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.BIGINT
       },
-      parentId: {
+      orderId: {
         type: Sequelize.BIGINT,
-        references: {
-          model: 'Permissions',
-          key: 'id'
-        },
+        references: 'Orders',
+        key: 'id',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      name: {
-        type: Sequelize.STRING(50),
+      quantity: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      code: {
-        type: Sequelize.STRING(50),
+      price: {
+        type: Sequelize.DECIMAL(15, 2),
         allowNull: false
       },
-      description: {
+      productId: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: 'Products',
+        key: 'id',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      productName: {
+        type: Sequelize.STRING
+      },
+      productImage: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -39,6 +49,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Permissions')
+    await queryInterface.dropTable('OrderProducts')
   }
 }

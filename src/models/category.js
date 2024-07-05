@@ -17,7 +17,7 @@ export default (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       image: DataTypes.STRING,
       status: DataTypes.STRING,
-      isFeatured: DataTypes.BOOLEAN,
+      featured: DataTypes.BOOLEAN,
       order: DataTypes.INTEGER
     },
     {

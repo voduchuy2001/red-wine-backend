@@ -5,7 +5,7 @@ import path from 'path'
 export const multerConfig = {
   storage: multer.memoryStorage(),
 
-  fileFilter(req, file, callback) {
+  fileFilter: function (req, file, callback) {
     const extensions = path.extname(file.originalname)
 
     if (!ALLOWED_EXTENSIONS.includes(extensions)) callback(new multer.MulterError('INVALID_EXTENSION'), false)
