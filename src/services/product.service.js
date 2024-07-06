@@ -3,9 +3,9 @@ import db from '@models/index'
 import BaseService from '@services/base.service'
 
 export default class ProductService extends BaseService {
-  constructor(productRepository, categoryRepository) {
+  constructor(productRepository, productCategoryRepository) {
     super(productRepository)
-    this.categoryRepository = categoryRepository
+    this.productCategoryRepository = productCategoryRepository
   }
 
   async index(queryParams = {}) {
@@ -14,7 +14,7 @@ export default class ProductService extends BaseService {
     const includeCategories = categoryIds?.length
       ? [
           {
-            model: db.Category,
+            model: db.ProductCategory,
             as: 'categories',
             where: { id: categoryIds },
             required: true,
@@ -35,7 +35,7 @@ export default class ProductService extends BaseService {
   }
 
   async setProductCategories(productId, categoryIds) {
-    const categories = await this.categoryRepository.findByIds(categoryIds)
+    const categories = await this.productCategoryRepository.findAll({ where: { id: categoryIds } })
     await this.repository.setCategoriesToProduct(productId, categories)
   }
 

@@ -43,7 +43,10 @@ module.exports = {
       orderId: {
         type: Sequelize.BIGINT,
         allowNull: false,
-        references: 'Orders',
+        references: {
+          model: 'Orders',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },

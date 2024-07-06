@@ -2,17 +2,18 @@ import SequelizePaginate from '@utils/paginate'
 import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
-  class Category extends Model {
+  class ProductCategory extends Model {
     static associate(models) {
-      const { Product, CategoryProduct } = models
+      const { Product, ProductHasProductCategory } = models
+
       this.belongsToMany(Product, {
-        through: CategoryProduct,
+        through: ProductHasProductCategory,
         foreignKey: 'categoryId',
         as: 'products'
       })
     }
   }
-  Category.init(
+  ProductCategory.init(
     {
       name: DataTypes.STRING,
       image: DataTypes.STRING,
@@ -22,10 +23,10 @@ export default (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Category'
+      modelName: 'ProductCategory'
     }
   )
 
-  SequelizePaginate.paginate(Category)
-  return Category
+  SequelizePaginate.paginate(ProductCategory)
+  return ProductCategory
 }

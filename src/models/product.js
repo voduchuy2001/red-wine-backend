@@ -4,9 +4,9 @@ import SequelizePaginate from '@utils/paginate'
 export default (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
-      const { Category, CategoryProduct } = models
-      Product.belongsToMany(Category, {
-        through: CategoryProduct,
+      const { ProductCategory, ProductHasProductCategory } = models
+      Product.belongsToMany(ProductCategory, {
+        through: ProductHasProductCategory,
         foreignKey: 'productId',
         as: 'categories'
       })

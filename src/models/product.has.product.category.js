@@ -1,20 +1,20 @@
 import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
-  class CategoryProduct extends Model {
+  class ProductHasProductCategory extends Model {
     static associate(models) {}
   }
-  CategoryProduct.init(
+  ProductHasProductCategory.init(
     {
       categoryId: DataTypes.BIGINT,
       productId: DataTypes.BIGINT
     },
     {
       sequelize,
-      modelName: 'CategoryProduct',
-      tableName: 'CategoryProducts',
+      modelName: 'ProductHasProductCategory',
+      tableName: 'ProductHasProductCategories',
       timestamps: false
     }
   )
-  return CategoryProduct
+  return ProductHasProductCategory
 }

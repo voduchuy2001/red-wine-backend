@@ -1,9 +1,9 @@
 import BaseService from '@services/base.service'
 import db from '@models/index'
 
-export default class CategoryService extends BaseService {
-  constructor(categoryRepository) {
-    super(categoryRepository)
+export default class ProductCategoryService extends BaseService {
+  constructor(productCategoryRepository) {
+    super(productCategoryRepository)
   }
 
   async index(queryParams = {}) {

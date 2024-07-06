@@ -12,8 +12,10 @@ module.exports = {
       userId: {
         type: Sequelize.BIGINT,
         allowNull: false,
-        references: 'Users',
-        key: 'id',
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },

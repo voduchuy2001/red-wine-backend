@@ -2,7 +2,7 @@ import LoginController from '@controllers/auth/login.controller'
 import OAuthGoogleController from '@controllers/auth/google.oauth.controller'
 import ProductController from '@controllers/product.controller'
 import RegisterController from '@controllers/auth/register.controller'
-import CategoryRepository from '@repositories/category.repository'
+import ProductCategoryRepository from '@repositories/product.category.repository'
 import ProductRepository from '@repositories/product.repository'
 import UserRepository from '@repositories/user.repository'
 import AuthService from '@services/auth/auth.service'
@@ -10,15 +10,15 @@ import OAuthGoogleService from '@services/auth/google.oauth.service'
 import ProductService from '@services/product.service'
 import SwaggerAuthController from '@controllers/auth/swagger.auth.controller'
 import SwaggerAuthService from '@services/swagger/swagger.auth.service'
-import CategoryService from '@services/category.service'
-import CategoryController from '@controllers/category.controller'
+import ProductCategoryService from '@services/product.category.service'
+import ProductCategoryController from '@controllers/product.category.controller'
 
-export const categoryRepository = new CategoryRepository()
-export const categoryService = new CategoryService(categoryRepository)
-export const categoryController = new CategoryController(categoryService)
+export const productCategoryRepository = new ProductCategoryRepository()
+export const productCategoryService = new ProductCategoryService(productCategoryRepository)
+export const productCategoryController = new ProductCategoryController(productCategoryService)
 
 export const productRepository = new ProductRepository()
-export const productService = new ProductService(productRepository, categoryRepository)
+export const productService = new ProductService(productRepository, productCategoryRepository)
 export const productController = new ProductController(productService)
 
 export const userRepository = new UserRepository()

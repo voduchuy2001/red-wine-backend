@@ -1,12 +1,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('CategoryProducts', {
+    await queryInterface.createTable('ProductHasProductCategories', {
       categoryId: {
         type: Sequelize.BIGINT,
         allowNull: false,
         references: {
-          model: 'Categories',
+          model: 'ProductCategories',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -25,6 +25,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('CategoryProducts')
+    await queryInterface.dropTable('ProductHasProductCategories')
   }
 }

@@ -18,16 +18,20 @@ module.exports = {
       userId: {
         type: Sequelize.BIGINT,
         allowNull: false,
-        references: 'Users',
-        key: 'id',
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
       orderId: {
         type: Sequelize.BIGINT,
         allowNull: false,
-        references: 'Orders',
-        key: 'id',
+        references: {
+          model: 'Orders',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },

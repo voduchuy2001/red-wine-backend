@@ -2,9 +2,9 @@ import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from '@constants/ht
 import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'
 
-export default class CategoryController {
-  constructor(categoryService) {
-    this.categoryService = categoryService
+export default class ProductCategoryController {
+  constructor(ProductCategoryService) {
+    this.ProductCategoryService = ProductCategoryService
   }
 
   async index(req, res) {
@@ -17,7 +17,7 @@ export default class CategoryController {
     }
 
     try {
-      const categories = await this.categoryService.index(options)
+      const categories = await this.ProductCategoryService.index(options)
 
       if (!categories) {
         return HttpHelper.successResponse(res, NOT_FOUND, MESSAGES.failure)
@@ -33,7 +33,7 @@ export default class CategoryController {
     const validatedData = req.body
 
     try {
-      const category = await this.categoryService.create(validatedData)
+      const category = await this.ProductCategoryService.create(validatedData)
 
       if (!category) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
@@ -49,7 +49,7 @@ export default class CategoryController {
     const { id } = req.params
 
     try {
-      const category = await this.categoryService.findById(id)
+      const category = await this.ProductCategoryService.findById(id)
 
       if (!category) {
         return HttpHelper.successResponse(res, NOT_FOUND, MESSAGES.failure)
@@ -66,7 +66,7 @@ export default class CategoryController {
     const { id, ...categoryData } = validatedData
 
     try {
-      const updated = await this.categoryService.update(id, categoryData)
+      const updated = await this.ProductCategoryService.update(id, categoryData)
 
       if (!updated) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
@@ -82,7 +82,7 @@ export default class CategoryController {
     const { id } = req.params
 
     try {
-      const category = await this.categoryService.remove(id)
+      const category = await this.ProductCategoryService.remove(id)
 
       if (!category) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
