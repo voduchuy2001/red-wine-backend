@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 export const VNP_PAYMENT_GATEWAY_SANDBOX_HOST = process.env.VNP_SANDBOX_HOST_API
 export const VNP_PAYMENT_ENDPOINT = process.env.VNP_PAYMENT_ENDPOINT
 export const QUERY_DR_REFUND_ENDPOINT = process.env.VNP_QUERY_DR_REFUND_ENDPOINT
