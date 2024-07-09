@@ -1,4 +1,4 @@
-import { INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from '@constants/http.status.code'
 import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'
 
@@ -7,36 +7,15 @@ export default class SettingController {
     this.settingService = settingService
   }
 
-  async index(req, res) {
-    try {
-    } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
-    }
-  }
+  async vnpaySetting(req, res) {
+    const { value } = req.body
 
-  async create(req, res) {
     try {
-    } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
-    }
-  }
+      const vnpaySetting = await this.settingService.vnpaySetting(value)
 
-  async show(req, res) {
-    try {
-    } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
-    }
-  }
+      if (!vnpaySetting) return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
 
-  async update(req, res) {
-    try {
-    } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
-    }
-  }
-
-  async destroy(req, res) {
-    try {
+      return HttpHelper.successResponse(res, OK, MESSAGES.success)
     } catch (error) {
       return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }

@@ -1,9 +1,30 @@
-export const create = () => []
+import { MESSAGES } from '@constants/message'
+import { body } from 'express-validator'
 
-export const update = () => []
+export const vnpaySetting = () => [
+  body('value').isObject().withMessage(MESSAGES.isObject),
 
-export const show = () => []
+  body('value.enabled').notEmpty().withMessage(MESSAGES.notEmpty).isBoolean().withMessage(MESSAGES.isBoolean),
 
-export const index = () => []
+  body('value.tmnCode')
+    .if((value, { req }) => req.body.value.enabled === true)
+    .notEmpty()
+    .bail()
+    .withMessage(MESSAGES.notEmpty)
+    .isString()
+    .bail()
+    .withMessage(MESSAGES.isString)
+    .isLength({ max: 120 })
+    .withMessage(MESSAGES.isLength(null, 120)),
 
-export const destroy = () => []
+  body('value.hashSecret')
+    .if((value, { req }) => req.body.value.enabled === true)
+    .notEmpty()
+    .bail()
+    .withMessage(MESSAGES.notEmpty)
+    .isString()
+    .bail()
+    .withMessage(MESSAGES.isString)
+    .isLength({ max: 120 })
+    .withMessage(MESSAGES.isLength(null, 120))
+]

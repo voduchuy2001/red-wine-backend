@@ -17,7 +17,7 @@ import OrderService from '@services/order.service'
 import OrderController from '@controllers/order.controller'
 import VNPayService from '@services/vnpay.service'
 import SettingRepository from '@repositories/setting.repository'
-import SettingService from '@services/setting,service'
+import SettingService from '@services/setting.service'
 import SettingController from '@controllers/setting.controller'
 
 export const productCategoryRepository = new ProductCategoryRepository()

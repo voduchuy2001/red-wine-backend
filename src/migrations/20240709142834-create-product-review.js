@@ -2,57 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 export default {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Payments', {
+    await queryInterface.createTable('ProductReviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.BIGINT
-      },
-      currency: {
-        type: Sequelize.STRING(120)
-      },
-      userId: {
-        type: Sequelize.BIGINT,
-        allowNull: true,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-      },
-      orderId: {
-        type: Sequelize.BIGINT,
-        allowNull: false,
-        references: {
-          model: 'Orders',
-          key: 'id'
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-      },
-      channel: {
-        type: Sequelize.STRING(120),
-        allowNull: false
-      },
-      note: {
-        type: Sequelize.STRING
-      },
-      amount: {
-        type: Sequelize.DECIMAL(15, 2)
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      type: {
-        type: Sequelize.STRING
-      },
-      refundedAmount: {
-        type: Sequelize.DECIMAL(15, 2)
-      },
-      refundedNote: {
-        type: Sequelize.STRING
       },
       customerId: {
         type: Sequelize.BIGINT,
@@ -63,6 +18,28 @@ export default {
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
+      },
+      productId: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+          model: 'Products',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
+      star: {
+        type: Sequelize.DOUBLE(8, 2)
+      },
+      comment: {
+        type: Sequelize.TEXT
+      },
+      status: {
+        type: Sequelize.STRING(60)
+      },
+      images: {
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -75,6 +52,6 @@ export default {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Payments')
+    await queryInterface.dropTable('ProductReviews')
   }
 }
