@@ -6,8 +6,12 @@ export default class SettingRepository extends BaseRepository {
     super(db.Setting)
   }
 
+  async getSetting(key = '') {
+    return await super.findOne({ where: { key } })
+  }
+
   async updateSetting(key, value) {
-    const setting = await super.findOne({ where: { key } })
+    const setting = await this.getSetting(key)
     return await setting.update({ value })
   }
 }

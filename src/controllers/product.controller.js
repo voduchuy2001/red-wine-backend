@@ -62,10 +62,10 @@ export default class ProductController {
   }
 
   async update(req, res) {
-    const validatedData = { ...req.params, ...req.body }
+    const data = { ...req.params, ...req.body }
 
     try {
-      const updated = await this.productService.update(validatedData)
+      const updated = await this.productService.update(data)
 
       if (!updated) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)

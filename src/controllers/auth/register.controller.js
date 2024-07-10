@@ -8,9 +8,10 @@ export default class RegisterController {
   }
 
   async register(req, res) {
-    const validatedData = req.body
+    const data = req.body
+
     try {
-      const registered = await this.authService.register(validatedData)
+      const registered = await this.authService.register(data)
 
       if (!registered) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)

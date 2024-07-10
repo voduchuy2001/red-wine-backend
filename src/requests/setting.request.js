@@ -4,7 +4,11 @@ import { body } from 'express-validator'
 export const vnpaySetting = () => [
   body('value').isObject().withMessage(MESSAGES.isObject),
 
-  body('value.enabled').notEmpty().withMessage(MESSAGES.notEmpty).isBoolean().withMessage(MESSAGES.isBoolean),
+  body('value.enabled')
+    .notEmpty()
+    .withMessage(MESSAGES.notEmpty)
+    .isBoolean({ strict: true })
+    .withMessage(MESSAGES.isBoolean),
 
   body('value.tmnCode')
     .if((value, { req }) => req.body.value.enabled === true)

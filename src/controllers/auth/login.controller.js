@@ -8,9 +8,10 @@ export default class LoginController {
   }
 
   async login(req, res) {
-    const validatedData = req.body
+    const data = req.body
+
     try {
-      const loggedIn = await this.authService.login(validatedData)
+      const loggedIn = await this.authService.login(data)
 
       if (!loggedIn) {
         return HttpHelper.successResponse(res, UNAUTHORIZED, MESSAGES.failure)

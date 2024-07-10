@@ -3,8 +3,8 @@ import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'
 
 export default class ProductCategoryController {
-  constructor(ProductCategoryService) {
-    this.ProductCategoryService = ProductCategoryService
+  constructor(productCategoryService) {
+    this.productCategoryService = productCategoryService
   }
 
   async index(req, res) {
@@ -17,7 +17,7 @@ export default class ProductCategoryController {
     }
 
     try {
-      const categories = await this.ProductCategoryService.index(options)
+      const categories = await this.productCategoryService.index(options)
 
       if (!categories) {
         return HttpHelper.successResponse(res, NOT_FOUND, MESSAGES.failure)
@@ -30,10 +30,10 @@ export default class ProductCategoryController {
   }
 
   async create(req, res) {
-    const validatedData = req.body
+    const data = req.body
 
     try {
-      const category = await this.ProductCategoryService.create(validatedData)
+      const category = await this.productCategoryService.create(data)
 
       if (!category) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
@@ -49,7 +49,7 @@ export default class ProductCategoryController {
     const { id } = req.params
 
     try {
-      const category = await this.ProductCategoryService.findById(id)
+      const category = await this.productCategoryService.findById(id)
 
       if (!category) {
         return HttpHelper.successResponse(res, NOT_FOUND, MESSAGES.failure)
@@ -62,11 +62,11 @@ export default class ProductCategoryController {
   }
 
   async update(req, res) {
-    const validatedData = { ...req.params, ...req.body }
-    const { id, ...categoryData } = validatedData
+    const data = { ...req.params, ...req.body }
+    const { id, ...categoryData } = data
 
     try {
-      const updated = await this.ProductCategoryService.update(id, categoryData)
+      const updated = await this.productCategoryService.update(id, categoryData)
 
       if (!updated) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
@@ -82,7 +82,7 @@ export default class ProductCategoryController {
     const { id } = req.params
 
     try {
-      const category = await this.ProductCategoryService.remove(id)
+      const category = await this.productCategoryService.remove(id)
 
       if (!category) {
         return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)

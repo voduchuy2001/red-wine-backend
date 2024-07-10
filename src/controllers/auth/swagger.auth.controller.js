@@ -16,10 +16,10 @@ export default class SwaggerAuthController {
   }
 
   async login(req, res) {
-    const validatedData = req.body
+    const data = req.body
 
     try {
-      const loggedIn = await this.swaggerAuthService.login(validatedData)
+      const loggedIn = await this.swaggerAuthService.login(data)
 
       if (!loggedIn) {
         return HttpHelper.successResponse(res, UNAUTHORIZED, MESSAGES.failure)
