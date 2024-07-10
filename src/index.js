@@ -17,6 +17,7 @@ import { filesystems } from '@config/filesystems'
 import cookieParser from 'cookie-parser'
 import { authenticated } from '@middlewares/swagger'
 import { session } from '@config/session'
+import { multer } from '@middlewares/multer'
 
 function bootstrap() {
   const app = express()
@@ -37,6 +38,7 @@ function bootstrap() {
   app.use(session)
   app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
   app.use('/', routes)
+  app.use(multer)
   app.use(notFound)
   app.set('io', io)
 
