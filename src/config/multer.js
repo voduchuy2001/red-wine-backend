@@ -2,7 +2,7 @@ import { ALLOWED_EXTENSIONS } from '@constants/file.extension'
 import multer from 'multer'
 import path from 'path'
 
-export const config = {
+const config = {
   storage: multer.memoryStorage(),
 
   fileFilter: function (req, file, callback) {
