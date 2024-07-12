@@ -7,13 +7,13 @@ export default class SettingController {
     this.settingService = settingService
   }
 
-  async vnpaySetting(req, res) {
+  async vnpSetting(req, res) {
     const { value } = req.body
 
     try {
-      const vnpaySetting = await this.settingService.vnpaySetting(value)
+      const vnpSetting = await this.settingService.vnpSetting(value)
 
-      if (!vnpaySetting) return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
+      if (!vnpSetting) return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
 
       return HttpHelper.successResponse(res, OK, MESSAGES.success)
     } catch (error) {

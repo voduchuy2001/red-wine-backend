@@ -1,7 +1,7 @@
 import { MESSAGES } from '@constants/message'
 import { body } from 'express-validator'
 
-export const vnpaySetting = () => [
+export const vnpSetting = () => [
   body('value').isObject().withMessage(MESSAGES.isObject),
 
   body('value.enabled')
@@ -10,7 +10,7 @@ export const vnpaySetting = () => [
     .isBoolean({ strict: true })
     .withMessage(MESSAGES.isBoolean),
 
-  body('value.tmnCode')
+  body('value.vnp_TmnCode')
     .if((value, { req }) => req.body.value.enabled === true)
     .notEmpty()
     .bail()
@@ -21,7 +21,7 @@ export const vnpaySetting = () => [
     .isLength({ max: 120 })
     .withMessage(MESSAGES.isLength(null, 120)),
 
-  body('value.hashSecret')
+  body('value.vnp_HashSecret')
     .if((value, { req }) => req.body.value.enabled === true)
     .notEmpty()
     .bail()
