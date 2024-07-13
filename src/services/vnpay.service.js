@@ -1,9 +1,12 @@
 import { SETTING_KEY } from '@constants/setting.key'
 import {
+  RESPONSE_MAP,
   VNP_CURRENCY_CODE,
   VNP_DEFAULT_COMMAND,
+  VNP_LOCALE,
   VNP_PAYMENT_ENDPOINT,
   VNP_PAYMENT_GATEWAY_SANDBOX_HOST,
+  VNP_PRODUCT_CODE,
   VNP_RETURN_URL,
   VNP_VERSION
 } from '@constants/vnp.api'
@@ -21,7 +24,9 @@ export default class VNPayService {
       vnp_Command: VNP_DEFAULT_COMMAND,
       vnp_Version: VNP_VERSION,
       vnp_CurrCode: VNP_CURRENCY_CODE,
-      vnp_ReturnUrl: VNP_RETURN_URL
+      vnp_ReturnUrl: VNP_RETURN_URL,
+      vnp_Locale: VNP_LOCALE,
+      vnp_OrderType: VNP_PRODUCT_CODE.Other
     }
   }
 
@@ -71,6 +76,16 @@ export default class VNPayService {
     )
   }
 
+  sortAndAppendParams(params, searchParams) {
+    Object.entries(params)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .forEach(([key, value]) => {
+        if (value !== '' && value !== undefined && value !== null) {
+          searchParams.append(key, value.toString())
+        }
+      })
+  }
+
   async generatePaymentUrl(data = {}) {
     const settings = await this.getVnpSetting()
     const dataToGenerate = {
@@ -86,19 +101,52 @@ export default class VNPayService {
 
     const redirectUrl = new URL(this.resolveUrlString(VNP_PAYMENT_GATEWAY_SANDBOX_HOST, VNP_PAYMENT_ENDPOINT))
 
-    Object.entries(dataToGenerate)
-      .sort(([prevKey], [nextKey]) => prevKey.toString().localeCompare(nextKey.toString()))
-      .forEach(([key, value]) => {
-        if (!value || value === '' || value === undefined || value === null) {
-          return
-        }
+    const searchParams = new URLSearchParams()
+    this.sortAndAppendParams(dataToGenerate, searchParams)
 
-        redirectUrl.searchParams.append(key, value.toString())
-      })
+    const signed = this.hash(settings.vnp_HashSecret, searchParams.toString())
+    searchParams.append('vnp_SecureHash', signed)
 
-    const signed = this.hash(settings.vnp_HashSecret, Buffer.from(redirectUrl.search.slice(1).toString(), 'utf-8'))
-    redirectUrl.searchParams.append('vnp_SecureHash', signed)
+    redirectUrl.search = searchParams.toString()
 
     return redirectUrl.toString()
+  }
+
+  getResponseByStatusCode(responseCode = '', locale = VNP_LOCALE, responseMap = RESPONSE_MAP) {
+    const respondText = responseMap.get(responseCode) || responseMap.get('default')
+    return respondText[locale]
+  }
+
+  async verifyIpn(query = '') {
+    const settings = await this.getVnpSetting()
+    const { vnp_SecureHash, ...queryData } = query
+
+    queryData.vnp_Amount = Number(queryData.vnp_Amount)
+
+    const outputResults = {
+      isVerified: true,
+      isSuccess: queryData.vnp_ResponseCode === '00',
+      message: this.getResponseByStatusCode(queryData.vnp_ResponseCode?.toString() || '', VNP_LOCALE)
+    }
+
+    const searchParams = new URLSearchParams()
+    this.sortAndAppendParams(queryData, searchParams)
+
+    const signed = this.hash(settings.vnp_HashSecret, Buffer.from(searchParams.toString(), 'utf-8'))
+
+    if (vnp_SecureHash !== signed) {
+      Object.assign(outputResults, {
+        isVerified: false,
+        message: 'Wrong checksum'
+      })
+    }
+
+    const result = {
+      ...queryData,
+      ...outputResults,
+      vnp_Amount: queryData.vnp_Amount / 100
+    }
+
+    return result
   }
 }
