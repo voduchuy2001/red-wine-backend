@@ -1,10 +1,28 @@
 import { SETTING_KEY } from '@constants/setting.key'
-import CryptoJS from 'crypto-js'
+import {
+  VNP_CURRENCY_CODE,
+  VNP_DEFAULT_COMMAND,
+  VNP_PAYMENT_ENDPOINT,
+  VNP_PAYMENT_GATEWAY_SANDBOX_HOST,
+  VNP_RETURN_URL,
+  VNP_VERSION
+} from '@constants/vnp.api'
+import crypto from 'crypto'
 import moment from 'moment'
+import { Buffer } from 'buffer'
 
 export default class VNPayService {
   constructor(settingRepository) {
     this.settingRepository = settingRepository
+  }
+
+  defaultConfig() {
+    return {
+      vnp_Command: VNP_DEFAULT_COMMAND,
+      vnp_Version: VNP_VERSION,
+      vnp_CurrCode: VNP_CURRENCY_CODE,
+      vnp_ReturnUrl: VNP_RETURN_URL
+    }
   }
 
   async getVnpSetting() {
@@ -13,12 +31,23 @@ export default class VNPayService {
     return enabled ? data : false
   }
 
-  hash(data, secret) {
-    return CryptoJS.HmacSHA256(data, secret).toString(CryptoJS.enc.Hex)
+  hash(secret, data) {
+    return crypto.createHmac('sha512', secret).update(Buffer.from(data, 'utf-8')).digest('hex')
   }
 
   getDateInGMT7(date) {
     return moment(date).tz('Asia/Ho_Chi_Minh').toDate()
+  }
+
+  resolveUrlString(host, endpoint) {
+    host = host.trim()
+    endpoint = endpoint.trim()
+
+    if (host.endsWith('/') || host.endsWith('\\)')) host = host.slice(0, -1)
+
+    if (endpoint.startsWith('/') || endpoint.startsWith('\\)')) host = host.slice(0, -1)
+
+    return `${host}/${endpoint}`
   }
 
   dateFormat(date, format = 'yyyyMMddHHmmss') {
@@ -45,7 +74,8 @@ export default class VNPayService {
   async generatePaymentUrl(data = {}) {
     const settings = await this.getVnpSetting()
     const dataToGenerate = {
-      ...settings,
+      vnp_TmnCode: settings.vnp_TmnCode,
+      ...this.defaultConfig(),
       ...data
     }
 
@@ -54,10 +84,10 @@ export default class VNPayService {
     const timeGMT7 = this.getDateInGMT7()
     dataToGenerate.vnp_CreateDate = this.dateFormat(timeGMT7)
 
-    const redirectUrl = new URL('https://sandbox.vnpayment.vn/paymentv2/vpcpay.html')
+    const redirectUrl = new URL(this.resolveUrlString(VNP_PAYMENT_GATEWAY_SANDBOX_HOST, VNP_PAYMENT_ENDPOINT))
 
     Object.entries(dataToGenerate)
-      .sort(([key1], [key2]) => key1.toString().localeCompare(key2.toString()))
+      .sort(([prevKey], [nextKey]) => prevKey.toString().localeCompare(nextKey.toString()))
       .forEach(([key, value]) => {
         if (!value || value === '' || value === undefined || value === null) {
           return
@@ -67,7 +97,8 @@ export default class VNPayService {
       })
 
     const signed = this.hash(settings.vnp_HashSecret, Buffer.from(redirectUrl.search.slice(1).toString(), 'utf-8'))
+    redirectUrl.searchParams.append('vnp_SecureHash', signed)
 
-    return redirectUrl.searchParams.append('vnp_SecureHash', signed)
+    return redirectUrl.toString()
   }
 }

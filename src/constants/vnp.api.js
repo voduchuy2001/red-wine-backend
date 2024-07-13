@@ -5,9 +5,10 @@ export const VNP_PAYMENT_ENDPOINT = process.env.VNP_PAYMENT_ENDPOINT
 export const QUERY_DR_REFUND_ENDPOINT = process.env.VNP_QUERY_DR_REFUND_ENDPOINT
 export const GET_BANK_LIST_ENDPOINT = process.env.VNP_GET_BANK_ENDPOINT
 export const VNP_VERSION = process.env.VNP_VERSION
-export const VNP_CURRENCY = process.env.VNP_CURRENCY
+export const VNP_CURRENCY_CODE = process.env.VNP_CURRENCY_CODE
 export const VNP_DEFAULT_COMMAND = process.env.VNP_DEFAULT_COMMAND
 export const VNP_LOCALE = process.env.VNP_LOCALE
+export const VNP_RETURN_URL = process.env.VNP_RETURN_URL
 
 export const VNP_PRODUCT_CODE = {
   FoodConsumption: '100000',
