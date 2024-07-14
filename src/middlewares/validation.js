@@ -10,5 +10,14 @@ export const validate = (validations) => async (req, res, next) => {
     return next()
   }
 
-  return HttpHelper.errorResponse(res, UNPROCESSABLE_ENTITY, errors.array())
+  const errorMessages = errors.array().reduce((accumulator, { path, msg }) => {
+    accumulator[path] = [...(accumulator[path] || []), msg]
+    return accumulator
+  }, {})
+
+  Object.keys(errorMessages).forEach((path) => {
+    errorMessages[path] = errorMessages[path] + '.'
+  })
+
+  return HttpHelper.errorResponse(res, UNPROCESSABLE_ENTITY, errorMessages)
 }
