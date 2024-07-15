@@ -25,15 +25,7 @@ $(document).ready(function () {
         }
 
         if (xhr.status === 422) {
-          const messages = response.message
-
-          if (Array.isArray(messages)) {
-            messages.forEach(({ path, msg }) => {
-              displayErrorMessage(path, msg)
-            })
-
-            return
-          }
+          displayErrorMessage(response.message)
         }
 
         if (xhr.status === 429) {
@@ -50,16 +42,9 @@ $(document).ready(function () {
     $('#login-error').addClass('d-none')
   }
 
-  function displayErrorMessage(path, msg) {
-    switch (path) {
-      case 'username':
-        $('#username-error').text(msg)
-        break
-      case 'password':
-        $('#password-error').text(msg)
-        break
-      default:
-        break
-    }
+  function displayErrorMessage(message) {
+    Object.entries(message).forEach(([path, msg]) => {
+      $(`#${path}-error`).text(msg)
+    })
   }
 })
