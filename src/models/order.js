@@ -1,5 +1,6 @@
 'use strict'
 import { Model } from 'sequelize'
+
 export default (sequelize, DataTypes) => {
   class Order extends Model {
     static associate(models) {}

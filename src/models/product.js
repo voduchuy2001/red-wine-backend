@@ -1,5 +1,4 @@
 import { Model } from 'sequelize'
-import SequelizePaginate from '@utils/paginate'
 
 export default (sequelize, DataTypes) => {
   class Product extends Model {
@@ -37,6 +36,5 @@ export default (sequelize, DataTypes) => {
     }
   )
 
-  SequelizePaginate.paginate(Product)
   return Product
 }

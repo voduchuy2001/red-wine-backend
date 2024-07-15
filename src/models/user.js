@@ -1,4 +1,3 @@
-import SequelizePaginate from '@utils/paginate'
 import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
@@ -45,6 +44,5 @@ export default (sequelize, DataTypes) => {
     }
   )
 
-  SequelizePaginate.paginate(User)
   return User
 }
