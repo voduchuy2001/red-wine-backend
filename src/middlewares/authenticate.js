@@ -4,7 +4,6 @@ import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'
 import jwt from 'jsonwebtoken'
 import { userRepository } from '@di/container'
-import db from '@models/index'
 
 export const auth = (req, res, next) => {
   const token = req.headers?.authorization?.split(' ')[1]
@@ -17,46 +16,20 @@ export const auth = (req, res, next) => {
   next()
 }
 
-const getAllPermissions = (user) => {
+const userPermissions = (user) => {
   const userRoleHasPermissions = user.roles.flatMap((role) => role.permissions.map((permission) => permission.code))
   const userHasPermissions = user.permissions.map((permission) => permission.code)
   return [...userRoleHasPermissions, ...userHasPermissions]
 }
 
 export const authorize = (permissions) => async (req, res, next) => {
-  const { data: authId } = req.auth
+  const { data: userId } = req.auth
 
   try {
-    const user = await userRepository.findOne({
-      where: {
-        id: authId
-      },
-      attributes: ['id'],
-      include: [
-        {
-          model: db.Role,
-          as: 'roles',
-          attributes: ['id'],
-          required: false,
-          include: {
-            model: db.Permission,
-            as: 'permissions',
-            attributes: ['id', 'code'],
-            required: false
-          }
-        },
-        {
-          model: db.Permission,
-          as: 'permissions',
-          attributes: ['id', 'code'],
-          required: false
-        }
-      ]
-    })
-
+    const user = await userRepository.getAllPermissions(userId)
     if (!user) return HttpHelper.errorResponse(res, BAD_REQUEST, MESSAGES.notFound)
 
-    const allPermissions = getAllPermissions(user)
+    const allPermissions = userPermissions(user)
 
     const requiredPermissionsArray = Array.isArray(permissions) ? permissions : [permissions]
     const hadRequiredPermissions = requiredPermissionsArray.every((permission) => allPermissions.includes(permission))
