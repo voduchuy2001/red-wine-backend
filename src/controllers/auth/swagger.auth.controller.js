@@ -1,5 +1,4 @@
 import { INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from '@constants/http.status.code'
-import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'
 
 export default class SwaggerAuthController {
@@ -22,12 +21,12 @@ export default class SwaggerAuthController {
       const loggedIn = await this.swaggerAuthService.login(data)
 
       if (!loggedIn) {
-        return HttpHelper.successResponse(res, UNAUTHORIZED, MESSAGES.failure)
+        return HttpHelper.successResponse(res, UNAUTHORIZED, __('swagger.login.failed'))
       }
 
       req.session.authenticated = true
 
-      HttpHelper.successResponse(res, OK, MESSAGES.success, loggedIn)
+      HttpHelper.successResponse(res, OK, __('swagger.login.success'), loggedIn)
     } catch (error) {
       HttpHelper.errorResponse(res, 500, INTERNAL_SERVER_ERROR, error.message)
     }

@@ -1,0 +1,41 @@
+{
+  "login": {
+    "email": {
+      "notEmpty": "Bắt buộc",
+      "isEmail": "Phải là một email"
+    },
+    "password": {
+      "notEmpty": "Bắt buộc"
+    }
+  },
+  "register": {
+    "email": {
+      "notEmpty": "Bắt buộc",
+      "isEmail": "Phải là email"
+    },
+    "password": {
+      "notEmpty": "Bắt buộc"
+    }
+  },
+  "swagger": {
+    "username": {
+      "notEmpty": "Bắt buộc"
+    },
+    "password": {
+      "notEmpty": "Bắt buộc"
+    },
+    "login": {
+      "success": "Đăng nhập thành công",
+      "failed": "Vui lòng kiểm tra lại thông tin đăng nhập"
+    }
+  },
+
+  "Sign In Below": "Đăng nhập dưới đây",
+  "Complete Your Information To Continue": "Điền đầy đủ thông tin để tiếp tục",
+  "Username": "Tài khoản",
+  "Password": "Mật khẩu",
+  "Sign In Now": "Đăng Nhập Ngay",
+  "I do not always test my code, but when I do, I do it in production.": "Tôi không phải lúc nào cũng kiểm tra mã của mình, nhưng khi làm vậy, tôi sẽ thực hiện nó trong quá trình sản xuất.",
+  "Welcome To {{appName}} API Documentation": "Chào mừng đến với tài liệu API {{appName}}",
+  "Continue to API Document": "Tiếp tục đến Tài liệu API"
+}

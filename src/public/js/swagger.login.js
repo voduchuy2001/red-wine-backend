@@ -21,7 +21,7 @@ $(document).ready(function () {
         const response = xhr.responseJSON
 
         if (xhr.status === 401) {
-          $('#login-error').text('Incorrect username or password').removeClass('d-none')
+          $('#login-error').text(response.message).removeClass('d-none')
         }
 
         if (xhr.status === 422) {

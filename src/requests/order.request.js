@@ -9,5 +9,7 @@ export const create = () => [
     .bail()
     .withMessage(MESSAGES.isString)
     .isLength({ max: 200 })
-    .withMessage(MESSAGES.isLength(null, 200))
+    .withMessage(MESSAGES.isLength(null, 200)),
+
+  body('phone').notEmpty().bail().withMessage(MESSAGES.notEmpty)
 ]

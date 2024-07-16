@@ -11,7 +11,7 @@ export const validate = (validations) => async (req, res, next) => {
   }
 
   const errorMessages = errors.array().reduce((accumulator, { path, msg }) => {
-    accumulator[path] = [...(accumulator[path] || []), msg]
+    accumulator[path] = [...(accumulator[path] || []), __(msg)]
     return accumulator
   }, {})
 

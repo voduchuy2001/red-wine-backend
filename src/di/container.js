@@ -19,6 +19,8 @@ import VNPayService from '@services/vnpay.service'
 import SettingRepository from '@repositories/setting.repository'
 import SettingService from '@services/setting.service'
 import SettingController from '@controllers/setting.controller'
+import OrderHistoryRepository from '@repositories/order.history.repository'
+import OrderAddressRepository from '@repositories/order.address.repository'
 
 export const productCategoryRepository = new ProductCategoryRepository()
 export const productCategoryService = new ProductCategoryService(productCategoryRepository)
@@ -45,6 +47,10 @@ export const settingController = new SettingController(settingService)
 
 export const vnPayService = new VNPayService(settingRepository)
 
+export const orderHistoryRepository = new OrderHistoryRepository()
+
+export const orderAddressRepository = new OrderAddressRepository()
+
 export const orderRepository = new OrderRepository()
-export const orderService = new OrderService(orderRepository)
+export const orderService = new OrderService(orderRepository, orderAddressRepository, orderHistoryRepository)
 export const orderController = new OrderController(orderService)

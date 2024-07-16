@@ -22,7 +22,7 @@
                       <div class="py-5">
                         <figure>
                           <blockquote class="blockquote">
-                            <p>"I don't always test my code, but when I do, I do it in production."</p>
+                            <p>"<%= __('I do not always test my code, but when I do, I do it in production.') %>"</p>
                           </blockquote>
                           <figcaption class="blockquote-footer text-white">
                             <cite>Vo Duc Huy</cite>
@@ -34,8 +34,10 @@
 
                   <div class="col-md-5 pe-0">
                     <div class="text-center my-5">
-                      <h3>Sign In Below</h3>
-                      <div class="text-muted text-center mx-auto">Complete Your Information To Continute</div>
+                      <h3><%= __('Sign In Below') %></h3>
+                      <div class="text-muted text-center mx-auto">
+                        <%= __('Complete Your Information To Continue') %>
+                      </div>
                     </div>
 
                     <div class="form-left h-100 px-5">
@@ -53,17 +55,16 @@
                             d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"
                           />
                         </svg>
-                        <div class="text-danger">Invalid username or password</div>
                       </div>
 
                       <form id="login-form" class="row g-4">
                         <div class="col-12">
-                          <label for="username">Username <span class="text-danger">*</span></label>
+                          <label for="username"><%= __('Username') %> <span class="text-danger">*</span></label>
                           <div class="input-group">
                             <input
                               type="text"
                               class="form-control"
-                              placeholder="Enter Username"
+                              placeholder="<%= __('Username') %>"
                               name="username"
                               id="username"
                             />
@@ -72,12 +73,12 @@
                         </div>
 
                         <div class="col-12">
-                          <label for="password">Password <span class="text-danger">*</span></label>
+                          <label for="password"><%= __('Password') %> <span class="text-danger">*</span></label>
                           <div class="input-group">
                             <input
                               type="password"
                               class="form-control"
-                              placeholder="Enter Password"
+                              placeholder="<%= __('Password') %>"
                               name="password"
                               id="password"
                             />
@@ -86,7 +87,7 @@
                         </div>
 
                         <div class="col-12 mb-5 text-center">
-                          <button type="submit" class="btn btn-primary px-4 mt-3">Sign In Now</button>
+                          <button type="submit" class="btn btn-primary px-4 mt-3"><%= __('Sign In Now') %></button>
                         </div>
                       </form>
                     </div>
