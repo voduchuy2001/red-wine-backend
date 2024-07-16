@@ -1,5 +1,4 @@
 import { PRODUCT_STATUS } from '@constants/product.status'
-import db from '@models/index'
 import BaseService from '@services/base.service'
 
 export default class ProductService extends BaseService {
@@ -9,28 +8,7 @@ export default class ProductService extends BaseService {
   }
 
   async index(queryParams = {}) {
-    const { page, paginate, search, categoryIds } = queryParams
-    const whereClause = search ? { name: { [db.Sequelize.Op.like]: `%${search}%` } } : {}
-    const includeCategories = categoryIds?.length
-      ? [
-          {
-            model: db.ProductCategory,
-            as: 'categories',
-            where: { id: categoryIds },
-            required: true,
-            through: { attributes: [] }
-          }
-        ]
-      : []
-    const options = {
-      where: { ...whereClause },
-      page,
-      paginate,
-      include: includeCategories
-    }
-
-    const products = await super.paginate(options)
-
+    const products = await this.repository.paginate(queryParams)
     return products.docs.length ? products : null
   }
 

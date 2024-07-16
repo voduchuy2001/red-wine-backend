@@ -1,5 +1,4 @@
 import BaseService from '@services/base.service'
-import db from '@models/index'
 
 export default class ProductCategoryService extends BaseService {
   constructor(productCategoryRepository) {
@@ -7,15 +6,7 @@ export default class ProductCategoryService extends BaseService {
   }
 
   async index(queryParams = {}) {
-    const { page, paginate, search } = queryParams
-    const whereClause = search ? { name: { [db.Sequelize.Op.like]: `%${search}%` } } : {}
-    const options = {
-      where: { ...whereClause },
-      page,
-      paginate
-    }
-
-    const categories = await super.paginate(options)
+    const categories = await this.repository.paginate(queryParams)
 
     return categories.docs.length ? categories : null
   }
