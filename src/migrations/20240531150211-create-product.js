@@ -21,9 +21,6 @@ export default {
       status: {
         type: Sequelize.STRING
       },
-      images: {
-        type: Sequelize.TEXT
-      },
       order: {
         type: Sequelize.INTEGER
       },

@@ -18,8 +18,7 @@ export default {
         allowNull: false
       },
       email: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       country: {
         type: Sequelize.STRING,
@@ -39,6 +38,10 @@ export default {
       },
       address: {
         type: Sequelize.STRING
+      },
+      type: {
+        type: Sequelize.STRING(120),
+        defaultValue: 'ShippingAddress'
       },
       orderId: {
         type: Sequelize.BIGINT,

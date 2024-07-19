@@ -9,11 +9,15 @@ export const auth = (req, res, next) => {
   const token = req.headers?.authorization?.split(' ')[1]
   if (!token) return HttpHelper.errorResponse(res, UNAUTHORIZED, MESSAGES.missingToken)
 
-  const payload = jwt.verify(token, process.env.JWT_SECRET_KEY)
-  if (!payload) return HttpHelper.errorResponse(res, UNAUTHORIZED, MESSAGES.invalidToken)
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET_KEY)
 
-  req.auth = payload
-  next()
+    req.auth = payload
+    next()
+    // eslint-disable-next-line no-unused-vars
+  } catch (error) {
+    return HttpHelper.errorResponse(res, UNAUTHORIZED, MESSAGES.invalidToken)
+  }
 }
 
 const userPermissions = (user) => {

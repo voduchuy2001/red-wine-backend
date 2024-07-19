@@ -4,9 +4,10 @@
       "notEmpty": "Required",
       "isEmail": "Must be an email"
     },
-    "password": "Required"
+    "password": {
+      "notEmpty": "Required"
+    }
   },
-
   "register": {
     "email": {
       "notEmpty": "Required",
@@ -16,7 +17,6 @@
       "notEmpty": "Required"
     }
   },
-
   "swagger": {
     "username": {
       "notEmpty": "Required"
@@ -29,7 +29,6 @@
       "failed": "Pls check your information"
     }
   },
-
   "Sign In Below": "Sign In Below",
   "Complete Your Information To Continue": "Complete Your Information To Continue",
   "Username": "Username",

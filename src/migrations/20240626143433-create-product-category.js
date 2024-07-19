@@ -8,6 +8,15 @@ export default {
         primaryKey: true,
         type: Sequelize.BIGINT
       },
+      parentId: {
+        type: Sequelize.BIGINT,
+        references: {
+          model: 'Categories',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
       name: {
         type: Sequelize.STRING(120)
       },
