@@ -9,16 +9,8 @@ export default class ProductCategoryController extends BaseController {
   }
 
   async index(req, res) {
-    const { page, limit, search, categoryIds } = req.query
-    const options = {
-      page: parseInt(page),
-      paginate: parseInt(limit),
-      search,
-      categoryIds
-    }
-
     try {
-      const categories = await this.productCategoryService.index(options)
+      const categories = await this.productCategoryService.index(req.query)
 
       if (!categories) {
         return this.json(res, NOT_FOUND, MESSAGES.failure)

@@ -1,0 +1,24 @@
+'use strict'
+const { Model } = require('sequelize')
+
+export default (sequelize, DataTypes) => {
+  class Media extends Model {
+    static associate(models) {}
+  }
+  Media.init(
+    {
+      mediable: DataTypes.STRING,
+      medialeId: DataTypes.BIGINT,
+      type: DataTypes.STRING,
+      mimeType: DataTypes.STRING,
+      size: DataTypes.INTEGER,
+      url: DataTypes.STRING,
+      alt: DataTypes.STRING
+    },
+    {
+      sequelize,
+      modelName: 'Media'
+    }
+  )
+  return Media
+}

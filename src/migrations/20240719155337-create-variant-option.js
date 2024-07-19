@@ -1,35 +1,27 @@
+'use strict'
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('VariantOptions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.BIGINT
       },
-      avatar: {
-        type: Sequelize.STRING
+      variantId: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+          model: 'ProductVariants',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
-      name: {
-        type: Sequelize.STRING(50)
-      },
-      email: {
+      optionValue: {
         type: Sequelize.STRING(120),
-        unique: true,
         allowNull: false
-      },
-      password: {
-        type: Sequelize.STRING
-      },
-      lastLoginAt: {
-        type: Sequelize.DATE
-      },
-      emailVerifiedAt: {
-        type: Sequelize.DATE
-      },
-      dob: {
-        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +34,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users')
+    await queryInterface.dropTable('VariantOptions')
   }
 }

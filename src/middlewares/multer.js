@@ -4,5 +4,5 @@ import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'
 
 export const multer = (error, req, res, next) => {
-  return HttpHelper.errorResponse(res, BAD_REQUEST, MESSAGES.failure, FILE_LIMITER[error.code])
+  return HttpHelper.json(res, BAD_REQUEST, MESSAGES.failure, FILE_LIMITER[error.code])
 }

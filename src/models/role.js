@@ -3,11 +3,9 @@ import { Model } from 'sequelize'
 export default (sequelize, DataTypes) => {
   class Role extends Model {
     static associate(models) {
-      const { User, ModelHasRole, Permission, RoleHasPermission } = models
-
-      this.belongsToMany(User, {
+      this.belongsToMany(models.User, {
         through: {
-          model: ModelHasRole,
+          model: models.ModelHasRole,
           scope: {
             modelType: 'user'
           }
@@ -16,8 +14,8 @@ export default (sequelize, DataTypes) => {
         as: 'users'
       })
 
-      this.belongsToMany(Permission, {
-        through: RoleHasPermission,
+      this.belongsToMany(models.Permission, {
+        through: models.RoleHasPermission,
         foreignKey: 'roleId',
         otherKey: 'permissionId',
         as: 'permissions'

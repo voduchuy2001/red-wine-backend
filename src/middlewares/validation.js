@@ -19,5 +19,5 @@ export const validate = (validations) => async (req, res, next) => {
     errorMessages[path] = errorMessages[path] + '.'
   })
 
-  return HttpHelper.errorResponse(res, UNPROCESSABLE_ENTITY, errorMessages)
+  return HttpHelper.json(res, UNPROCESSABLE_ENTITY, errorMessages)
 }

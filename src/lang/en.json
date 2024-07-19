@@ -29,6 +29,11 @@
       "failed": "Pls check your information"
     }
   },
+  "authorize": {
+    "user": {
+      "notFound": "Not found user"
+    }
+  },
   "Sign In Below": "Sign In Below",
   "Complete Your Information To Continue": "Complete Your Information To Continue",
   "Username": "Username",
@@ -36,5 +41,25 @@
   "Sign In Now": "Sign In Now",
   "I do not always test my code, but when I do, I do it in production.": "I do not always test my code, but when I do, I do it in production.",
   "Welcome To {{appName}} API Documentation": "Welcome To {{appName}} API Documentation",
-  "Continue to API Document": "Continue to API Document"
+  "Continue to API Document": "Continue to API Document",
+  "Only accept ACTIVE, INACTIVE, DRAFT": "Only accept ACTIVE, INACTIVE, DRAFT",
+  "Must be an array between 1 and 2 element(s)": "Must be an array between 1 and 2 element(s)",
+  "Required": "Required",
+  "http": {
+    "ok": "Ok",
+    "created": "Created",
+    "notContent": "No Content",
+    "badRequest": "Bad Request",
+    "unauthorize": "Unauthorize",
+    "forbidden": "Forbidden",
+    "notFound": "Not Found",
+    "unprocessableEntity": "Unprocessable Entity",
+    "tooManyRequests": "Too many requests",
+    "internalServerError": "Internal Server Error",
+    "permissionDenied": "Permission Denied",
+    "invalidToken": "Invalid Token",
+    "invalidCredentials": "Invalid Credentials",
+    "invalidRefreshToken": "Invalid Refresh Token",
+    "missingToken": "Missing token"
+  }
 }

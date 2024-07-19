@@ -1,35 +1,34 @@
+'use strict'
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Media', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.BIGINT
       },
-      avatar: {
+      mediable: {
+        type: Sequelize.STRING(120)
+      },
+      medialeId: {
+        type: Sequelize.BIGINT
+      },
+      type: {
         type: Sequelize.STRING
       },
-      name: {
-        type: Sequelize.STRING(50)
-      },
-      email: {
-        type: Sequelize.STRING(120),
-        unique: true,
-        allowNull: false
-      },
-      password: {
+      mimeType: {
         type: Sequelize.STRING
       },
-      lastLoginAt: {
-        type: Sequelize.DATE
+      size: {
+        type: Sequelize.INTEGER
       },
-      emailVerifiedAt: {
-        type: Sequelize.DATE
+      url: {
+        type: Sequelize.STRING
       },
-      dob: {
-        type: Sequelize.DATE
+      alt: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +41,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users')
+    await queryInterface.dropTable('Media')
   }
 }

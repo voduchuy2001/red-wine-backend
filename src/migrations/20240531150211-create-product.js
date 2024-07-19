@@ -1,5 +1,5 @@
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Products', {
       id: {
@@ -26,30 +26,6 @@ export default {
       },
       featured: {
         type: Sequelize.TINYINT
-      },
-      price: {
-        type: Sequelize.DOUBLE
-      },
-      salePrice: {
-        type: Sequelize.DOUBLE
-      },
-      length: {
-        type: Sequelize.FLOAT
-      },
-      width: {
-        type: Sequelize.FLOAT
-      },
-      height: {
-        type: Sequelize.FLOAT
-      },
-      weight: {
-        type: Sequelize.FLOAT
-      },
-      barcode: {
-        type: Sequelize.STRING
-      },
-      views: {
-        type: Sequelize.BIGINT
       },
       createdAt: {
         allowNull: false,

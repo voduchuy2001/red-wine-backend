@@ -5,8 +5,9 @@ export default class ProductCategoryService extends BaseService {
     super(productCategoryRepository)
   }
 
-  async index(queryParams = {}) {
-    const categories = await this.repository.paginate(queryParams)
+  async index({ page, limit, search, categoryIds }) {
+    const options = { page: Number(page), paginate: Number(limit), search, categoryIds }
+    const categories = await this.repository.paginate(options)
 
     return categories.docs.length ? categories : null
   }

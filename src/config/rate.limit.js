@@ -11,6 +11,6 @@ export const limiter = (windowMs, max) =>
     statusCode: 429,
     handler: (req, res) => {
       const minutes = Math.ceil((req.rateLimit.resetTime - Date.now()) / 60000)
-      HttpHelper.errorResponse(res, TOO_MANY_REQUESTS, MESSAGES.tooManyRequests(minutes))
+      HttpHelper.json(res, TOO_MANY_REQUESTS, MESSAGES.tooManyRequests(minutes))
     }
   })

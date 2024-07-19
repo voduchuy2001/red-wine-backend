@@ -3,10 +3,8 @@ import { Model } from 'sequelize'
 export default (sequelize, DataTypes) => {
   class ProductCategory extends Model {
     static associate(models) {
-      const { Product, ProductHasProductCategory } = models
-
-      this.belongsToMany(Product, {
-        through: ProductHasProductCategory,
+      this.belongsToMany(models.Product, {
+        through: models.ProductHasProductCategory,
         foreignKey: 'categoryId',
         as: 'products'
       })

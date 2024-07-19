@@ -1,5 +1,5 @@
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('ProductCategories', {
       id: {
@@ -11,7 +11,7 @@ export default {
       parentId: {
         type: Sequelize.BIGINT,
         references: {
-          model: 'Categories',
+          model: 'ProductCategories',
           key: 'id'
         },
         onUpdate: 'CASCADE',

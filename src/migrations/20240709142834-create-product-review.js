@@ -1,6 +1,6 @@
 'use strict'
 /** @type {import('sequelize-cli').Migration} */
-export default {
+module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('ProductReviews', {
       id: {
@@ -30,7 +30,8 @@ export default {
         onUpdate: 'CASCADE'
       },
       star: {
-        type: Sequelize.DOUBLE(8, 2)
+        type: Sequelize.DOUBLE(8, 2),
+        allowNull: false
       },
       comment: {
         type: Sequelize.TEXT
