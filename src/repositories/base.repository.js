@@ -27,6 +27,25 @@ export default class BaseRepository {
     return this.model.destroy({ where: { id } })
   }
 
+  /**
+   * Asynchronously paginates the results based on the provided parameters.
+   *
+   * @param {Object} options - The pagination options.
+   * @param {number} [options.page=1] - The current page number.
+   * @param {number} [options.paginate=25] - The number of items per page.
+   * @param {Object} [options.*] - Additional parameters for filtering and sorting.
+   *
+   * @returns {Object} An object containing paginated results and pagination details:
+   * - total: Total number of items.
+   * - perPage: Number of items per page.
+   * - currentPage: Current page number.
+   * - lastPage: Last page number.
+   * - nextPageURL: URL for the next page.
+   * - prevPageURL: URL for the previous page.
+   * - from: Starting index of the items on the current page.
+   * - to: Ending index of the items on the current page.
+   * - docs: Array of paginated items.
+   */
   async paginate({ page = 1, paginate = 25, ...params } = {}) {
     const options = { ...params }
     const countOptions = Object.keys(options).reduce((acc, key) => {
@@ -42,15 +61,15 @@ export default class BaseRepository {
       total = total.length
     }
 
-    const pages = Math.ceil(total / parseInt(paginate))
-    options.limit = parseInt(paginate)
-    options.offset = parseInt(paginate) * (parseInt(page) - 1)
+    const pages = Math.ceil(total / paginate)
+    options.limit = paginate
+    options.offset = paginate * (page - 1)
 
     if (params.order) options.order = params.order
     const docs = await this.findAll(options)
 
-    const currentPage = parseInt(page)
-    const perPage = parseInt(paginate)
+    const currentPage = page
+    const perPage = paginate
     const lastPage = pages
     const nextPageURL = currentPage < lastPage ? `?page=${currentPage + 1}` : null
     const prevPageURL = currentPage > 1 ? `?page=${currentPage - 1}` : null

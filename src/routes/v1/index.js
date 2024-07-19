@@ -5,9 +5,10 @@ import googleOAuth from '@routes/v1/google.oauth'
 import swaggerAuth from '@routes/v1/swagger'
 import productCategory from '@routes/v1/product.category'
 import setting from '@routes/v1/setting'
-import welcomeController from '@controllers/welcome.controller'
+import WelcomeController from '@controllers/welcome.controller'
 
 const router = express.Router()
+const welcomeController = new WelcomeController()
 
 router.use('/', product)
 router.use('/', productCategory)
@@ -15,6 +16,6 @@ router.use('/', auth)
 router.use('/', googleOAuth)
 router.use('/', swaggerAuth)
 router.use('/', setting)
-router.get('/', welcomeController.index)
+router.get('/', welcomeController.index.bind(welcomeController))
 
 export default router

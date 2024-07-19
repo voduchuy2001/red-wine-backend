@@ -1,9 +1,10 @@
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from '@constants/http.status.code'
 import { MESSAGES } from '@constants/message'
-import HttpHelper from '@utils/http'
+import BaseController from '@controllers/base.controller'
 
-export default class ProductCategoryController {
+export default class ProductCategoryController extends BaseController {
   constructor(productCategoryService) {
+    super()
     this.productCategoryService = productCategoryService
   }
 
@@ -20,12 +21,12 @@ export default class ProductCategoryController {
       const categories = await this.productCategoryService.index(options)
 
       if (!categories) {
-        return HttpHelper.successResponse(res, NOT_FOUND, MESSAGES.failure)
+        return this.json(res, NOT_FOUND, MESSAGES.failure)
       }
 
-      return HttpHelper.successResponse(res, OK, MESSAGES.success, categories)
+      return this.json(res, OK, MESSAGES.success, categories)
     } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 
@@ -36,12 +37,12 @@ export default class ProductCategoryController {
       const category = await this.productCategoryService.create(data)
 
       if (!category) {
-        return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
+        return this.json(res, BAD_REQUEST, MESSAGES.failure)
       }
 
-      return HttpHelper.successResponse(res, OK, MESSAGES.success)
+      return this.json(res, OK, MESSAGES.success)
     } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 
@@ -52,12 +53,12 @@ export default class ProductCategoryController {
       const category = await this.productCategoryService.findById(id)
 
       if (!category) {
-        return HttpHelper.successResponse(res, NOT_FOUND, MESSAGES.failure)
+        return this.json(res, NOT_FOUND, MESSAGES.failure)
       }
 
-      return HttpHelper.successResponse(res, OK, MESSAGES.success, category)
+      return this.json(res, OK, MESSAGES.success, category)
     } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 
@@ -69,12 +70,12 @@ export default class ProductCategoryController {
       const updated = await this.productCategoryService.update(id, categoryData)
 
       if (!updated) {
-        return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
+        return this.json(res, BAD_REQUEST, MESSAGES.failure)
       }
 
-      return HttpHelper.successResponse(res, OK, MESSAGES.success)
+      return this.json(res, OK, MESSAGES.success)
     } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 
@@ -85,12 +86,12 @@ export default class ProductCategoryController {
       const category = await this.productCategoryService.remove(id)
 
       if (!category) {
-        return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
+        return this.json(res, BAD_REQUEST, MESSAGES.failure)
       }
 
-      return HttpHelper.successResponse(res, OK, MESSAGES.success)
+      return this.json(res, OK, MESSAGES.success)
     } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 }

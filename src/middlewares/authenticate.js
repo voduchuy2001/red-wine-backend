@@ -20,7 +20,7 @@ export const auth = (req, res, next) => {
   }
 }
 
-const userPermissions = (user) => {
+const getUserPermissions = (user) => {
   const userRoleHasPermissions = user.roles.flatMap((role) => role.permissions.map((permission) => permission.code))
   const userHasPermissions = user.permissions.map((permission) => permission.code)
   return [...userRoleHasPermissions, ...userHasPermissions]
@@ -30,10 +30,10 @@ export const authorize = (permissions) => async (req, res, next) => {
   const { data: userId } = req.auth
 
   try {
-    const user = await userRepository.getAllPermissions(userId)
-    if (!user) return HttpHelper.errorResponse(res, BAD_REQUEST, MESSAGES.notFound)
+    const userWithPermissions = await userRepository.getAllPermissions(userId)
+    if (!userWithPermissions) return HttpHelper.errorResponse(res, BAD_REQUEST, MESSAGES.notFound)
 
-    const allPermissions = userPermissions(user)
+    const allPermissions = getUserPermissions(userWithPermissions)
 
     const requiredPermissionsArray = Array.isArray(permissions) ? permissions : [permissions]
     const hadRequiredPermissions = requiredPermissionsArray.every((permission) => allPermissions.includes(permission))
