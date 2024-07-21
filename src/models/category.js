@@ -1,20 +1,21 @@
 'use strict'
 import { Model } from 'sequelize'
+
 export default (sequelize, DataTypes) => {
-  class Product extends Model {
+  class Category extends Model {
     static associate(models) {}
   }
-  Product.init(
+  Category.init(
     {
-      brandId: DataTypes.BIGINT,
+      parentId: DataTypes.BIGINT,
       name: DataTypes.STRING,
-      featured: DataTypes.TINYINT,
-      status: DataTypes.STRING
+      status: DataTypes.STRING,
+      featured: DataTypes.TINYINT
     },
     {
       sequelize,
-      modelName: 'Product'
+      modelName: 'Category'
     }
   )
-  return Product
+  return Category
 }

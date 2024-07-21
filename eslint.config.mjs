@@ -12,7 +12,8 @@ export default [
         require: 'readonly',
         process: 'readonly',
         __dirname: 'readonly',
-        module: 'readonly'
+        module: 'readonly',
+        __: 'readonly'
       }
     }
   },

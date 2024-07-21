@@ -2,46 +2,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Orders', {
+    await queryInterface.createTable('ProductVariants', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.BIGINT
+        type: Sequelize.INTEGER
       },
-      userId: {
+      productId: {
         type: Sequelize.BIGINT,
-        allowNull: false,
         references: {
-          model: 'Users',
+          model: 'Products',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      code: {
-        type: Sequelize.STRING(200),
-        unique: true,
-        allowNull: false
-      },
-      status: {
+      sku: {
         type: Sequelize.STRING(120)
       },
-      subTotal: {
-        type: Sequelize.DECIMAL(15, 2),
-        allowNull: false
+      price: {
+        type: Sequelize.DECIMAL(12, 2)
       },
-      taxAmount: {
-        type: Sequelize.DECIMAL(15, 2)
+      salePrice: {
+        type: Sequelize.DECIMAL(12, 2)
       },
-      amount: {
-        type: Sequelize.DECIMAL(15, 2)
+      quantity: {
+        type: Sequelize.INTEGER
       },
-      shippingAmount: {
-        type: Sequelize.DECIMAL(15, 2)
-      },
-      note: {
-        type: Sequelize.STRING
+      isDefault: {
+        type: Sequelize.TINYINT
       },
       createdAt: {
         allowNull: false,
@@ -54,6 +44,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Orders')
+    await queryInterface.dropTable('ProductVariants')
   }
 }

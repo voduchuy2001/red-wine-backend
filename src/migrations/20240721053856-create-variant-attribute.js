@@ -2,26 +2,33 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('VariantOptions', {
+    await queryInterface.createTable('VariantAttributes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.BIGINT
+        type: Sequelize.INTEGER
       },
-      variantId: {
+      productVariantId: {
         type: Sequelize.BIGINT,
-        allowNull: false,
         references: {
           model: 'ProductVariants',
           key: 'id'
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
-      optionValue: {
-        type: Sequelize.STRING(120),
-        allowNull: false
+      productAttributeId: {
+        type: Sequelize.BIGINT,
+        references: {
+          model: 'ProductAttributes',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      value: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +41,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('VariantOptions')
+    await queryInterface.dropTable('VariantAttributes')
   }
 }

@@ -1,5 +1,5 @@
 'use strict'
-const { Model } = require('sequelize')
+import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
   class Media extends Model {
@@ -8,7 +8,7 @@ export default (sequelize, DataTypes) => {
   Media.init(
     {
       mediable: DataTypes.STRING,
-      medialeId: DataTypes.BIGINT,
+      mediableId: DataTypes.BIGINT,
       type: DataTypes.STRING,
       mimeType: DataTypes.STRING,
       size: DataTypes.INTEGER,

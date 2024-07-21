@@ -5,24 +5,26 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsToMany(models.Role, {
         through: {
-          model: models.ModelHasRole,
+          model: 'ModelHasRoles',
           scope: {
             modelType: 'user'
           }
         },
         foreignKey: 'modelId',
-        as: 'roles'
+        as: 'roles',
+        timestamps: false
       })
 
       this.belongsToMany(models.Permission, {
         through: {
-          model: models.ModelHasPermission,
+          model: 'ModelHasPermissions',
           scope: {
             modelType: 'user'
           }
         },
         foreignKey: 'modelId',
-        as: 'permissions'
+        as: 'permissions',
+        timestamps: false
       })
     }
   }

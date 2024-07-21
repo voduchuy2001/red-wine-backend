@@ -1,31 +1,34 @@
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Products', {
+    await queryInterface.createTable('Media', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.BIGINT
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      description: {
-        type: Sequelize.TEXT
-      },
-      content: {
-        type: Sequelize.TEXT('long')
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      order: {
         type: Sequelize.INTEGER
       },
-      featured: {
-        type: Sequelize.TINYINT
+      mediable: {
+        type: Sequelize.STRING
+      },
+      mediableId: {
+        type: Sequelize.BIGINT
+      },
+      type: {
+        type: Sequelize.STRING
+      },
+      mimeType: {
+        type: Sequelize.STRING
+      },
+      size: {
+        type: Sequelize.INTEGER
+      },
+      url: {
+        type: Sequelize.STRING
+      },
+      alt: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -35,9 +38,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    })
+    });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Products')
+    await queryInterface.dropTable('Media');
   }
-}
+};
