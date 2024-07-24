@@ -10,9 +10,9 @@ export default class WelcomeController extends BaseController {
   async index(req, res) {
     try {
       const userAgent = req.get('user-agent')
-      return this.view(res, 'pages/welcome', { userAgent })
+      return super.view(res, 'pages/welcome', { userAgent })
     } catch (error) {
-      return this.json(res, BAD_REQUEST, MESSAGES.failure, error.message)
+      return super.json(res, BAD_REQUEST, MESSAGES.failure, error.message)
     }
   }
 }

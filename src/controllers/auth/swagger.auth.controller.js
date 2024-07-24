@@ -9,9 +9,9 @@ export default class SwaggerAuthController extends BaseController {
 
   async showLoginForm(req, res) {
     try {
-      return this.view(res, 'pages/login')
+      return super.view(res, 'pages/login')
     } catch (error) {
-      return this.json(res, 500, INTERNAL_SERVER_ERROR, error.message)
+      return super.json(res, 500, INTERNAL_SERVER_ERROR, error.message)
     }
   }
 
@@ -22,14 +22,14 @@ export default class SwaggerAuthController extends BaseController {
       const loggedIn = await this.swaggerAuthService.login(data)
 
       if (!loggedIn) {
-        return this.json(res, UNAUTHORIZED, __('swagger.login.failed'))
+        return super.json(res, UNAUTHORIZED, __('swagger.login.failed'))
       }
 
       req.session.authenticated = true
 
-      return this.json(res, OK, __('swagger.login.success'), loggedIn)
+      return super.json(res, OK, __('swagger.login.success'), loggedIn)
     } catch (error) {
-      return this.json(res, 500, INTERNAL_SERVER_ERROR, error.message)
+      return super.json(res, 500, INTERNAL_SERVER_ERROR, error.message)
     }
   }
 }

@@ -39,7 +39,7 @@
   "Username": "Tài khoản",
   "Password": "Mật khẩu",
   "Sign In Now": "Đăng Nhập Ngay",
-  "I do not always test my code, but when I do, I do it in production.": "Tôi không phải lúc nào cũng kiểm tra mã của mình, nhưng khi làm vậy, tôi sẽ thực hiện nó trong quá trình sản xuất.",
+  "I do not always test my code, but when I do, I do it in production.": "Tôi không phải lúc nào cũng kiểm tra mã của mình, nhưng khi làm vậy, tôi sẽ thực hiện nó trên môi trường sản xuất.",
   "Welcome To {{appName}} API Documentation": "Chào mừng đến với tài liệu API {{appName}}",
   "Continue to API Document": "Tiếp tục đến Tài liệu API",
   "Only accept ACTIVE, INACTIVE, DRAFT": "Chỉ chấp nhận ACTIVE, INACTIVE, DRAFT",

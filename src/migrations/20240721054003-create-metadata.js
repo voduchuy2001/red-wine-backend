@@ -1,33 +1,24 @@
-'use strict';
+'use strict'
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Media', {
+    await queryInterface.createTable('Metadata', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      mediable: {
-        type: Sequelize.STRING
-      },
-      mediableId: {
         type: Sequelize.BIGINT
       },
-      type: {
+      metadataType: {
         type: Sequelize.STRING
       },
-      mimeType: {
+      metadataId: {
+        type: Sequelize.BIGINT
+      },
+      key: {
         type: Sequelize.STRING
       },
-      size: {
-        type: Sequelize.INTEGER
-      },
-      url: {
-        type: Sequelize.STRING
-      },
-      alt: {
+      value: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -38,9 +29,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Media');
+    await queryInterface.dropTable('Metadata')
   }
-};
+}

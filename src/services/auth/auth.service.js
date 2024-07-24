@@ -1,10 +1,11 @@
+import UserRepository from '@repositories/user.repository'
 import { generateAvatar } from '@utils/avatar'
 import Bcrypt from '@utils/bcrypt'
 import JWT from '@utils/jwt'
 
 export default class AuthService {
-  constructor(userRepository) {
-    this.userRepository = userRepository
+  constructor() {
+    this.userRepository = new UserRepository()
   }
 
   async login(data) {

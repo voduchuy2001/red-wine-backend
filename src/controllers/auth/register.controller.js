@@ -15,12 +15,12 @@ export default class RegisterController extends BaseController {
       const registered = await this.authService.register(data)
 
       if (!registered) {
-        return this.json(res, BAD_REQUEST, MESSAGES.failure)
+        return super.json(res, BAD_REQUEST, MESSAGES.failure)
       }
 
-      return this.json(res, CREATED, MESSAGES.success)
+      return super.json(res, CREATED, MESSAGES.success)
     } catch (error) {
-      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return super.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 }

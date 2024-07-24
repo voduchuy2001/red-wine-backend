@@ -3,7 +3,9 @@ import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
   class Brand extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.hasMany(models.Product, { foreignKey: 'brandId', as: 'products' })
+    }
   }
   Brand.init(
     {

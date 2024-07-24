@@ -3,7 +3,14 @@ import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
   class Category extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.belongsToMany(models.Product, {
+        through: 'ProductCategories',
+        foreignKey: 'categoryId',
+        as: 'products',
+        timestamps: false
+      })
+    }
   }
   Category.init(
     {

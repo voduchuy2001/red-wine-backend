@@ -2,7 +2,7 @@ import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from '@constants
 import { MESSAGES } from '@constants/message'
 import BaseController from '@controllers/base.controller'
 
-export default class OAuthGoogleController extends BaseController {
+export default class GoogleOAuthController extends BaseController {
   constructor(googleOAuthService) {
     super()
     this.googleOAuthService = googleOAuthService
@@ -13,12 +13,12 @@ export default class OAuthGoogleController extends BaseController {
       const redirectUrl = await this.googleOAuthService.redirect()
 
       if (!redirectUrl) {
-        return this.json(res, BAD_REQUEST, MESSAGES.failure)
+        return super.json(res, BAD_REQUEST, MESSAGES.failure)
       }
 
-      return this.json(res, OK, MESSAGES.success, redirectUrl)
+      return super.json(res, OK, MESSAGES.success, redirectUrl)
     } catch (error) {
-      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return super.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 
@@ -27,18 +27,18 @@ export default class OAuthGoogleController extends BaseController {
 
     try {
       if (!code) {
-        return this.json(res, UNAUTHORIZED, MESSAGES.failure)
+        return super.json(res, UNAUTHORIZED, MESSAGES.failure)
       }
 
       const loggedIn = await this.googleOAuthService.callback(code)
 
       if (!loggedIn) {
-        return this.json(res, UNAUTHORIZED, MESSAGES.failure)
+        return super.json(res, UNAUTHORIZED, MESSAGES.failure)
       }
 
-      return this.json(res, OK, MESSAGES.success, loggedIn)
+      return super.json(res, OK, MESSAGES.success, loggedIn)
     } catch (error) {
-      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return super.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 }

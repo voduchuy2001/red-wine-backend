@@ -9,7 +9,6 @@
           "@config": "./src/config",
           "@constants": "./src/constants",
           "@controllers": "./src/controllers",
-          "@di": "./src/di",
           "@documents": "./src/documents",
           "@middlewares": "./src/middlewares",
           "@models": "./src/models",

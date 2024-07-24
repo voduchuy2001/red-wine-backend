@@ -5,7 +5,6 @@
       "@config/*": ["config/*"],
       "@constants/*": ["constants/*"],
       "@controllers/*": ["controllers/*"],
-      "@di/*": ["di/*"],
       "@documents/*": ["documents/*"],
       "@middlewares/*": ["middlewares/*"],
       "@models/*": ["models/*"],

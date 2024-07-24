@@ -15,12 +15,12 @@ export default class LoginController extends BaseController {
       const loggedIn = await this.authService.login(data)
 
       if (!loggedIn) {
-        return this.json(res, UNAUTHORIZED, MESSAGES.failure)
+        return super.json(res, UNAUTHORIZED, MESSAGES.failure)
       }
 
-      return this.json(res, OK, MESSAGES.success, loggedIn)
+      return super.json(res, OK, MESSAGES.success, loggedIn)
     } catch (error) {
-      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return super.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 }

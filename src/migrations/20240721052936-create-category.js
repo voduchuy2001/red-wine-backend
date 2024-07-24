@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       parentId: {
         type: Sequelize.BIGINT,
@@ -19,7 +19,8 @@ module.exports = {
         onDelete: 'SET NULL'
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       status: {
         type: Sequelize.STRING

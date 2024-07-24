@@ -14,11 +14,11 @@ export default class SettingController extends BaseController {
     try {
       const vnpSetting = await this.settingService.vnpSetting(value)
 
-      if (!vnpSetting) return this.json(res, BAD_REQUEST, MESSAGES.failure)
+      if (!vnpSetting) return super.json(res, BAD_REQUEST, MESSAGES.failure)
 
-      return this.json(res, OK, MESSAGES.success)
+      return super.json(res, OK, MESSAGES.success)
     } catch (error) {
-      return this.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return super.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 }

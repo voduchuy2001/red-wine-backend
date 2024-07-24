@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       brandId: {
         type: Sequelize.BIGINT,
@@ -19,7 +19,11 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.TEXT('long')
       },
       featured: {
         type: Sequelize.TINYINT

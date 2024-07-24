@@ -2,20 +2,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ProductCategories', {
-      productId: {
+    await queryInterface.createTable('VariantOptions', {
+      variantId: {
         type: Sequelize.BIGINT,
         references: {
-          model: 'Products',
+          model: 'Variants',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      categoryId: {
+      optionValueId: {
         type: Sequelize.BIGINT,
         references: {
-          model: 'Categories',
+          model: 'OptionValues',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -24,6 +24,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ProductCategories')
+    await queryInterface.dropTable('VariantOptions')
   }
 }
