@@ -1,9 +1,32 @@
-import SequelizePaginate from '@utils/paginate'
 import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.belongsToMany(models.Role, {
+        through: {
+          model: 'ModelHasRoles',
+          scope: {
+            modelType: 'user'
+          }
+        },
+        foreignKey: 'modelId',
+        as: 'roles',
+        timestamps: false
+      })
+
+      this.belongsToMany(models.Permission, {
+        through: {
+          model: 'ModelHasPermissions',
+          scope: {
+            modelType: 'user'
+          }
+        },
+        foreignKey: 'modelId',
+        as: 'permissions',
+        timestamps: false
+      })
+    }
   }
   User.init(
     {
@@ -21,6 +44,5 @@ export default (sequelize, DataTypes) => {
     }
   )
 
-  SequelizePaginate.paginate(User)
   return User
 }

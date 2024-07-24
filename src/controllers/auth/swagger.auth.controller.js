@@ -1,35 +1,35 @@
 import { INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from '@constants/http.status.code'
-import { MESSAGES } from '@constants/message'
-import HttpHelper from '@utils/http'
+import BaseController from '@controllers/base.controller'
 
-export default class SwaggerAuthController {
+export default class SwaggerAuthController extends BaseController {
   constructor(swaggerAuthService) {
+    super()
     this.swaggerAuthService = swaggerAuthService
   }
 
   async showLoginForm(req, res) {
     try {
-      return res.status(200).render('pages/login')
+      return super.view(res, 'pages/login')
     } catch (error) {
-      HttpHelper.errorResponse(res, 500, INTERNAL_SERVER_ERROR, error.message)
+      return super.json(res, 500, INTERNAL_SERVER_ERROR, error.message)
     }
   }
 
   async login(req, res) {
-    const validatedData = req.body
+    const data = req.body
 
     try {
-      const loggedIn = await this.swaggerAuthService.login(validatedData)
+      const loggedIn = await this.swaggerAuthService.login(data)
 
       if (!loggedIn) {
-        return HttpHelper.successResponse(res, UNAUTHORIZED, MESSAGES.failure)
+        return super.json(res, UNAUTHORIZED, __('swagger.login.failed'))
       }
 
       req.session.authenticated = true
 
-      HttpHelper.successResponse(res, OK, MESSAGES.success, loggedIn)
+      return super.json(res, OK, __('swagger.login.success'), loggedIn)
     } catch (error) {
-      HttpHelper.errorResponse(res, 500, INTERNAL_SERVER_ERROR, error.message)
+      return super.json(res, 500, INTERNAL_SERVER_ERROR, error.message)
     }
   }
 }

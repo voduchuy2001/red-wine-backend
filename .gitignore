@@ -4,4 +4,5 @@ package-lock.json
 .idea
 .vscode
 
-src/storage/logs/*
+src/storage/logs
+src/storage/tmp

@@ -1,41 +1,31 @@
+'use strict'
 import { Model } from 'sequelize'
-import SequelizePaginate from '@utils/paginate'
-
 export default (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
-      const { Category, CategoryProduct } = models
-      Product.belongsToMany(Category, {
-        through: CategoryProduct,
+      this.belongsTo(models.Brand, { foreignKey: 'brandId', as: 'brand' })
+
+      this.belongsToMany(models.Category, {
+        through: 'ProductCategories',
         foreignKey: 'productId',
-        as: 'categories'
+        as: 'categories',
+        timestamps: false
       })
+
+      this.hasMany(models.Variant, { foreignKey: 'productId', as: 'variants' })
     }
   }
   Product.init(
     {
+      brandId: DataTypes.BIGINT,
       name: DataTypes.STRING,
-      description: DataTypes.TEXT,
-      content: DataTypes.TEXT,
-      status: DataTypes.STRING,
-      images: DataTypes.TEXT,
-      order: DataTypes.INTEGER,
-      isFeatured: DataTypes.TINYINT,
-      price: DataTypes.DOUBLE,
-      salePrice: DataTypes.DOUBLE,
-      length: DataTypes.FLOAT,
-      width: DataTypes.FLOAT,
-      height: DataTypes.FLOAT,
-      weight: DataTypes.FLOAT,
-      barcode: DataTypes.STRING,
-      views: DataTypes.BIGINT
+      featured: DataTypes.TINYINT,
+      status: DataTypes.STRING
     },
     {
       sequelize,
       modelName: 'Product'
     }
   )
-
-  SequelizePaginate.paginate(Product)
   return Product
 }

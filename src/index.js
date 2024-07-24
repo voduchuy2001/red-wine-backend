@@ -17,6 +17,9 @@ import { filesystems } from '@config/filesystems'
 import cookieParser from 'cookie-parser'
 import { authenticated } from '@middlewares/swagger'
 import { session } from '@config/session'
+import { multer } from '@middlewares/multer'
+import i18n from '@config/lang'
+import lang from '@middlewares/lang'
 
 function bootstrap() {
   const app = express()
@@ -34,9 +37,12 @@ function bootstrap() {
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(logging)
   app.set('trust proxy', 1)
+  app.use(i18n.init)
+  app.use(lang)
   app.use(session)
   app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
   app.use('/', routes)
+  app.use(multer)
   app.use(notFound)
   app.set('io', io)
 

@@ -3,6 +3,6 @@ import { BAD_REQUEST } from '@constants/http.status.code'
 import { MESSAGES } from '@constants/message'
 import HttpHelper from '@utils/http'
 
-export const multerMiddleware = (error, req, res, next) => {
-  return HttpHelper.errorResponse(res, BAD_REQUEST, MESSAGES.failure, FILE_LIMITER[error.code])
+export const multer = (error, req, res, next) => {
+  return HttpHelper.json(res, BAD_REQUEST, MESSAGES.failure, FILE_LIMITER[error.code])
 }

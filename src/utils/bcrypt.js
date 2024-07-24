@@ -2,12 +2,14 @@ import bcrypt from 'bcryptjs'
 
 const SALT = 10
 
-export default class Bcrypt {
-  static async hashPassword(password) {
+class Bcrypt {
+  async hashPassword(password) {
     return bcrypt.hash(password, SALT)
   }
 
-  static async comparePassword(password, hashedPassword) {
+  async comparePassword(password, hashedPassword) {
     return bcrypt.compare(password, hashedPassword)
   }
 }
+
+export default new Bcrypt()

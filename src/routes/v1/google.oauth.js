@@ -1,9 +1,10 @@
+import GoogleOAuthController from '@controllers/auth/google.oauth.controller'
 import express from 'express'
-import { googleOAuthController } from '@di/container'
 
 const router = express.Router()
+const googleOAuthController = new GoogleOAuthController()
 
-router.get('/redirect/google', googleOAuthController.redirect.bind(googleOAuthController))
-router.get('/callback/google', googleOAuthController.callback.bind(googleOAuthController))
+router.get('/redirect/google', googleOAuthController.redirect)
+router.get('/callback/google', googleOAuthController.callback)
 
 export default router

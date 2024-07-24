@@ -1,24 +1,26 @@
 import { BAD_REQUEST, CREATED, INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
 import { MESSAGES } from '@constants/message'
-import HttpHelper from '@utils/http'
+import BaseController from '@controllers/base.controller'
 
-export default class RegisterController {
+export default class RegisterController extends BaseController {
   constructor(authService) {
+    super()
     this.authService = authService
   }
 
   async register(req, res) {
-    const validatedData = req.body
+    const data = req.body
+
     try {
-      const registered = await this.authService.register(validatedData)
+      const registered = await this.authService.register(data)
 
       if (!registered) {
-        return HttpHelper.successResponse(res, BAD_REQUEST, MESSAGES.failure)
+        return super.json(res, BAD_REQUEST, MESSAGES.failure)
       }
 
-      return HttpHelper.successResponse(res, CREATED, MESSAGES.success, registered)
+      return super.json(res, CREATED, MESSAGES.success)
     } catch (error) {
-      return HttpHelper.errorResponse(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return super.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
     }
   }
 }

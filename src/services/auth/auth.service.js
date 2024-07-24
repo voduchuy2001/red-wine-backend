@@ -1,11 +1,11 @@
-import { MESSAGES } from '@constants/message'
+import UserRepository from '@repositories/user.repository'
 import { generateAvatar } from '@utils/avatar'
 import Bcrypt from '@utils/bcrypt'
 import JWT from '@utils/jwt'
 
 export default class AuthService {
-  constructor(userRepository) {
-    this.userRepository = userRepository
+  constructor() {
+    this.userRepository = new UserRepository()
   }
 
   async login(data) {
@@ -32,15 +32,10 @@ export default class AuthService {
     const { email, password } = data
 
     const existedUser = await this.userRepository.findOne({ where: { email } })
-    if (existedUser) throw new Error(MESSAGES.isExisted)
+    if (existedUser) return false
 
     const hashedPassword = await Bcrypt.hashPassword(password)
     const avatar = generateAvatar(email, 200) || null
-    const user = await this.userRepository.create({ email, avatar, password: hashedPassword })
-
-    const registeredUser = user.get({ plain: true })
-    delete registeredUser.password
-
-    return registeredUser
+    return !!(await this.userRepository.create({ email, avatar, password: hashedPassword }))
   }
 }
