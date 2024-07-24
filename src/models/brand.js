@@ -13,7 +13,8 @@ export default (sequelize, DataTypes) => {
       website: DataTypes.STRING,
       description: DataTypes.TEXT,
       status: DataTypes.STRING,
-      featured: DataTypes.TINYINT
+      featured: DataTypes.TINYINT,
+      order: DataTypes.TINYINT
     },
     {
       sequelize,

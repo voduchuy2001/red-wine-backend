@@ -14,8 +14,8 @@ export default (sequelize, DataTypes) => {
       productId: DataTypes.BIGINT,
       sku: DataTypes.STRING,
       price: DataTypes.DECIMAL,
-      quantity: DataTypes.INTEGER,
-      isDefault: DataTypes.TINYINT
+      salePrice: DataTypes.DECIMAL,
+      quantity: DataTypes.INTEGER
     },
     {
       sequelize,

@@ -22,14 +22,32 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      description: {
+      content: {
         type: Sequelize.TEXT('long')
+      },
+      description: {
+        type: Sequelize.TEXT
       },
       featured: {
         type: Sequelize.TINYINT
       },
       status: {
         type: Sequelize.STRING
+      },
+      sku: {
+        type: Sequelize.STRING
+      },
+      quantity: {
+        type: Sequelize.INTEGER
+      },
+      order: {
+        type: Sequelize.TINYINT
+      },
+      price: {
+        type: Sequelize.DECIMAL(12, 2)
+      },
+      salePrice: {
+        type: Sequelize.DECIMAL(12, 2)
       },
       createdAt: {
         allowNull: false,

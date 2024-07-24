@@ -28,6 +28,9 @@ module.exports = {
       featured: {
         type: Sequelize.TINYINT
       },
+      order: {
+        type: Sequelize.TINYINT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

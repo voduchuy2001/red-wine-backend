@@ -26,12 +26,12 @@ module.exports = {
         type: Sequelize.DECIMAL(12, 2),
         allowNull: false
       },
+      salePrice: {
+        type: Sequelize.DECIMAL(12, 2)
+      },
       quantity: {
         type: Sequelize.INTEGER,
         allowNull: false
-      },
-      isDefault: {
-        type: Sequelize.TINYINT
       },
       createdAt: {
         allowNull: false,
