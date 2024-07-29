@@ -5,6 +5,15 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.Brand, { foreignKey: 'brandId', as: 'brand' })
 
+      this.hasMany(models.Media, {
+        foreignKey: 'mediableId',
+        constraints: false,
+        scope: {
+          mediable: 'Product'
+        },
+        as: 'media'
+      })
+
       this.belongsToMany(models.Category, {
         through: 'ProductCategories',
         foreignKey: 'productId',

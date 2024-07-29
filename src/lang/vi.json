@@ -1,39 +1,13 @@
 {
-  "login": {
-    "email": {
-      "notEmpty": "Bắt buộc",
-      "isEmail": "Phải là một email"
-    },
-    "password": {
-      "notEmpty": "Bắt buộc"
-    }
-  },
-  "register": {
-    "email": {
-      "notEmpty": "Bắt buộc",
-      "isEmail": "Phải là email"
-    },
-    "password": {
-      "notEmpty": "Bắt buộc"
-    }
-  },
-  "swagger": {
-    "username": {
-      "notEmpty": "Bắt buộc"
-    },
-    "password": {
-      "notEmpty": "Bắt buộc"
-    },
-    "login": {
-      "success": "Đăng nhập thành công",
-      "failed": "Vui lòng kiểm tra lại thông tin đăng nhập"
-    }
-  },
-  "authorize": {
-    "user": {
-      "notFound": "Không tìm thấy người dùng"
-    }
-  },
+  "notEmpty": "Bắt buộc",
+  "isEmail": "Phải là email",
+  "isInteger": "Phải là số nguyên",
+  "isObject": "Phải là một đối tượng",
+  "isArray": "Phải là một mảng",
+  "isString": "Phải là một chuỗi",
+  "success": "Thành công",
+  "failure": "Không thành công",
+  "Too many requests! Please try again after {{minutes}} minute(s)": "Quá nhiều yêu cầu! Vui lòng thử lại sau {{minutes}} phút",
   "Sign In Below": "Đăng nhập dưới đây",
   "Complete Your Information To Continue": "Điền đầy đủ thông tin để tiếp tục",
   "Username": "Tài khoản",

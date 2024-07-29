@@ -27,41 +27,10 @@ export default class BaseRepository {
     return this.model.destroy({ where: { id } })
   }
 
-  async paginate({ page = 1, paginate = 25, ...params } = {}) {
-    const options = { ...params }
-    const countOptions = { ...options }
-
-    if (params.group) {
-      countOptions.distinct = true
-      countOptions.col = params.group
-    }
-
-    const { count, rows: docs } = await this.model.findAndCountAll({
-      ...options,
-      limit: paginate,
-      offset: paginate * (page - 1)
-    })
-
-    const total = Array.isArray(count) ? count.length : count
-    const pages = Math.ceil(total / paginate)
-    const currentPage = page
-    const perPage = paginate
-    const lastPage = pages
-    const nextPageURL = currentPage < lastPage ? `?page=${currentPage + 1}` : null
-    const prevPageURL = currentPage > 1 ? `?page=${currentPage - 1}` : null
-    const from = (currentPage - 1) * perPage + 1
-    const to = Math.min(total, currentPage * perPage)
-
-    return {
-      total,
-      perPage,
-      currentPage,
-      lastPage,
-      nextPageURL,
-      prevPageURL,
-      from,
-      to,
-      docs
-    }
+  async paginate({ page = 1, limit = 25, ...params } = {}) {
+    page = Number.isInteger(parseInt(page, 10)) ? parseInt(page, 10) : 1
+    limit = Number.isInteger(parseInt(limit, 10)) ? parseInt(limit, 10) : 25
+    const offset = limit * (page - 1)
+    return this.findAll({ ...params, limit, offset })
   }
 }
