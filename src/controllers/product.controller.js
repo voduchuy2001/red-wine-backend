@@ -1,4 +1,4 @@
-import { INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from '@constants/http.status.code'
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from '@constants/http.status.code'
 import BaseController from './base.controller'
 
 export default class ProductController extends BaseController {
@@ -19,6 +19,22 @@ export default class ProductController extends BaseController {
       return super.json(res, OK, __('success'), products)
     } catch (error) {
       return super.json(res, INTERNAL_SERVER_ERROR, __('failure'), error.message)
+    }
+  }
+
+  async create(req, res) {
+    const data = req.body
+
+    try {
+      const product = await this.productService.create(data)
+
+      if (!product) {
+        return super.json(res, BAD_REQUEST, __('failure'))
+      }
+
+      return super.json(res, OK, __('success'))
+    } catch (error) {
+      return super.json(res, INTERNAL_SERVER_ERROR, __('failure', error.message))
     }
   }
 }

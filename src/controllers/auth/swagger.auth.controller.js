@@ -22,12 +22,12 @@ export default class SwaggerAuthController extends BaseController {
       const loggedIn = await this.swaggerAuthService.login(data)
 
       if (!loggedIn) {
-        return super.json(res, UNAUTHORIZED, __('swagger.login.failed'))
+        return super.json(res, UNAUTHORIZED, __('failure'))
       }
 
       req.session.authenticated = true
 
-      return super.json(res, OK, __('swagger.login.success'), loggedIn)
+      return super.json(res, OK, __('success'), loggedIn)
     } catch (error) {
       return super.json(res, 500, INTERNAL_SERVER_ERROR, error.message)
     }

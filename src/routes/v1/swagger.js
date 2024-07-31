@@ -4,12 +4,14 @@ import { limiter } from '@config/rate.limit'
 import { swagger } from '@requests/swagger.request'
 import { authenticate } from '@middlewares/swagger'
 import SwaggerAuthController from '@controllers/auth/swagger.auth.controller'
+import SwaggerAuthService from '@services/swagger/swagger.auth.service'
 
 const router = express.Router()
 const authLimiter = limiter(5 * 60 * 1000, 5)
-const swaggerAuthController = new SwaggerAuthController()
+const swaggerAuthService = new SwaggerAuthService()
+const swaggerAuthController = new SwaggerAuthController(swaggerAuthService)
 
-router.get('/swagger-sign-in', authenticate, swaggerAuthController.showLoginForm)
-router.post('/swagger-sign-in', authLimiter, validate(swagger()), swaggerAuthController.login)
+router.get('/swagger-sign-in', authenticate, swaggerAuthController.showLoginForm.bind(swaggerAuthController))
+router.post('/swagger-sign-in', authLimiter, validate(swagger()), swaggerAuthController.login.bind(swaggerAuthController))
 
 export default router

@@ -10,4 +10,8 @@ export default class ProductService extends BaseService {
     const products = await super.paginate({ page, limit, q })
     return products.length ? products : null
   }
+
+  async create(data = {}) {
+    const { attributeIds, optionIds, categoryIds, media, ...productData } = data
+  }
 }
