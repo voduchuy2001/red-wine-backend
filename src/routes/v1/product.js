@@ -2,7 +2,7 @@ import ProductController from '@controllers/product.controller'
 import { auth } from '@middlewares/authenticate'
 import { validate } from '@middlewares/validation'
 import ProductRepository from '@repositories/product.repository'
-import { productFilterRequest } from '@requests/product.request'
+import productFilterRequest from '@requests/filter.product.request'
 import ProductService from '@services/product.service'
 import express from 'express'
 
