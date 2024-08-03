@@ -90,8 +90,8 @@ Swagger UI is available at http://localhost:6969/api-docs.
  ┃ ┣ 📂config
  ┃ ┣ 📂constants
  ┃ ┣ 📂controllers
- ┃ ┣ 📂di
  ┃ ┣ 📂documents
+ ┃ ┣ 📂lang
  ┃ ┣ 📂middlewares
  ┃ ┣ 📂migrations
  ┃ ┣ 📂models
@@ -132,4 +132,4 @@ Feel free to submit issues or pull requests. For major changes, please open an i
 
 ## License
 
-This project is proprietary and confidential. Unauthorized copying or distribution of this file, via any medium, is strictly prohibited.
+This project is open-source. You are free to use, modify, and distribute this file, via any medium, under the terms of the MIT License.

@@ -26,4 +26,49 @@ export default class ProductRepository extends BaseRepository {
 
     return super.paginate({ page, limit, ...queryOptions })
   }
+
+  async findOne(id) {
+    const options = {
+      where: { id },
+      include: [
+        {
+          model: db.Brand,
+          as: 'brand',
+          attributes: ['id', 'name', 'website', 'description', 'status', 'featured']
+        },
+        {
+          model: db.Category,
+          as: 'categories',
+          through: { attributes: [] },
+          attributes: ['id', 'name', 'status', 'featured']
+        },
+        {
+          model: db.Variant,
+          as: 'variants',
+          include: [
+            {
+              model: db.OptionValue,
+              as: 'optionValues',
+              include: [
+                {
+                  model: db.ProductOption,
+                  as: 'option',
+                  attributes: ['id', 'name']
+                }
+              ],
+              attributes: ['id', 'value']
+            }
+          ],
+          attributes: ['id', 'sku', 'price', 'quantity']
+        },
+        {
+          model: db.Media,
+          as: 'media',
+          attributes: ['id', 'type', 'mimeType', 'size', 'url', 'alt']
+        }
+      ]
+    }
+
+    return super.findOne(options)
+  }
 }
