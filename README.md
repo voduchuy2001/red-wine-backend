@@ -90,8 +90,8 @@ Swagger UI is available at http://localhost:6969/api-docs.
  ┃ ┣ 📂config
  ┃ ┣ 📂constants
  ┃ ┣ 📂controllers
- ┃ ┣ 📂di
  ┃ ┣ 📂documents
+ ┃ ┣ 📂lang
  ┃ ┣ 📂middlewares
  ┃ ┣ 📂migrations
  ┃ ┣ 📂models
