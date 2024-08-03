@@ -1,5 +1,4 @@
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from '@constants/http.status.code'
-import { MESSAGES } from '@constants/message'
 import BaseController from '@controllers/base.controller'
 
 export default class SettingController extends BaseController {
@@ -14,11 +13,11 @@ export default class SettingController extends BaseController {
     try {
       const vnpSetting = await this.settingService.vnpSetting(value)
 
-      if (!vnpSetting) return super.json(res, BAD_REQUEST, MESSAGES.failure)
+      if (!vnpSetting) return super.json(res, BAD_REQUEST, __('failure'))
 
-      return super.json(res, OK, MESSAGES.success)
+      return super.json(res, OK, __('success'))
     } catch (error) {
-      return super.json(res, INTERNAL_SERVER_ERROR, MESSAGES.failure, error.message)
+      return super.json(res, INTERNAL_SERVER_ERROR, __('failure'), error.message)
     }
   }
 }

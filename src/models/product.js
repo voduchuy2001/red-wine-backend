@@ -5,6 +5,15 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.Brand, { foreignKey: 'brandId', as: 'brand' })
 
+      this.hasMany(models.Media, {
+        foreignKey: 'mediableId',
+        constraints: false,
+        scope: {
+          mediable: 'Product'
+        },
+        as: 'media'
+      })
+
       this.belongsToMany(models.Category, {
         through: 'ProductCategories',
         foreignKey: 'productId',
@@ -20,7 +29,14 @@ export default (sequelize, DataTypes) => {
       brandId: DataTypes.BIGINT,
       name: DataTypes.STRING,
       featured: DataTypes.TINYINT,
-      status: DataTypes.STRING
+      status: DataTypes.STRING,
+      content: DataTypes.TEXT,
+      description: DataTypes.TEXT,
+      sku: DataTypes.STRING,
+      quantity: DataTypes.INTEGER,
+      order: DataTypes.TINYINT,
+      price: DataTypes.DECIMAL,
+      salePrice: DataTypes.DECIMAL
     },
     {
       sequelize,

@@ -9,7 +9,7 @@ export default class OrderConfirm extends Mail {
     return {
       from: this.mailData.from || process.env.MAIL_FROM_ADDRESS,
       to: this.mailData.to,
-      subject: 'Order Confirmation'
+      subject: __('Order Confirmation')
     }
   }
 

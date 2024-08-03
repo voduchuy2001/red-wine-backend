@@ -4,9 +4,7 @@ import { Model } from 'sequelize'
 export default (sequelize, DataTypes) => {
   class OptionValue extends Model {
     static associate(models) {
-      this.belongsTo(models.Option, { foreignKey: 'optionId', as: 'option' })
-
-      this.hasMany(models.VariantOption, { foreignKey: 'optionValueId', as: 'variantOptions' })
+      this.belongsTo(models.ProductOption, { foreignKey: 'optionId', as: 'option' })
     }
   }
   OptionValue.init(

@@ -1,39 +1,13 @@
 {
-  "login": {
-    "email": {
-      "notEmpty": "Required",
-      "isEmail": "Must be an email"
-    },
-    "password": {
-      "notEmpty": "Required"
-    }
-  },
-  "register": {
-    "email": {
-      "notEmpty": "Required",
-      "isEmail": "Must be an email"
-    },
-    "password": {
-      "notEmpty": "Required"
-    }
-  },
-  "swagger": {
-    "username": {
-      "notEmpty": "Required"
-    },
-    "password": {
-      "notEmpty": "Required"
-    },
-    "login": {
-      "success": "Logged in",
-      "failed": "Pls check your information"
-    }
-  },
-  "authorize": {
-    "user": {
-      "notFound": "Not found user"
-    }
-  },
+  "notEmpty": "Not empty",
+  "isEmail": "Must be an email",
+  "isInteger": "Must be an integer",
+  "isObject": "Must be an object",
+  "isArray": "Must be an array",
+  "isString": "Must be a string",
+  "success": "Success",
+  "failure": "Failure",
+  "Too many requests! Please try again after {{minutes}} minute(s)": "Too many requests! Please try again after {{minutes}} minute(s)",
   "Sign In Below": "Sign In Below",
   "Complete Your Information To Continue": "Complete Your Information To Continue",
   "Username": "Username",

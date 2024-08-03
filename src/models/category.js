@@ -17,7 +17,8 @@ export default (sequelize, DataTypes) => {
       parentId: DataTypes.BIGINT,
       name: DataTypes.STRING,
       status: DataTypes.STRING,
-      featured: DataTypes.TINYINT
+      featured: DataTypes.TINYINT,
+      order: DataTypes.TINYINT
     },
     {
       sequelize,

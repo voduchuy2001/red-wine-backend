@@ -2,19 +2,19 @@
 import { Model } from 'sequelize'
 
 export default (sequelize, DataTypes) => {
-  class Option extends Model {
+  class ProductOption extends Model {
     static associate(models) {
       this.hasMany(models.OptionValue, { foreignKey: 'optionId', as: 'optionValues' })
     }
   }
-  Option.init(
+  ProductOption.init(
     {
       name: DataTypes.STRING
     },
     {
       sequelize,
-      modelName: 'Option'
+      modelName: 'ProductOption'
     }
   )
-  return Option
+  return ProductOption
 }

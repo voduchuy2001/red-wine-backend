@@ -1,13 +1,9 @@
 import { body } from 'express-validator'
 
-export const login = () => [
-  body('email')
-    .notEmpty()
-    .bail()
-    .withMessage('login.email.notEmpty')
-    .isEmail()
-    .bail()
-    .withMessage('login.email.isEmail'),
+const loginRequest = () => [
+  body('email').notEmpty().bail().withMessage('notEmpty').isEmail().bail().withMessage('isEmail'),
 
-  body('password').notEmpty().bail().withMessage('login.password.notEmpty')
+  body('password').notEmpty().bail().withMessage('notEmpty')
 ]
+
+export default loginRequest

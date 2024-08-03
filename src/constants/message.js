@@ -22,7 +22,7 @@ const MESSAGES = {
   failure: 'Failure',
   isInt: (min, max) =>
     `Must be an integer${min && max ? ` between ${min} and ${max}` : min ? ` greater than or equal to ${min}` : max ? ` less than or equal to ${max}` : ''}`,
-  tooManyRequests: (minutes) => `Too many requests. Please try again after ${minutes} minute(s)`,
+  tooManyRequests: (minutes) => ``,
   isFloat: 'Must be a float',
   isDouble: 'Must be a double',
   isBoolean: 'Must be a boolean',

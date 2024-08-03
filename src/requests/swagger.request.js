@@ -1,7 +1,9 @@
 import { body } from 'express-validator'
 
-export const swagger = () => [
-  body('username').notEmpty().bail().withMessage('swagger.username.notEmpty'),
+const swaggerRequest = () => [
+  body('username').notEmpty().bail().withMessage('notEmpty'),
 
-  body('password').notEmpty().bail().withMessage('swagger.password.notEmpty')
+  body('password').notEmpty().bail().withMessage('notEmpty')
 ]
+
+export default swaggerRequest

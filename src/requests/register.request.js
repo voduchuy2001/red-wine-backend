@@ -1,13 +1,9 @@
 import { body } from 'express-validator'
 
-export const register = () => [
-  body('email')
-    .notEmpty()
-    .bail()
-    .withMessage('register.email.notEmpty')
-    .isEmail()
-    .bail()
-    .withMessage('register.email.isEmail'),
+const registerRequest = () => [
+  body('email').notEmpty().bail().withMessage('notEmpty').isEmail().bail().withMessage('isEmail'),
 
-  body('password').notEmpty().bail().withMessage('register.password.notEmpty')
+  body('password').notEmpty().bail().withMessage('notEmpty')
 ]
+
+export default registerRequest
