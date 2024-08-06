@@ -97,14 +97,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      content: {
-        type: Sequelize.TEXT('long')
-      },
       description: {
         type: Sequelize.TEXT
-      },
-      featured: {
-        type: Sequelize.TINYINT
       },
       status: {
         type: Sequelize.STRING
@@ -112,17 +106,17 @@ module.exports = {
       sku: {
         type: Sequelize.STRING
       },
-      quantity: {
-        type: Sequelize.INTEGER
-      },
-      order: {
-        type: Sequelize.TINYINT
-      },
       price: {
         type: Sequelize.DECIMAL(12, 2)
       },
       salePrice: {
         type: Sequelize.DECIMAL(12, 2)
+      },
+      quantity: {
+        type: Sequelize.INTEGER
+      },
+      order: {
+        type: Sequelize.TINYINT
       },
       createdAt: {
         allowNull: false,
@@ -134,7 +128,7 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable('Variants', {
+    await queryInterface.createTable('ProductVariants', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -149,10 +143,6 @@ module.exports = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
-      },
-      sku: {
-        type: Sequelize.STRING(120),
-        allowNull: false
       },
       price: {
         type: Sequelize.DECIMAL(12, 2),
@@ -175,7 +165,7 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable('ProductOptions', {
+    await queryInterface.createTable('OptionValues', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -196,41 +186,11 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable('OptionValues', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.BIGINT
-      },
-      optionId: {
-        type: Sequelize.BIGINT,
-        references: {
-          model: 'ProductOptions',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
-      value: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    })
-
     await queryInterface.createTable('VariantOptions', {
       variantId: {
         type: Sequelize.BIGINT,
         references: {
-          model: 'Variants',
+          model: 'ProductVariants',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -275,7 +235,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.BIGINT
       },
-      mediable: {
+      mediableType: {
         type: Sequelize.STRING
       },
       mediableId: {
@@ -305,15 +265,20 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+
+    await queryInterface.addIndex('Products', ['sku'])
+    await queryInterface.addIndex('Categories', ['parentId'])
+    await queryInterface.addIndex('ProductVariants', ['productId'])
+    await queryInterface.addIndex('VariantOptions', ['variantId', 'optionValueId'])
+    await queryInterface.addIndex('ProductCategories', ['productId', 'categoryId'])
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Brands')
     await queryInterface.dropTable('VariantOptions')
     await queryInterface.dropTable('OptionValues')
-    await queryInterface.dropTable('ProductOptions')
+    await queryInterface.dropTable('ProductVariants')
     await queryInterface.dropTable('Products')
     await queryInterface.dropTable('Categories')
-    await queryInterface.dropTable('Brands')
     await queryInterface.dropTable('Media')
     await queryInterface.dropTable('ProductCategories')
   }

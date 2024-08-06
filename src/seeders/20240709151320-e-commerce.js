@@ -2,156 +2,215 @@
 
 const { faker } = require('@faker-js/faker')
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    const brands = []
-    for (let i = 0; i < 10; i++) {
-      brands.push({
-        name: faker.company.name(),
-        website: faker.internet.url(),
-        description: faker.lorem.paragraph(),
+  up: async (queryInterface, Sequelize) => {
+    // Insert Brands
+    await queryInterface.bulkInsert('Brands', [
+      { name: 'Apple', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Samsung', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Nike', createdAt: new Date(), updatedAt: new Date() }
+    ])
+
+    // Retrieve Brands
+    const brands = await queryInterface.sequelize.query('SELECT * FROM `Brands`', { type: Sequelize.QueryTypes.SELECT })
+
+    // Insert Categories
+    await queryInterface.bulkInsert('Categories', [
+      { name: 'Electronics', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Clothing', createdAt: new Date(), updatedAt: new Date() }
+    ])
+
+    // Retrieve Categories
+    const categories = await queryInterface.sequelize.query('SELECT * FROM `Categories`', {
+      type: Sequelize.QueryTypes.SELECT
+    })
+
+    // Insert Products
+    await queryInterface.bulkInsert('Products', [
+      {
+        name: 'iPhone 15 Pro Max',
+        brandId: brands.find((b) => b.name === 'Apple').id,
+        description: 'The latest iPhone model with advanced features.',
         status: 'active',
-        featured: faker.datatype.boolean() ? 1 : 0,
+        sku: 'IP15PM128BLK',
+        price: 30000000,
+        salePrice: 0,
+        quantity: 100,
         createdAt: new Date(),
         updatedAt: new Date()
-      })
-    }
-    await queryInterface.bulkInsert('Brands', brands, {})
-
-    const categories = []
-    for (let i = 0; i < 10; i++) {
-      categories.push({
-        parentId: null,
-        name: faker.commerce.department(),
+      },
+      {
+        name: 'Samsung Galaxy S22 Ultra',
+        brandId: brands.find((b) => b.name === 'Samsung').id,
+        description: 'Flagship smartphone with powerful camera and performance.',
         status: 'active',
-        featured: faker.datatype.boolean() ? 1 : 0,
+        sku: 'SGS22UL512GRY',
+        price: 25000000,
+        salePrice: 0,
+        quantity: 80,
         createdAt: new Date(),
         updatedAt: new Date()
-      })
-    }
-    await queryInterface.bulkInsert('Categories', categories, {})
-
-    const products = []
-    for (let i = 0; i < 50; i++) {
-      products.push({
-        brandId: faker.number.int({ min: 1, max: 10 }),
-        name: faker.commerce.productName(),
-        content: faker.lorem.paragraph(),
-        description: faker.lorem.sentences(3),
+      },
+      {
+        name: 'Nike Air Zoom Pegasus 38',
+        brandId: brands.find((b) => b.name === 'Nike').id,
+        description: 'Running shoes with responsive cushioning for long-distance runs.',
         status: 'active',
-        sku: faker.string.uuid(),
-        quantity: faker.number.int({ min: 1, max: 100 }),
-        price: parseFloat(faker.commerce.price({})),
-        salePrice: parseFloat(faker.commerce.price({})),
+        sku: 'NAZP38BLK',
+        price: 1500000,
+        salePrice: 0,
+        quantity: 200,
         createdAt: new Date(),
         updatedAt: new Date()
-      })
-    }
-    await queryInterface.bulkInsert('Products', products, {})
-
-    const variants = []
-    for (let i = 0; i < 150; i++) {
-      variants.push({
-        productId: faker.number.int({ min: 1, max: 50 }),
-        sku: faker.string.sample(10),
-        price: faker.commerce.price({}),
-        quantity: faker.number.int({ min: 1, max: 100 }),
-        createdAt: new Date(),
-        updatedAt: new Date()
-      })
-    }
-    await queryInterface.bulkInsert('Variants', variants, {})
-
-    const productOptions = []
-    const optionNames = ['Color', 'Size', 'Material', 'Weight']
-    for (const name of optionNames) {
-      productOptions.push({
-        name: name,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      })
-    }
-    await queryInterface.bulkInsert('ProductOptions', productOptions, {})
-
-    const optionValues = []
-    const optionValuesData = {
-      Color: ['Red', 'Green', 'Blue', 'Black', 'White'],
-      Size: ['Small', 'Medium', 'Large', 'X-Large'],
-      Material: ['Cotton', 'Polyester', 'Wool', 'Leather'],
-      Weight: ['0.5kg', '1kg', '1.5kg', '2kg']
-    }
-
-    for (const [optionName, values] of Object.entries(optionValuesData)) {
-      const option = await queryInterface.sequelize.query(`SELECT id FROM ProductOptions WHERE name = :name`, {
-        replacements: { name: optionName },
-        type: Sequelize.QueryTypes.SELECT
-      })
-      const optionId = option[0].id
-
-      for (const value of values) {
-        optionValues.push({
-          optionId: optionId,
-          value: value,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        })
       }
-    }
-    await queryInterface.bulkInsert('OptionValues', optionValues, {})
+    ])
 
-    const variantOptions = []
-    for (let i = 0; i < 150; i++) {
-      const variantId = faker.number.int({ min: 1, max: 150 })
-      const optionId = faker.number.int({ min: 1, max: 4 })
-      const optionValue = await queryInterface.sequelize.query(
-        `SELECT id FROM OptionValues WHERE optionId = :optionId ORDER BY RAND() LIMIT 1`,
-        { replacements: { optionId: optionId }, type: Sequelize.QueryTypes.SELECT }
-      )
-      const optionValueId = optionValue[0].id
+    // Retrieve Products
+    const products = await queryInterface.sequelize.query('SELECT * FROM `Products`', {
+      type: Sequelize.QueryTypes.SELECT
+    })
 
-      variantOptions.push({
-        variantId: variantId,
-        optionValueId: optionValueId
-      })
-    }
-    await queryInterface.bulkInsert('VariantOptions', variantOptions, {})
+    // Insert ProductVariants
+    await queryInterface.bulkInsert('ProductVariants', [
+      {
+        productId: products.find((p) => p.name === 'iPhone 15 Pro Max').id,
+        price: 30000000,
+        salePrice: 0,
+        quantity: 50,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        productId: products.find((p) => p.name === 'Samsung Galaxy S22 Ultra').id,
+        price: 25000000,
+        salePrice: 0,
+        quantity: 40,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        productId: products.find((p) => p.name === 'Nike Air Zoom Pegasus 38').id,
+        price: 1500000,
+        salePrice: 0,
+        quantity: 100,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ])
 
-    const productCategories = []
-    for (let i = 0; i < 50; i++) {
-      productCategories.push({
-        productId: faker.number.int({ min: 1, max: 50 }),
-        categoryId: faker.number.int({ min: 1, max: 10 })
-      })
-    }
-    await queryInterface.bulkInsert('ProductCategories', productCategories, {})
+    // Retrieve ProductVariants
+    const productVariants = await queryInterface.sequelize.query('SELECT * FROM `ProductVariants`', {
+      type: Sequelize.QueryTypes.SELECT
+    })
 
-    const media = []
-    for (let i = 0; i < 100; i++) {
-      media.push({
-        mediable: 'Product',
-        mediableId: faker.number.int({ min: 1, max: 50 }),
+    // Insert OptionValues
+    await queryInterface.bulkInsert('OptionValues', [
+      { name: '128GB', createdAt: new Date(), updatedAt: new Date() },
+      { name: '256GB', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Black', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Gray', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'White', createdAt: new Date(), updatedAt: new Date() }
+    ])
+
+    // Retrieve OptionValues
+    const optionValues = await queryInterface.sequelize.query('SELECT * FROM `OptionValues`', {
+      type: Sequelize.QueryTypes.SELECT
+    })
+
+    // Insert VariantOptions
+    await queryInterface.bulkInsert('VariantOptions', [
+      {
+        variantId: productVariants.find((v) => v.productId === products.find((p) => p.name === 'iPhone 15 Pro Max').id)
+          .id,
+        optionValueId: optionValues.find((o) => o.name === '128GB').id
+      },
+      {
+        variantId: productVariants.find((v) => v.productId === products.find((p) => p.name === 'iPhone 15 Pro Max').id)
+          .id,
+        optionValueId: optionValues.find((o) => o.name === 'Black').id
+      },
+      {
+        variantId: productVariants.find(
+          (v) => v.productId === products.find((p) => p.name === 'Samsung Galaxy S22 Ultra').id
+        ).id,
+        optionValueId: optionValues.find((o) => o.name === '256GB').id
+      },
+      {
+        variantId: productVariants.find(
+          (v) => v.productId === products.find((p) => p.name === 'Samsung Galaxy S22 Ultra').id
+        ).id,
+        optionValueId: optionValues.find((o) => o.name === 'Gray').id
+      },
+      {
+        variantId: productVariants.find(
+          (v) => v.productId === products.find((p) => p.name === 'Nike Air Zoom Pegasus 38').id
+        ).id,
+        optionValueId: optionValues.find((o) => o.name === 'White').id
+      }
+    ])
+
+    // Insert ProductCategories
+    await queryInterface.bulkInsert('ProductCategories', [
+      {
+        productId: products.find((p) => p.name === 'iPhone 15 Pro Max').id,
+        categoryId: categories.find((c) => c.name === 'Electronics').id
+      },
+      {
+        productId: products.find((p) => p.name === 'Samsung Galaxy S22 Ultra').id,
+        categoryId: categories.find((c) => c.name === 'Electronics').id
+      },
+      {
+        productId: products.find((p) => p.name === 'Nike Air Zoom Pegasus 38').id,
+        categoryId: categories.find((c) => c.name === 'Clothing').id
+      }
+    ])
+
+    // Insert Media
+    await queryInterface.bulkInsert('Media', [
+      {
+        mediableType: 'product',
+        mediableId: products.find((p) => p.name === 'iPhone 15 Pro Max').id,
         type: 'image',
         mimeType: 'image/jpeg',
-        size: faker.number.int({ min: 1000, max: 10000 }),
-        url: faker.image.url(),
-        alt: faker.lorem.sentence(),
+        size: 1024,
+        url: faker.image.urlLoremFlickr({ category: 'fashion' }),
+        alt: 'iPhone 15 Pro Max',
         createdAt: new Date(),
         updatedAt: new Date()
-      })
-    }
-    await queryInterface.bulkInsert('Media', media, {})
+      },
+      {
+        mediableType: 'product',
+        mediableId: products.find((p) => p.name === 'Samsung Galaxy S22 Ultra').id,
+        type: 'image',
+        mimeType: 'image/jpeg',
+        size: 1024,
+        url: faker.image.url(),
+        alt: 'Samsung Galaxy S22 Ultra',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        mediableType: 'product',
+        mediableId: products.find((p) => p.name === 'Nike Air Zoom Pegasus 38').id,
+        type: 'image',
+        mimeType: 'image/jpeg',
+        size: 1024,
+        url: faker.image.url(),
+        alt: 'Nike Air Zoom Pegasus 38',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ])
   },
 
-  async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Brands', null, {})
-    await queryInterface.bulkDelete('Categories', null, {})
-    await queryInterface.bulkDelete('Products', null, {})
-    await queryInterface.bulkDelete('Variants', null, {})
-    await queryInterface.bulkDelete('ProductOptions', null, {})
-    await queryInterface.bulkDelete('OptionValues', null, {})
-    await queryInterface.bulkDelete('VariantOptions', null, {})
-    await queryInterface.bulkDelete('ProductCategories', null, {})
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Media', null, {})
+    await queryInterface.bulkDelete('ProductCategories', null, {})
+    await queryInterface.bulkDelete('VariantOptions', null, {})
+    await queryInterface.bulkDelete('OptionValues', null, {})
+    await queryInterface.bulkDelete('ProductVariants', null, {})
+    await queryInterface.bulkDelete('Products', null, {})
+    await queryInterface.bulkDelete('Categories', null, {})
+    await queryInterface.bulkDelete('Brands', null, {})
   }
 }

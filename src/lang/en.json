@@ -35,5 +35,6 @@
     "invalidCredentials": "Invalid Credentials",
     "invalidRefreshToken": "Invalid Refresh Token",
     "missingToken": "Missing token"
-  }
+  },
+  "notFound": "notFound"
 }

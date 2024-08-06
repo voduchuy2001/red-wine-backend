@@ -14,4 +14,6 @@ export default class ProductService extends BaseService {
   async show(id) {
     return super.findOne(id)
   }
+
+  async create(data = {}) {}
 }

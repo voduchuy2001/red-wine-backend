@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
   }
   Media.init(
     {
-      mediable: DataTypes.STRING,
+      mediableType: DataTypes.STRING,
       mediableId: DataTypes.BIGINT,
       type: DataTypes.STRING,
       mimeType: DataTypes.STRING,

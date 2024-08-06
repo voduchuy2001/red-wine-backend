@@ -1,27 +1,39 @@
 import db from '@models/index'
 import BaseRepository from '@repositories/base.repository'
-import { Op } from 'sequelize'
 
 export default class ProductRepository extends BaseRepository {
   constructor() {
     super(db.Product)
+    this.category = db.Category
+    this.brand = db.Brand
+    this.productVariant = db.ProductVariant
+    this.optionValue = db.OptionValue
+    this.media = db.Media
   }
 
   async paginate(data) {
     const { page, limit, q } = data
     const queryOptions = {
       where: {},
+      attributes: ['id', 'name', 'status', 'description', 'sku', 'quantity', 'order', 'price', 'salePrice'],
       include: [
         {
-          model: db.Media,
-          as: 'media',
-          attributes: ['alt', 'url']
-        }
+          model: this.brand,
+          as: 'brand',
+          attributes: ['id', 'name', 'website', 'description', 'status', 'featured', 'order']
+        },
+        {
+          model: this.category,
+          as: 'categories',
+          through: { attributes: [] },
+          attributes: ['id', 'name', 'status', 'featured', 'order']
+        },
+        { model: this.media, as: 'media', attributes: ['id', 'url', 'alt'] }
       ]
     }
 
     if (q) {
-      queryOptions.where.name = { [Op.like]: `%${q}%` }
+      queryOptions.where.name = { [db.Sequelize.Op.like]: `%${q}%` }
     }
 
     return super.paginate({ page, limit, ...queryOptions })
@@ -31,44 +43,19 @@ export default class ProductRepository extends BaseRepository {
     const options = {
       where: { id },
       include: [
+        { model: this.brand, as: 'brand' },
+        { model: this.category, as: 'categories', through: { attributes: [] } },
         {
-          model: db.Brand,
-          as: 'brand',
-          attributes: ['id', 'name', 'website', 'description', 'status', 'featured']
-        },
-        {
-          model: db.Category,
-          as: 'categories',
-          through: { attributes: [] },
-          attributes: ['id', 'name', 'status', 'featured']
-        },
-        {
-          model: db.Variant,
+          model: this.productVariant,
           as: 'variants',
-          include: [
-            {
-              model: db.OptionValue,
-              as: 'optionValues',
-              include: [
-                {
-                  model: db.ProductOption,
-                  as: 'option',
-                  attributes: ['id', 'name']
-                }
-              ],
-              attributes: ['id', 'value']
-            }
-          ],
-          attributes: ['id', 'sku', 'price', 'quantity']
+          include: [{ model: this.optionValue, as: 'options', through: { attributes: [] } }]
         },
-        {
-          model: db.Media,
-          as: 'media',
-          attributes: ['id', 'type', 'mimeType', 'size', 'url', 'alt']
-        }
+        { model: this.media, as: 'media' }
       ]
     }
 
     return super.findOne(options)
   }
+
+  async create(data = {}) {}
 }

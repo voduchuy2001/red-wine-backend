@@ -5,32 +5,23 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.Brand, { foreignKey: 'brandId', as: 'brand' })
 
+      this.hasMany(models.ProductVariant, { foreignKey: 'productId', as: 'variants' })
+
+      this.belongsToMany(models.Category, { foreignKey: 'productId', through: 'ProductCategories', as: 'categories' })
+
       this.hasMany(models.Media, {
         foreignKey: 'mediableId',
         constraints: false,
-        scope: {
-          mediable: 'Product'
-        },
+        scope: { mediableType: 'product' },
         as: 'media'
       })
-
-      this.belongsToMany(models.Category, {
-        through: 'ProductCategories',
-        foreignKey: 'productId',
-        as: 'categories',
-        timestamps: false
-      })
-
-      this.hasMany(models.Variant, { foreignKey: 'productId', as: 'variants' })
     }
   }
   Product.init(
     {
       brandId: DataTypes.BIGINT,
       name: DataTypes.STRING,
-      featured: DataTypes.TINYINT,
       status: DataTypes.STRING,
-      content: DataTypes.TEXT,
       description: DataTypes.TEXT,
       sku: DataTypes.STRING,
       quantity: DataTypes.INTEGER,

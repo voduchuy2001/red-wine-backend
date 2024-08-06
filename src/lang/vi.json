@@ -35,5 +35,6 @@
     "invalidCredentials": "Thông tin đăng nhập không hợp lệ",
     "invalidRefreshToken": "Token làm mới không hợp lệ",
     "missingToken": "Không tìm thấy token"
-  }
+  },
+  "notFound": "notFound"
 }

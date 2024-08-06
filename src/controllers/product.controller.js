@@ -1,5 +1,5 @@
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from '@constants/http.status.code'
-import BaseController from './base.controller'
+import BaseController from '@controllers/base.controller'
 
 export default class ProductController extends BaseController {
   constructor(productService) {
@@ -50,7 +50,7 @@ export default class ProductController extends BaseController {
 
       return super.json(res, OK, __('success'))
     } catch (error) {
-      return super.json(res, INTERNAL_SERVER_ERROR, __('failure', error.message))
+      return super.json(res, INTERNAL_SERVER_ERROR, __('failure'), error.message)
     }
   }
 }
