@@ -4,9 +4,7 @@ import bodyParser from 'body-parser'
 import routes from '@routes/v1'
 import helmet from 'helmet'
 import compression from 'compression'
-import morgan from 'morgan'
 import { notFound } from '@middlewares/not.found'
-import { logging } from '@config/logging'
 import { socket } from '@config/socket.io'
 import cors from 'cors'
 import http from 'http'
@@ -20,28 +18,30 @@ import { session } from '@config/session'
 import { multer } from '@middlewares/multer'
 import i18n from '@config/lang'
 import lang from '@middlewares/lang'
+import { morganMiddleware } from '@middlewares/morgan'
+import errorHandler from '@middlewares/error.handler'
 
-function bootstrap() {
+async function bootstrap() {
   const app = express()
   const server = http.createServer(app)
   const io = socket(server)
 
   view(app)
   filesystems(app)
+  app.use(morganMiddleware)
   app.use(cors())
   app.use(cookieParser())
   app.use(helmet())
   app.use(compression())
-  app.use(morgan('dev'))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
-  app.use(logging)
   app.set('trust proxy', 1)
   app.use(i18n.init)
   app.use(lang)
   app.use(session)
   app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
   app.use('/', routes)
+  app.use(errorHandler)
   app.use(multer)
   app.use(notFound)
   app.set('io', io)

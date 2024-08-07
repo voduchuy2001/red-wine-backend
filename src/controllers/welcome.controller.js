@@ -1,4 +1,3 @@
-import { BAD_REQUEST } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
 
 export default class WelcomeController extends BaseController {
@@ -6,12 +5,12 @@ export default class WelcomeController extends BaseController {
     super()
   }
 
-  async index(req, res) {
+  async index(req, res, next) {
     try {
       const userAgent = req.get('user-agent')
       return super.view(res, 'pages/welcome', { userAgent })
     } catch (error) {
-      return super.json(res, BAD_REQUEST, __('failure'), error.message)
+      next(error)
     }
   }
 }

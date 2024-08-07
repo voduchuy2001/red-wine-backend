@@ -12,6 +12,6 @@ const swaggerAuthService = new SwaggerAuthService()
 const swaggerAuthController = new SwaggerAuthController(swaggerAuthService)
 
 router.get('/swagger-sign-in', authenticate, swaggerAuthController.showLoginForm.bind(swaggerAuthController))
-router.post('/swagger-sign-in', authLimiter, validate(swaggerRequest()), swaggerAuthController.login.bind(swaggerAuthController))
+router.post('/swagger-sign-in', authLimiter, validate(swaggerRequest), swaggerAuthController.login.bind(swaggerAuthController))
 
 export default router

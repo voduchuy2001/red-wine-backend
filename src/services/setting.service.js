@@ -8,6 +8,6 @@ export default class SettingService extends BaseService {
 
   async vnpSetting(value = {}) {
     const parseJson = JSON.stringify(value)
-    return !!(await this.repository.updateSetting(SETTING_KEY.VNPAY, parseJson))
+    return !!this.repository.updateSetting(SETTING_KEY.VNPAY, parseJson)
   }
 }

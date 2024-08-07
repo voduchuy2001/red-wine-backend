@@ -14,7 +14,7 @@ const authService = new AuthService()
 const loginController = new LoginController(authService)
 const registerController = new RegisterController(authService)
 
-router.post('/login', authLimiter, validate(loginRequest()), loginController.login.bind(loginController))
-router.post('/register', validate(registerRequest()), registerController.register.bind(registerController))
+router.post('/login', authLimiter, validate(loginRequest), loginController.login.bind(loginController))
+router.post('/register', validate(registerRequest), registerController.register.bind(registerController))
 
 export default router

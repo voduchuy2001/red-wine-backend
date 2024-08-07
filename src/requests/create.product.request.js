@@ -1,6 +1,6 @@
 import { body } from 'express-validator'
 
-const createProductRequest = () => [
+const createProductRequest = [
   body('name')
     .notEmpty()
     .bail()

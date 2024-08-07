@@ -7,13 +7,10 @@ export default class ProductService extends BaseService {
 
   async index(data = {}) {
     const { page, limit, q } = data
-    const products = await super.paginate({ page, limit, q })
-    return products.length ? products : null
+    return super.paginate({ page, limit, q })
   }
 
   async show(id) {
     return super.findOne(id)
   }
-
-  async create(data = {}) {}
 }

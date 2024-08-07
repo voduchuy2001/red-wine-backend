@@ -36,5 +36,12 @@
     "invalidRefreshToken": "Invalid Refresh Token",
     "missingToken": "Missing token"
   },
-  "notFound": "notFound"
+  "notFound": "notFound",
+  "Failure": "Failure",
+  "Success": "Success",
+  "isURL": "isURL",
+  "isIn": "isIn",
+  "isIn ACTIVE,INACTIVE": "isIn ACTIVE,INACTIVE",
+  "isInt": "isInt",
+  "Internal Server Error": "Internal Server Error"
 }

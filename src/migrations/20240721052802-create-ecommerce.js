@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM(['published', 'draft', 'pending'])
       },
       featured: {
         type: Sequelize.TINYINT
@@ -59,7 +59,7 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM(['published', 'draft', 'pending'])
       },
       featured: {
         type: Sequelize.TINYINT
@@ -101,7 +101,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM(['published', 'draft', 'pending'])
       },
       sku: {
         type: Sequelize.STRING

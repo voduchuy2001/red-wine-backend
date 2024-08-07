@@ -32,7 +32,7 @@ export default class ProductRepository extends BaseRepository {
       ]
     }
 
-    if (q) {
+    if (String(q)) {
       queryOptions.where.name = { [db.Sequelize.Op.like]: `%${q}%` }
     }
 
@@ -56,6 +56,4 @@ export default class ProductRepository extends BaseRepository {
 
     return super.findOne(options)
   }
-
-  async create(data = {}) {}
 }
