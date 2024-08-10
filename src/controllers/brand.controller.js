@@ -11,8 +11,8 @@ export default class BrandController extends BaseController {
     const data = req.query
 
     try {
-      const categories = await this.brandService.index(data)
-      return super.json(res, OK, __('Success'), categories)
+      const brands = await this.brandService.index(data)
+      return super.json(res, OK, __('Success'), brands)
     } catch (error) {
       next(error)
     }

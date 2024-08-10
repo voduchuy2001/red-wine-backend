@@ -1,3 +1,5 @@
+import { BAD_REQUEST } from '@constants/http.status.code'
+import HttpException from '@exceptions/http.exception'
 import BaseService from '@services/base.service'
 
 export default class BrandService extends BaseService {
@@ -21,6 +23,7 @@ export default class BrandService extends BaseService {
 
   async create(data) {
     const { name, website, status, featured, order, logo } = data
+
     const sanitizedData = {
       name: this.sanitize(name),
       website: this.sanitize(website),
@@ -31,6 +34,10 @@ export default class BrandService extends BaseService {
     }
 
     const brand = await super.create(sanitizedData)
+
+    if (!brand) {
+      throw new HttpException(BAD_REQUEST, 'Could not create brand')
+    }
 
     if (logo) {
       await this.addMediaToBrand(logo, brand.id, brand.name)

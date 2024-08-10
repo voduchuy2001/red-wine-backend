@@ -10,6 +10,7 @@
           "@constants": "./src/constants",
           "@controllers": "./src/controllers",
           "@documents": "./src/documents",
+          "@exceptions": "./src/exceptions",
           "@middlewares": "./src/middlewares",
           "@models": "./src/models",
           "@repositories": "./src/repositories",
