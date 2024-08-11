@@ -10,6 +10,16 @@ export default (sequelize, DataTypes) => {
         as: 'products',
         timestamps: false
       })
+
+      this.belongsTo(models.Category, {
+        foreignKey: 'parentId',
+        as: 'parent'
+      })
+
+      this.hasMany(models.Category, {
+        foreignKey: 'parentId',
+        as: 'children'
+      })
     }
   }
   Category.init(

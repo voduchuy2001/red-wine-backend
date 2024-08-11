@@ -17,4 +17,15 @@ export default class CategoryController extends BaseController {
       next(error)
     }
   }
+
+  async create(req, res, next) {
+    const data = req.body
+
+    try {
+      await this.categoryService.create(data)
+      return super.json(res, OK, __('Success'))
+    } catch (error) {
+      next(error)
+    }
+  }
 }
