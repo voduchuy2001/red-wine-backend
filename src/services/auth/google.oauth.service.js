@@ -13,6 +13,7 @@ export default class GoogleOAuthService {
   }
 
   async redirect() {
+    console.log('checkeddd')
     const scope = ['https://www.googleapis.com/auth/userinfo.profile', 'email']
 
     return this.oAuth2Client.generateAuthUrl({
