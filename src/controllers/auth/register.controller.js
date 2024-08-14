@@ -1,4 +1,4 @@
-import { BAD_REQUEST, CREATED, INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
+import { BAD_REQUEST, CREATED } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
 
 export default class RegisterController extends BaseController {
@@ -7,7 +7,7 @@ export default class RegisterController extends BaseController {
     this.authService = authService
   }
 
-  async register(req, res) {
+  async register(req, res, next) {
     const data = req.body
 
     try {
@@ -19,7 +19,7 @@ export default class RegisterController extends BaseController {
 
       return super.json(res, CREATED, __('success'))
     } catch (error) {
-      return super.json(res, INTERNAL_SERVER_ERROR, __('failure'), error.message)
+      next(error)
     }
   }
 }
