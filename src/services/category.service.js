@@ -12,10 +12,5 @@ export default class CategoryService extends BaseService {
     return super.paginate({ page, limit, q })
   }
 
-  async create(data = {}) {
-    const { name, parentId, status, featured, order, image } = data
-
-    const category = await super.create(categoryData)
-    console.log(db.Category.prototype)
-  }
+  async create(data = {}) {}
 }

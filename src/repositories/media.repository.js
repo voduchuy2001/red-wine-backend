@@ -6,8 +6,8 @@ export default class MediaRepository extends BaseRepository {
     super(db.Media)
   }
 
-  async getMediaByProduct(productId) {
-    return await this.findAll({
+  async getMediaByProductId(productId) {
+    return this.findAll({
       where: {
         productId
       },
@@ -16,11 +16,11 @@ export default class MediaRepository extends BaseRepository {
   }
 
   async getMediaById(mediaId) {
-    return await this.findByPk(mediaId)
+    return this.findByPk(mediaId)
   }
 
   async deleteMedia(mediaId) {
-    return await this.destroy({
+    return this.destroy({
       where: {
         id: mediaId
       }

@@ -49,7 +49,7 @@ async function bootstrap() {
   const host = process.env.APP_URL || 'localhost'
   const port = process.env.PORT || 6969
   server.listen(port, () => {
-    console.log(`[http://${host}:${port}]`)
+    console.log(`${host}:${port}]`)
   })
 }
 
