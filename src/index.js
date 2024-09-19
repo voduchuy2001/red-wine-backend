@@ -28,6 +28,7 @@ async function bootstrap() {
 
   view(app)
   filesystems(app)
+  app.use(multer)
   app.use(morganMiddleware)
   app.use(cors())
   app.use(cookieParser())
@@ -42,14 +43,13 @@ async function bootstrap() {
   app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
   app.use('/', routes)
   app.use(errorHandler)
-  app.use(multer)
   app.use(notFound)
   app.set('io', io)
 
   const host = process.env.APP_URL || 'localhost'
   const port = process.env.PORT || 6969
   server.listen(port, () => {
-    console.log(`${host}:${port}]`)
+    console.log(`${host}:${port}`)
   })
 }
 

@@ -25,12 +25,7 @@ export default class AuthService {
     findUser.update({ lastLoginAt: new Date() })
     await findUser.save()
 
-    const loggedInUser = findUser.get({ plain: true })
-    delete loggedInUser.password
-
-    loggedInUser.token = JWT.generate(findUser.id, '7d')
-
-    return loggedInUser
+    return JWT.generate(findUser.id, '7d')
   }
 
   async register(data) {
@@ -43,6 +38,15 @@ export default class AuthService {
 
     const hashedPassword = await Bcrypt.hashPassword(password)
     const avatar = generateAvatar(email, 200) || null
-    return !!(await this.userRepository.create({ email, avatar, password: hashedPassword }))
+    return await this.userRepository.create({ email, avatar, password: hashedPassword })
+  }
+
+  async authenticated(id) {
+    const user = await this.userRepository.getUserPermissions(id)
+    if (!user) {
+      throw new ServiceException(401, __('User not found'))
+    }
+
+    return user
   }
 }

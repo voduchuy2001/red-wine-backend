@@ -1,8 +1,8 @@
 import 'dotenv/config'
 import { FORBIDDEN, UNAUTHORIZED } from '@constants/http.status.code'
-import HttpHelper from '@utils/http'
 import jwt from 'jsonwebtoken'
 import UserRepository from '@repositories/user.repository'
+import HttpHelper from '@utils/http'
 
 export const auth = (req, res, next) => {
   const token = req.headers?.authorization?.split(' ')[1]
@@ -11,12 +11,11 @@ export const auth = (req, res, next) => {
   }
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET_KEY)
-
-    req.auth = payload
+    req.auth = jwt.verify(token, process.env.JWT_SECRET_KEY)
     next()
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    next(error)
+    return HttpHelper.json(res, UNAUTHORIZED, __('Token is invalid'))
   }
 }
 
@@ -26,38 +25,12 @@ const getUserPermissions = (user) => {
   return new Set([...rolePermissions, ...userPermissions])
 }
 
-export const hasPermission = (permissions) => async (req, res, next) => {
-  const { data: userId } = req.auth
+export const authorize =
+  (permissions, option = 'every', userRepository = new UserRepository()) =>
+  async (req, res, next) => {
+    const { data: id } = req.auth
 
-  try {
-    const userRepository = new UserRepository()
-    const userWithPermissions = await userRepository.getAllPermissions(userId)
-
-    if (!userWithPermissions) {
-      return HttpHelper.json(res, UNAUTHORIZED, __('User not found'))
-    }
-
-    const allPermissions = getUserPermissions(userWithPermissions)
-    const requiredPermissionsArray = Array.isArray(permissions) ? permissions : [permissions]
-
-    const hadRequiredPermissions = requiredPermissionsArray.every((permission) => allPermissions.includes(permission))
-
-    if (!hadRequiredPermissions) {
-      return HttpHelper.json(res, FORBIDDEN, __('Forbidden'))
-    }
-
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
-export const hasAnyPermission = (permissions) => async (req, res, next) => {
-  const { data: userId } = req.auth
-
-  try {
-    const userRepository = new UserRepository()
-    const userWithPermissions = await userRepository.getAllPermissions(userId)
+    const userWithPermissions = await userRepository.getUserPermissions(id)
 
     if (!userWithPermissions) {
       return HttpHelper.json(res, UNAUTHORIZED, __('User not found'))
@@ -66,24 +39,14 @@ export const hasAnyPermission = (permissions) => async (req, res, next) => {
     const allPermissions = getUserPermissions(userWithPermissions)
     const requiredPermissionsArray = Array.isArray(permissions) ? permissions : [permissions]
 
-    const hadRequiredPermissions = requiredPermissionsArray.some((permission) => allPermissions.includes(permission))
+    const hadRequiredPermissions =
+      option === 'every'
+        ? requiredPermissionsArray.every((permission) => allPermissions.has(permission))
+        : requiredPermissionsArray.some((permission) => allPermissions.has(permission))
 
     if (!hadRequiredPermissions) {
       return HttpHelper.json(res, FORBIDDEN, __('Forbidden'))
     }
 
     next()
-  } catch (error) {
-    next(error)
   }
-}
-
-export const hasRole = (roles) => async (req, res, next) => {
-  const { data: userId } = req.auth
-
-  try {
-    next()
-  } catch (error) {
-    next(error)
-  }
-}

@@ -3,6 +3,5 @@ import HttpHelper from '@utils/http'
 
 export const notFound = (req, res, next) => {
   const error = new Error(`Not Found - ${req.originalUrl}`)
-  HttpHelper.json(res, NOT_FOUND, error.message)
-  next(error.message)
+  return HttpHelper.json(res, NOT_FOUND, error.message)
 }

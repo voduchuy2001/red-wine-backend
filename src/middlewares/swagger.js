@@ -4,9 +4,8 @@ export const authenticate = (req, res, next) => {
 }
 
 export const authenticated = (req, res, next) => {
-  if (req.session && req.session.authenticated) {
-    return next()
+  if (!req.session || !req.session.authenticated) {
+    return res.redirect('/swagger-sign-in')
   }
-
-  return res.redirect('/swagger-sign-in')
+  next()
 }

@@ -48,9 +48,13 @@ export default class VNPayService {
     host = host.trim()
     endpoint = endpoint.trim()
 
-    if (host.endsWith('/') || host.endsWith('\\)')) host = host.slice(0, -1)
+    if (host.endsWith('/') || host.endsWith('\\)')) {
+      host = host.slice(0, -1)
+    }
 
-    if (endpoint.startsWith('/') || endpoint.startsWith('\\)')) host = host.slice(0, -1)
+    if (endpoint.startsWith('/') || endpoint.startsWith('\\)')) {
+      host = host.slice(0, -1)
+    }
 
     return `${host}/${endpoint}`
   }
@@ -141,12 +145,10 @@ export default class VNPayService {
       })
     }
 
-    const result = {
+    return {
       ...queryData,
       ...outputResults,
       vnp_Amount: queryData.vnp_Amount / 100
     }
-
-    return result
   }
 }

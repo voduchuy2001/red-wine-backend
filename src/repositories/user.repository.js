@@ -6,30 +6,30 @@ export default class UserRepository extends BaseRepository {
     super(db.User)
   }
 
-  async getAllPermissions(userId) {
+  async getUserPermissions(id) {
     return await super.findOne({
-      where: {
-        id: userId
-      },
-      attributes: ['id'],
+      where: { id },
+      attributes: { exclude: ['password'] },
       include: [
         {
           model: db.Role,
           as: 'roles',
-          attributes: ['id'],
+          attributes: ['id', 'name', 'code'],
           required: false,
           include: {
             model: db.Permission,
             as: 'permissions',
-            attributes: ['id', 'code'],
-            required: false
+            attributes: ['id', 'code', 'name', 'description'],
+            required: false,
+            through: { attributes: [] }
           }
         },
         {
           model: db.Permission,
           as: 'permissions',
-          attributes: ['id', 'code'],
-          required: false
+          attributes: ['id', 'code', 'name', 'description'],
+          required: false,
+          through: { attributes: [] }
         }
       ]
     })

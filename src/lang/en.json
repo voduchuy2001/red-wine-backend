@@ -35,5 +35,13 @@
 	"Continue to API Document": "Continue to API Document",
 	"notEmpty": "notEmpty",
 	"success": "success",
-	"failure": "failure"
+	"failure": "failure",
+	"Email has been already exist": "Email has been already exist",
+	"User not found": "User not found",
+	"Password does not match": "Password does not match",
+	"Validation Error": "Validation Error",
+	"Auth exception": "Auth exception",
+	"Token is invalid": "Token is invalid",
+	"Missing  token": "Missing  token",
+	"File not found": "File not found"
 }
