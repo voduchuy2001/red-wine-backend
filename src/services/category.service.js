@@ -1,4 +1,3 @@
-import db from '@models/index'
 import BaseService from './base.service'
 
 export default class CategoryService extends BaseService {
@@ -11,6 +10,4 @@ export default class CategoryService extends BaseService {
     const { page, limit, q } = data
     return super.paginate({ page, limit, q })
   }
-
-  async create(data = {}) {}
 }

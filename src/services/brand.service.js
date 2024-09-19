@@ -36,7 +36,7 @@ export default class BrandService extends BaseService {
     const brand = await super.create(sanitizedData)
 
     if (!brand) {
-      throw new HttpException(BAD_REQUEST, 'Could not create brand')
+      throw new HttpException(BAD_REQUEST, __('Could not create brand'))
     }
 
     if (logo) {

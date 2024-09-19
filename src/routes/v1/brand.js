@@ -1,5 +1,5 @@
 import BrandController from '@controllers/brand.controller'
-import { auth } from '@middlewares/authenticate'
+import { auth } from '@middlewares/authenticated'
 import { validate } from '@middlewares/validation'
 import BrandRepository from '@repositories/brand.repository'
 import MediaRepository from '@repositories/media.repository'

@@ -1,5 +1,5 @@
 import { GOOGLE_SERVICE } from '@config/services'
-import JWT from '@utils/jwt'
+import JWT from '@config/jwt'
 import { OAuth2Client } from 'google-auth-library'
 
 export default class GoogleOAuthService {
@@ -13,7 +13,6 @@ export default class GoogleOAuthService {
   }
 
   async redirect() {
-    console.log('checkeddd')
     const scope = ['https://www.googleapis.com/auth/userinfo.profile', 'email']
 
     return this.oAuth2Client.generateAuthUrl({
@@ -40,8 +39,8 @@ export default class GoogleOAuthService {
       loggedInUser.token = JWT.generate(userAccount.id, '7d')
 
       return loggedInUser
+      // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      console.log(error.message)
       return false
     }
   }
@@ -49,9 +48,13 @@ export default class GoogleOAuthService {
   async registerOrUpdateUser(email, name, picture) {
     let user = await this.userRepository.findOne({ where: { email } })
 
-    if (!user) user = await this.userRepository.create({ email, name, avatar: picture })
+    if (!user) {
+      user = await this.userRepository.create({ email, name, avatar: picture })
+    }
 
-    user.update({ lastLoginAt: new Date() })
+    const current = new Date()
+
+    user.update({ lastLoginAt: current })
     await user.save()
 
     return user

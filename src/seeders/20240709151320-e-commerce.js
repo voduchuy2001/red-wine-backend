@@ -149,8 +149,8 @@ module.exports = {
       }
     ])
 
-    // Insert ProductCategories
-    await queryInterface.bulkInsert('ProductCategories', [
+    // Insert ProductCategory
+    await queryInterface.bulkInsert('ProductCategory', [
       {
         productId: products.find((p) => p.name === 'iPhone 15 Pro Max').id,
         categoryId: categories.find((c) => c.name === 'Electronics').id
@@ -205,7 +205,7 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Media', null, {})
-    await queryInterface.bulkDelete('ProductCategories', null, {})
+    await queryInterface.bulkDelete('ProductCategory', null, {})
     await queryInterface.bulkDelete('VariantOptions', null, {})
     await queryInterface.bulkDelete('OptionValues', null, {})
     await queryInterface.bulkDelete('ProductVariants', null, {})

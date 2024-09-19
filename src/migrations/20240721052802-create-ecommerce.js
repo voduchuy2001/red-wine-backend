@@ -207,7 +207,7 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable('ProductCategories', {
+    await queryInterface.createTable('ProductCategory', {
       productId: {
         type: Sequelize.BIGINT,
         references: {
@@ -270,7 +270,7 @@ module.exports = {
     await queryInterface.addIndex('Categories', ['parentId'])
     await queryInterface.addIndex('ProductVariants', ['productId'])
     await queryInterface.addIndex('VariantOptions', ['variantId', 'optionValueId'])
-    await queryInterface.addIndex('ProductCategories', ['productId', 'categoryId'])
+    await queryInterface.addIndex('ProductCategory', ['productId', 'categoryId'])
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Brands')
@@ -280,6 +280,6 @@ module.exports = {
     await queryInterface.dropTable('Products')
     await queryInterface.dropTable('Categories')
     await queryInterface.dropTable('Media')
-    await queryInterface.dropTable('ProductCategories')
+    await queryInterface.dropTable('ProductCategory')
   }
 }

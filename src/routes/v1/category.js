@@ -1,5 +1,5 @@
 import CategoryController from '@controllers/category.controller'
-import { auth } from '@middlewares/authenticate'
+import { auth } from '@middlewares/authenticated'
 import { validate } from '@middlewares/validation'
 import CategoryRepository from '@repositories/category.repository'
 import MediaRepository from '@repositories/media.repository'

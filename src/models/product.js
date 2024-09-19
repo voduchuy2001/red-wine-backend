@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
 
       this.hasMany(models.ProductVariant, { foreignKey: 'productId', as: 'variants' })
 
-      this.belongsToMany(models.Category, { foreignKey: 'productId', through: 'ProductCategories', as: 'categories' })
+      this.belongsToMany(models.Category, { foreignKey: 'productId', through: 'ProductCategory', as: 'categories' })
 
       this.hasMany(models.Media, {
         foreignKey: 'mediableId',
