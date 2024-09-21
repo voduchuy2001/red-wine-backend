@@ -17,6 +17,7 @@ const userRepository = new UserRepository()
 const authService = new AuthService(userRepository)
 const loginController = new LoginController(authService)
 const registerController = new RegisterController(authService)
+const authenticatedController = new AuthenticateController(authService)
 
 router.post('/login', authLimiter, validate(loginRequest), loginController.login.bind(loginController))
 router.post('/register', validate(registerRequest), registerController.register.bind(registerController))
