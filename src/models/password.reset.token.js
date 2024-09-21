@@ -1,13 +1,14 @@
 import { Model } from 'sequelize'
 
-export default (sequelize, DataTypes) => {
-  class PasswordResetToken extends Model {
-    static associate(models) {}
-  }
+class PasswordResetToken extends Model {
+  static associate(models) {}
+}
+
+export default (sequelize, { STRING }) => {
   PasswordResetToken.init(
     {
-      email: DataTypes.STRING,
-      token: DataTypes.STRING
+      email: STRING,
+      token: STRING
     },
     {
       sequelize,

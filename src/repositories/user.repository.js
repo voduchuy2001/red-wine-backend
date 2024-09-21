@@ -6,7 +6,7 @@ class UserRepository extends BaseRepository {
     super(db.User)
   }
 
-  async getUserPermissions(id) {
+  async getPermissions(id) {
     return await super.findOne({
       where: { id },
       attributes: { exclude: ['password'] },
@@ -33,6 +33,10 @@ class UserRepository extends BaseRepository {
         }
       ]
     })
+  }
+
+  async findByEmail(email) {
+    return super.findOne({ where: { email } })
   }
 }
 

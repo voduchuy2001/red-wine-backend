@@ -32,7 +32,7 @@ export const authorize =
     const { data: id } = req.auth
 
     try {
-      const userWithPermissions = await userRepository.getUserPermissions(id)
+      const userWithPermissions = await userRepository.getPermissions(id)
 
       if (!userWithPermissions) {
         throw new AuthException(UNAUTHORIZED, __('Not found user'))

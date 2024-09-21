@@ -1,19 +1,21 @@
 'use strict'
 import { Model } from 'sequelize'
 
-export default (sequelize, DataTypes) => {
-  class Media extends Model {
-    static associate(models) {}
-  }
+class Media extends Model {
+  static associate(models) {}
+}
+
+export default (sequelize, { BIGINT, INTEGER, STRING }) => {
+
   Media.init(
     {
-      mediableType: DataTypes.STRING,
-      mediableId: DataTypes.BIGINT,
-      type: DataTypes.STRING,
-      mimeType: DataTypes.STRING,
-      size: DataTypes.INTEGER,
-      url: DataTypes.STRING,
-      alt: DataTypes.STRING
+      mediableType: STRING,
+      mediableId: BIGINT,
+      type: STRING,
+      mimeType: STRING,
+      size: INTEGER,
+      url: STRING,
+      alt: STRING
     },
     {
       sequelize,

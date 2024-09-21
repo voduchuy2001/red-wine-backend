@@ -7,16 +7,16 @@ export const validate = (validations) => async (req, res, next) => {
 
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    const errorMessages = errors.array().reduce((accumulator, { path, msg }) => {
+    const messages = errors.array().reduce((accumulator, { path, msg }) => {
       accumulator[path] = [...(accumulator[path] || []), msg]
       return accumulator
     }, {})
 
-    Object.keys(errorMessages).forEach((path) => {
-      errorMessages[path] = errorMessages[path].join('. ') + '.'
+    Object.keys(messages).forEach((path) => {
+      messages[path] = messages[path].join('. ') + '.'
     })
 
-    return next(new ValidationException(UNPROCESSABLE_ENTITY, errorMessages))
+    return next(new ValidationException(UNPROCESSABLE_ENTITY, messages))
   }
 
   next()

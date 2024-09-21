@@ -11,7 +11,7 @@ class AuthService {
   async login(data) {
     const { email, password } = data
 
-    const findUser = await this.userRepository.findOne({ where: { email } })
+    const findUser = await this.userRepository.findByEmail(email)
     if (!findUser) {
       throw new ServiceException(401, __('User not found'))
     }
@@ -35,7 +35,7 @@ class AuthService {
   async register(data) {
     const { email, password } = data
 
-    const existedUser = await this.userRepository.findOne({ where: { email } })
+    const existedUser = await this.userRepository.findByEmail(email)
     if (existedUser) {
       throw new ServiceException(400, __('Email has been already exist'))
     }

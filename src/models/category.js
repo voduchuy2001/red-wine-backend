@@ -1,34 +1,35 @@
 'use strict'
 import { Model } from 'sequelize'
 
-export default (sequelize, DataTypes) => {
-  class Category extends Model {
-    static associate(models) {
-      this.belongsToMany(models.Product, {
-        through: 'ProductCategory',
-        foreignKey: 'categoryId',
-        as: 'products',
-        timestamps: false
-      })
+class Category extends Model {
+  static associate({ Category, Product }) {
+    this.belongsToMany(Product, {
+      through: 'ProductCategory',
+      foreignKey: 'categoryId',
+      as: 'products',
+      timestamps: false
+    })
 
-      this.belongsTo(models.Category, {
-        foreignKey: 'parentId',
-        as: 'parent'
-      })
+    this.belongsTo(Category, {
+      foreignKey: 'parentId',
+      as: 'parent'
+    })
 
-      this.hasMany(models.Category, {
-        foreignKey: 'parentId',
-        as: 'children'
-      })
-    }
+    this.hasMany(Category, {
+      foreignKey: 'parentId',
+      as: 'children'
+    })
   }
+}
+
+export default (sequelize, { BIGINT, STRING, TINYINT }) => {
   Category.init(
     {
-      parentId: DataTypes.BIGINT,
-      name: DataTypes.STRING,
-      status: DataTypes.STRING,
-      featured: DataTypes.TINYINT,
-      order: DataTypes.TINYINT
+      parentId: BIGINT,
+      name: STRING,
+      status: STRING,
+      featured: TINYINT,
+      order: TINYINT
     },
     {
       sequelize,

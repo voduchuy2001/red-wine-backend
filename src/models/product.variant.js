@@ -1,24 +1,25 @@
 'use strict'
 import { Model } from 'sequelize'
 
-export default (sequelize, DataTypes) => {
-  class ProductVariant extends Model {
-    static associate(models) {
-      this.belongsTo(models.Product, { foreignKey: 'productId', as: 'product' })
+class ProductVariant extends Model {
+  static associate({ OptionValue, Product }) {
+    this.belongsTo(Product, { foreignKey: 'productId', as: 'product' })
 
-      ProductVariant.belongsToMany(models.OptionValue, {
-        through: 'VariantOptions',
-        as: 'options',
-        foreignKey: 'variantId'
-      })
-    }
+    ProductVariant.belongsToMany(OptionValue, {
+      through: 'VariantOptions',
+      as: 'options',
+      foreignKey: 'variantId'
+    })
   }
+}
+
+export default (sequelize, { BIGINT, DECIMAL, INTEGER }) => {
   ProductVariant.init(
     {
-      productId: DataTypes.BIGINT,
-      price: DataTypes.DECIMAL,
-      salePrice: DataTypes.DECIMAL,
-      quantity: DataTypes.INTEGER
+      productId: BIGINT,
+      price: DECIMAL,
+      salePrice: DECIMAL,
+      quantity: INTEGER
     },
     {
       sequelize,

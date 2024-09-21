@@ -15,6 +15,28 @@ class AdministrativeController extends BaseController {
       next(error)
     }
   }
+
+  districts(req, res, next) {
+    const {provinceId} = req.params
+
+    try {
+      const districts = this.administrativeUnitService.districts(provinceId)
+      return super.json(res, OK, __('Success'), districts)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  wards(req, res, next) {
+    const {districtId} = req.params
+
+    try {
+      const wards = this.administrativeUnitService.wards(districtId)
+      return super.json(res, OK, __('Success'), wards)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 export default AdministrativeController

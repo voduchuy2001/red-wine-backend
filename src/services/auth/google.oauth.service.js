@@ -46,7 +46,7 @@ class GoogleOAuthService {
   }
 
   async registerOrUpdateUser(email, name, picture) {
-    let user = await this.userRepository.findOne({ where: { email } })
+    let user = await this.userRepository.findByEmail(email)
 
     if (!user) {
       user = await this.userRepository.create({ email, name, avatar: picture })

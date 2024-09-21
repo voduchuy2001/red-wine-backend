@@ -1,34 +1,35 @@
 import { Model } from 'sequelize'
 
-export default (sequelize, DataTypes) => {
-  class Role extends Model {
-    static associate(models) {
-      this.belongsToMany(models.User, {
-        through: {
-          model: 'ModelHasRoles',
-          scope: {
-            modelType: 'user'
-          }
-        },
-        foreignKey: 'modelId',
-        as: 'users',
-        timestamps: false
-      })
+class Role extends Model {
+  static associate({ Permission, User }) {
+    this.belongsToMany(User, {
+      through: {
+        model: 'ModelHasRoles',
+        scope: {
+          modelType: 'user'
+        }
+      },
+      foreignKey: 'modelId',
+      as: 'users',
+      timestamps: false
+    })
 
-      this.belongsToMany(models.Permission, {
-        through: 'RoleHasPermissions',
-        foreignKey: 'roleId',
-        otherKey: 'permissionId',
-        as: 'permissions',
-        timestamps: false
-      })
-    }
+    this.belongsToMany(Permission, {
+      through: 'RoleHasPermissions',
+      foreignKey: 'roleId',
+      otherKey: 'permissionId',
+      as: 'permissions',
+      timestamps: false
+    })
   }
+}
+
+export default (sequelize, { STRING }) => {
   Role.init(
     {
-      name: DataTypes.STRING,
-      code: DataTypes.STRING,
-      description: DataTypes.STRING
+      name: STRING,
+      code: STRING,
+      description: STRING
     },
     {
       sequelize,

@@ -1,15 +1,16 @@
 'use strict'
 import { Model } from 'sequelize'
 
-export default (sequelize, DataTypes) => {
-  class OptionValue extends Model {
-    static associate(models) {
-      this.belongsToMany(models.Variant, { through: 'VariantOptions', as: 'variants', timestamps: false })
-    }
+class OptionValue extends Model {
+  static associate({ Variant }) {
+    this.belongsToMany(Variant, { through: 'VariantOptions', as: 'variants', timestamps: false })
   }
+}
+
+export default (sequelize, { STRING }) => {
   OptionValue.init(
     {
-      name: DataTypes.STRING
+      name: STRING
     },
     {
       sequelize,
