@@ -10,6 +10,8 @@
           "@constants": "./src/constants",
           "@controllers": "./src/controllers",
           "@documents": "./src/documents",
+          "@dtos": "./src/dtos",
+          "@events": "./src/events",
           "@exceptions": "./src/exceptions",
           "@middlewares": "./src/middlewares",
           "@models": "./src/models",

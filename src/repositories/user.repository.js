@@ -38,6 +38,11 @@ class UserRepository extends BaseRepository {
   async findByEmail(email) {
     return super.findOne({ where: { email } })
   }
+
+  async updateLastLoginAt(id) {
+    const current = new Date()
+    return super.update(id, { lastLoginAt: current })
+  }
 }
 
 export default UserRepository

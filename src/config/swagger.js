@@ -2,14 +2,17 @@ import path from 'path'
 import swaggerJsdoc from 'swagger-jsdoc'
 import 'dotenv/config'
 
+const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 6969
+const version = process.env.VERION || 'v1'
+
 const swaggerDefinition = {
   info: {
     title: 'API Red Wine',
     version: '1.0.0',
     description: 'API Documentation'
   },
-  host: `${process.env.APP_URL}:${port}`
+  host: `${host}:${port}/${version}`
 }
 
 const options = {

@@ -8,7 +8,7 @@ $(document).ready(function () {
     clearErrorMessages()
 
     $.ajax({
-      url: '/swagger-sign-in',
+      url: '/v1/swagger-sign-in',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({ username, password }),
