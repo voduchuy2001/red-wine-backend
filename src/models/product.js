@@ -7,7 +7,7 @@ class Product extends Model {
 
     this.hasMany(ProductVariant, { foreignKey: 'productId', as: 'variants' })
 
-    this.belongsToMany(Category, { foreignKey: 'productId', through: 'ProductCategory', as: 'categories' })
+    this.belongsToMany(Category, { foreignKey: 'productId', through: 'ProductCategories', as: 'categories' })
 
     this.hasMany(Media, {
       foreignKey: 'mediableId',
