@@ -1,7 +1,6 @@
 import { BAD_REQUEST, OK, UNAUTHORIZED } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
-
-export default class GoogleOAuthController extends BaseController {
+class GoogleOAuthController extends BaseController {
   constructor(googleOAuthService) {
     super()
     this.googleOAuthService = googleOAuthService
@@ -41,3 +40,5 @@ export default class GoogleOAuthController extends BaseController {
     }
   }
 }
+
+export default GoogleOAuthController

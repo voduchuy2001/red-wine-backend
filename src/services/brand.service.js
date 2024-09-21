@@ -1,3 +1,5 @@
 import BaseService from '@services/base.service'
 
-export default class BrandService extends BaseService {}
+class BrandService extends BaseService {}
+
+export default BrandService

@@ -14,7 +14,7 @@ import crypto from 'crypto'
 import moment from 'moment'
 import { Buffer } from 'buffer'
 
-export default class VNPayService {
+class VNPayService {
   constructor(settingRepository) {
     this.settingRepository = settingRepository
   }
@@ -152,3 +152,5 @@ export default class VNPayService {
     }
   }
 }
+
+export default VNPayService

@@ -1,7 +1,9 @@
 import BaseService from '@services/base.service'
 
-export default class ProductService extends BaseService {
+class ProductService extends BaseService {
   constructor(productRepository) {
     super(productRepository)
   }
 }
+
+export default ProductService

@@ -1,12 +1,11 @@
-import UserRepository from '@repositories/user.repository'
 import { generateAvatar } from '@utils/avatar'
 import Bcrypt from '@utils/bcrypt'
 import JWT from '@config/jwt'
 import ServiceException from '@exceptions/service.exception'
 
-export default class AuthService {
-  constructor() {
-    this.userRepository = new UserRepository()
+class AuthService {
+  constructor(userRepository) {
+    this.userRepository = userRepository
   }
 
   async login(data) {
@@ -25,7 +24,12 @@ export default class AuthService {
     findUser.update({ lastLoginAt: new Date() })
     await findUser.save()
 
-    return JWT.generate(findUser.id, '7d')
+    const loggedInUser = findUser.get({ plain: true })
+    delete loggedInUser.password
+
+    loggedInUser.token = JWT.generate(findUser.id, '7d')
+
+    return loggedInUser
   }
 
   async register(data) {
@@ -40,13 +44,6 @@ export default class AuthService {
     const avatar = generateAvatar(email, 200) || null
     return await this.userRepository.create({ email, avatar, password: hashedPassword })
   }
-
-  async authenticated(id) {
-    const user = await this.userRepository.getUserPermissions(id)
-    if (!user) {
-      throw new ServiceException(401, __('User not found'))
-    }
-
-    return user
-  }
 }
+
+export default AuthService

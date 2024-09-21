@@ -33,7 +33,6 @@
 	"I do not always test my code, but when I do, I do it in production.": "I do not always test my code, but when I do, I do it in production.",
 	"Welcome To {{app}} API Documentation": "Welcome To {{app}} API Documentation",
 	"Continue to API Document": "Continue to API Document",
-	"notEmpty": "notEmpty",
 	"success": "success",
 	"failure": "failure",
 	"Email has been already exist": "Email has been already exist",

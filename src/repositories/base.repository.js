@@ -1,4 +1,4 @@
-export default class BaseRepository {
+class BaseRepository {
   constructor(model) {
     this.model = model
   }
@@ -31,3 +31,5 @@ export default class BaseRepository {
     return this.findAll({ limit, offset, ...params })
   }
 }
+
+export default BaseRepository

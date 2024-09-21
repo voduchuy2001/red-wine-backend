@@ -1,7 +1,9 @@
 import BaseService from './base.service'
 
-export default class CategoryService extends BaseService {
-  constructor(categoryRepository) {
+class CategoryService extends BaseService {
+  constructor(categoryRepository, mediaRepository) {
     super(categoryRepository)
   }
 }
+
+export default CategoryService

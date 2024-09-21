@@ -1,4 +1,4 @@
-export default class BaseController {
+class BaseController {
   json(res, status, message, data = null) {
     return res.status(status).json({ status, message, data })
   }
@@ -7,3 +7,5 @@ export default class BaseController {
     return res.render(viewName, data)
   }
 }
+
+export default BaseController

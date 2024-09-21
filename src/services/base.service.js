@@ -1,4 +1,4 @@
-export default class BaseService {
+class BaseService {
   constructor(repository) {
     this.repository = repository
   }
@@ -31,3 +31,5 @@ export default class BaseService {
     return this.repository.paginate(options)
   }
 }
+
+export default BaseService

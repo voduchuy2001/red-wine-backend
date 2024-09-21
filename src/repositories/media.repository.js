@@ -1,7 +1,7 @@
 import db from '@models/index'
 import BaseRepository from './base.repository'
 
-export default class MediaRepository extends BaseRepository {
+class MediaRepository extends BaseRepository {
   constructor() {
     super(db.Media)
   }
@@ -36,3 +36,5 @@ export default class MediaRepository extends BaseRepository {
     })
   }
 }
+
+export default MediaRepository

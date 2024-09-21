@@ -2,7 +2,7 @@ import { GOOGLE_SERVICE } from '@config/services'
 import JWT from '@config/jwt'
 import { OAuth2Client } from 'google-auth-library'
 
-export default class GoogleOAuthService {
+class GoogleOAuthService {
   constructor(userRepository) {
     this.userRepository = userRepository
     this.oAuth2Client = new OAuth2Client(
@@ -60,3 +60,5 @@ export default class GoogleOAuthService {
     return user
   }
 }
+
+export default GoogleOAuthService

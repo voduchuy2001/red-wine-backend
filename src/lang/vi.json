@@ -33,5 +33,14 @@
   "I do not always test my code, but when I do, I do it in production.": "Tôi không luôn luôn kiểm tra mã của mình, nhưng khi kiểm tra, tôi thực hiện nó trong môi trường sản xuất.",
   "Welcome To {{app}} API Documentation": "Chào mừng đến với tài liệu API của {{app}}",
   "Continue to API Document": "Tiếp tục đến tài liệu API",
-  "success": "success"
+  "success": "thành công",
+  "failure": "thất bại",
+  "Email has been already exist": "Email đã tồn tại",
+  "User not found": "Không tìm thấy người dùng",
+  "Password does not match": "Mật khẩu không đúng",
+  "Validation Error": "Validation Error",
+  "Auth exception": "Auth exception",
+  "Token is invalid": "Token is invalid",
+  "Missing  token": "Missing  token",
+  "File not found": "File not found"
 }

@@ -1,7 +1,7 @@
 import db from '@models/index'
 import BaseRepository from '@repositories/base.repository'
 
-export default class ProductRepository extends BaseRepository {
+class ProductRepository extends BaseRepository {
   constructor() {
     super(db.Product)
     this.category = db.Category
@@ -57,3 +57,5 @@ export default class ProductRepository extends BaseRepository {
     return super.findOne(options)
   }
 }
+
+export default ProductRepository

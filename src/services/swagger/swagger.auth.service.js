@@ -2,7 +2,7 @@ import { swaggerAccount } from '@constants/swagger.account'
 import ServiceException from '@exceptions/service.exception'
 import Bcrypt from '@utils/bcrypt'
 
-export default class SwaggerAuthService {
+class SwaggerAuthService {
   async login(data) {
     const { username, password } = data
 
@@ -13,3 +13,5 @@ export default class SwaggerAuthService {
     return Bcrypt.comparePassword(password, swaggerAccount.password)
   }
 }
+
+export default SwaggerAuthService

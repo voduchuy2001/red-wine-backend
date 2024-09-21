@@ -1,7 +1,7 @@
 import { OK, UNAUTHORIZED } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
 
-export default class SwaggerAuthController extends BaseController {
+class SwaggerAuthController extends BaseController {
   constructor(swaggerAuthService) {
     super()
     this.swaggerAuthService = swaggerAuthService
@@ -33,3 +33,5 @@ export default class SwaggerAuthController extends BaseController {
     }
   }
 }
+
+export default SwaggerAuthController

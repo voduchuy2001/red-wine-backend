@@ -1,6 +1,6 @@
 import BaseController from '@controllers/base.controller'
 
-export default class WelcomeController extends BaseController {
+class WelcomeController extends BaseController {
   constructor() {
     super()
   }
@@ -14,3 +14,5 @@ export default class WelcomeController extends BaseController {
     }
   }
 }
+
+export default WelcomeController

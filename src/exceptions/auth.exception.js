@@ -1,7 +1,7 @@
-import HttpException from '@exceptions/http.exception'
-
-export default class AuthException extends HttpException {
+class AuthException extends Error {
   constructor(status = 400, message = __('Auth exception')) {
     super(status, message)
   }
 }
+
+export default AuthException
