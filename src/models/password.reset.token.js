@@ -1,7 +1,14 @@
+'use strict'
+
 import { Model } from 'sequelize'
 
 class PasswordResetToken extends Model {
-  static associate(models) {}
+  static associate({ User }) {
+    this.belongsTo(User, {
+      foreignKey: 'email',
+      as: 'user'
+    })
+  }
 }
 
 export default (sequelize, { STRING }) => {
@@ -13,6 +20,7 @@ export default (sequelize, { STRING }) => {
     {
       sequelize,
       modelName: 'PasswordResetToken',
+      tableName: 'PasswordResetTokens',
       updatedAt: false
     }
   )

@@ -1,37 +1,53 @@
 'use strict'
+
 import { Model } from 'sequelize'
 
 class Product extends Model {
-  static associate({ Brand, Category, Media }) {
-    this.belongsTo(Brand, { foreignKey: 'brandId', as: 'brand' })
+  static associate({ Brand, Category, Media, SKU }) {
+    this.belongsTo(Brand, {
+      foreignKey: 'brandId',
+      as: 'brand'
+    })
 
-    this.belongsToMany(Category, { foreignKey: 'productId', through: 'ProductCategories', as: 'categories' })
+    this.belongsToMany(Category, {
+      foreignKey: 'productId',
+      through: 'ProductCategories',
+      as: 'categories'
+    })
 
     this.hasMany(Media, {
       foreignKey: 'mediableId',
       constraints: false,
-      scope: { mediableType: 'product' },
+      scope: {
+        mediableType: 'Product'
+      },
       as: 'media'
+    })
+
+    this.hasMany(SKU, {
+      foreignKey: 'productId',
+      as: 'skus'
     })
   }
 }
 
-export default (sequelize, { BIGINT, DECIMAL, INTEGER, STRING, TEXT, TINYINT }) => {
+export default (sequelize, { BIGINT, DECIMAL, INTEGER, STRING, TEXT }) => {
   Product.init(
     {
       brandId: BIGINT,
       name: STRING,
-      status: STRING,
+      code: STRING,
       description: TEXT,
-      sku: STRING,
-      quantity: INTEGER,
-      order: TINYINT,
+      status: STRING,
       price: DECIMAL,
-      salePrice: DECIMAL
+      salePrice: DECIMAL,
+      quantity: INTEGER,
+      order: INTEGER
     },
     {
       sequelize,
-      modelName: 'Product'
+      modelName: 'Product',
+      tableName: 'Products'
     }
   )
   return Product

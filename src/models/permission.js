@@ -1,3 +1,5 @@
+'use strict'
+
 import { Model } from 'sequelize'
 
 class Permission extends Model {
@@ -14,7 +16,7 @@ class Permission extends Model {
       through: {
         model: 'ModelHasPermissions',
         scope: {
-          modelType: 'user'
+          modelType: 'User'
         }
       },
       foreignKey: 'permissionId',
@@ -33,7 +35,8 @@ export default (sequelize, { STRING }) => {
     },
     {
       sequelize,
-      modelName: 'Permission'
+      modelName: 'Permission',
+      tableName: 'Permissions'
     }
   )
   return Permission

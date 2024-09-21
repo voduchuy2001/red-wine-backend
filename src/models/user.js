@@ -1,12 +1,14 @@
+'use strict'
+
 import { Model } from 'sequelize'
 
 class User extends Model {
-  static associate({ Permission, Role }) {
+  static associate({ Permission, Role, PasswordResetToken }) {
     this.belongsToMany(Role, {
       through: {
         model: 'ModelHasRoles',
         scope: {
-          modelType: 'user'
+          modelType: 'User'
         }
       },
       foreignKey: 'modelId',
@@ -14,11 +16,16 @@ class User extends Model {
       timestamps: false
     })
 
+    this.hasMany(PasswordResetToken, {
+      foreignKey: 'email',
+      as: 'resetPasswordTokens'
+    })
+
     this.belongsToMany(Permission, {
       through: {
         model: 'ModelHasPermissions',
         scope: {
-          modelType: 'user'
+          modelType: 'User'
         }
       },
       foreignKey: 'modelId',
@@ -41,9 +48,9 @@ export default (sequelize, { DATE, STRING }) => {
     },
     {
       sequelize,
-      modelName: 'User'
+      modelName: 'User',
+      tableName: 'Users'
     }
   )
-
   return User
 }

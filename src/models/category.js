@@ -1,4 +1,5 @@
 'use strict'
+
 import { Model } from 'sequelize'
 
 class Category extends Model {
@@ -22,18 +23,19 @@ class Category extends Model {
   }
 }
 
-export default (sequelize, { BIGINT, STRING, TINYINT }) => {
+export default (sequelize, { BIGINT, STRING, INTEGER }) => {
   Category.init(
     {
       parentId: BIGINT,
       name: STRING,
       status: STRING,
-      featured: TINYINT,
-      order: TINYINT
+      featured: INTEGER,
+      order: INTEGER
     },
     {
       sequelize,
-      modelName: 'Category'
+      modelName: 'Category',
+      tableName: 'Categories'
     }
   )
   return Category

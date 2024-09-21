@@ -1,3 +1,5 @@
+'use strict'
+
 import { Model } from 'sequelize'
 
 class Role extends Model {
@@ -6,7 +8,7 @@ class Role extends Model {
       through: {
         model: 'ModelHasRoles',
         scope: {
-          modelType: 'user'
+          modelType: 'User'
         }
       },
       foreignKey: 'modelId',
@@ -33,7 +35,8 @@ export default (sequelize, { STRING }) => {
     },
     {
       sequelize,
-      modelName: 'Role'
+      modelName: 'Role',
+      tableName: 'Roles'
     }
   )
   return Role

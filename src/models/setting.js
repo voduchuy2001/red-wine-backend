@@ -1,4 +1,5 @@
 'use strict'
+
 import { Model } from 'sequelize'
 
 class Setting extends Model {
@@ -13,7 +14,8 @@ export default (sequelize, { STRING, TEXT }) => {
     },
     {
       sequelize,
-      modelName: 'Setting'
+      modelName: 'Setting',
+      tableName: 'Settings'
     }
   )
   return Setting

@@ -18,6 +18,7 @@ module.exports = {
       {
         brandId: insertedBrands[0][0].id,
         name: 'Nike Air Max',
+        code: 'NAM',
         description: faker.commerce.productDescription(),
         status: 'published',
         createdAt: new Date(),
@@ -26,6 +27,7 @@ module.exports = {
       {
         brandId: insertedBrands[0][1].id,
         name: 'Adidas Ultraboost',
+        code: 'AAU',
         description: faker.commerce.productDescription(),
         status: 'published',
         createdAt: new Date(),
@@ -34,6 +36,7 @@ module.exports = {
       {
         brandId: insertedBrands[0][2].id,
         name: 'iPhone 14',
+        code: 'IP14',
         description: faker.commerce.productDescription(),
         status: 'published',
         createdAt: new Date(),
@@ -42,6 +45,7 @@ module.exports = {
       {
         brandId: insertedBrands[0][3].id,
         name: 'Samsung Galaxy S22',
+        code: 'SS22',
         description: faker.commerce.productDescription(),
         status: 'published',
         createdAt: new Date(),

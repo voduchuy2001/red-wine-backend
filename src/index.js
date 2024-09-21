@@ -38,7 +38,7 @@ async function bootstrap() {
   app.use(i18n.init)
   app.use(lang)
   app.use(session)
-  app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
+  app.use('/v1/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
   app.use('/v1', routes)
   app.use(notFound)
   app.set('io', io)

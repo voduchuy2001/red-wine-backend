@@ -20,13 +20,13 @@ module.exports = {
         type: Sequelize.TEXT
       },
       status: {
-        type: Sequelize.ENUM(['published', 'draft', 'pending'])
+        type: Sequelize.STRING(50)
       },
       featured: {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       },
       order: {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -59,13 +59,13 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM(['published', 'draft', 'pending'])
+        type: Sequelize.STRING(50)
       },
       featured: {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       },
       order: {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -97,14 +97,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      code: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       description: {
         type: Sequelize.TEXT
       },
       status: {
-        type: Sequelize.ENUM(['published', 'draft', 'pending'])
-      },
-      sku: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       price: {
         type: Sequelize.DECIMAL(12, 2)
@@ -116,7 +117,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       order: {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -129,70 +130,168 @@ module.exports = {
     })
 
     await queryInterface.createTable('SKUs', {
-      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.BIGINT },
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.BIGINT
+      },
       productId: {
         type: Sequelize.BIGINT,
-        references: { model: 'Products', key: 'id' },
+        references: {
+          model: 'Products',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      code: { type: Sequelize.STRING, allowNull: false },
-      price: { type: Sequelize.DOUBLE, allowNull: false },
-      stock: { type: Sequelize.INTEGER }, // new field
-      status: { type: Sequelize.ENUM(['active', 'inactive']) }, // new field
-      createdAt: { allowNull: false, type: Sequelize.DATE },
-      updatedAt: { allowNull: false, type: Sequelize.DATE }
+      code: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      price: {
+        type: Sequelize.DECIMAL(12, 2)
+      },
+      salePrice: {
+        type: Sequelize.DECIMAL(12, 2)
+      },
+      stock: {
+        type: Sequelize.INTEGER
+      },
+      status: {
+        type: Sequelize.STRING(50)
+      },
+      isDefault: {
+        type: Sequelize.BOOLEAN
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     })
 
     await queryInterface.createTable('Attributes', {
-      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.BIGINT },
-      name: { type: Sequelize.STRING, allowNull: false },
-      description: { type: Sequelize.TEXT },
-      isVisible: { type: Sequelize.BOOLEAN },
-      createdAt: { allowNull: false, type: Sequelize.DATE },
-      updatedAt: { allowNull: false, type: Sequelize.DATE }
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.BIGINT
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.TEXT
+      },
+      isVisible: {
+        type: Sequelize.BOOLEAN
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     })
 
     await queryInterface.createTable('AttributeOptions', {
-      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.BIGINT },
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.BIGINT
+      },
       attributeId: {
         type: Sequelize.BIGINT,
-        references: { model: 'Attributes', key: 'id' },
+        references: {
+          model: 'Attributes',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      value: { type: Sequelize.STRING, allowNull: false },
-      isDefault: { type: Sequelize.BOOLEAN },
-      order: { type: Sequelize.TINYINT },
-      createdAt: { allowNull: false, type: Sequelize.DATE },
-      updatedAt: { allowNull: false, type: Sequelize.DATE }
+      value: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      order: {
+        type: Sequelize.INTEGER
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     })
 
     await queryInterface.createTable('AttributeOptionSKUs', {
       skuId: {
         type: Sequelize.BIGINT,
-        references: { model: 'SKUs', key: 'id' },
+        references: {
+          model: 'SKUs',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
       attributeOptionId: {
         type: Sequelize.BIGINT,
-        references: { model: 'AttributeOptions', key: 'id' },
+        references: {
+          model: 'AttributeOptions',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      quantity: { type: Sequelize.INTEGER }
+      quantity: {
+        type: Sequelize.INTEGER
+      }
     })
 
     await queryInterface.createTable('Media', {
-      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.BIGINT },
-      mediableType: { type: Sequelize.STRING },
-      mediableId: { type: Sequelize.BIGINT },
-      url: { type: Sequelize.STRING, allowNull: false },
-      type: { type: Sequelize.STRING }, // new field
-      altText: { type: Sequelize.STRING }, // new field
-      createdAt: { allowNull: false, type: Sequelize.DATE },
-      updatedAt: { allowNull: false, type: Sequelize.DATE }
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.BIGINT
+      },
+      mediableType: {
+        type: Sequelize.STRING
+      },
+      mediableId: {
+        type: Sequelize.BIGINT
+      },
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      type: {
+        type: Sequelize.STRING
+      },
+      isDefault: {
+        type: Sequelize.BOOLEAN
+      },
+      altText: {
+        type: Sequelize.STRING
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     })
   },
   async down(queryInterface, Sequelize) {
