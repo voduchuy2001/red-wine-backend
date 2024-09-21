@@ -3,11 +3,11 @@ class BaseRepository {
     this.model = model
   }
 
-  async findAll(options = null) {
+  async findAll(options = {}) {
     return this.model.findAll(options)
   }
 
-  async findOne(options = null) {
+  async findOne(options = {}) {
     return this.model.findOne(options)
   }
 

@@ -30,7 +30,6 @@ $(document).ready(function () {
 
         if (xhr.status === 429) {
           $('#login-error').text(response.message).removeClass('d-none')
-          return
         }
       }
     })

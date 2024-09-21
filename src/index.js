@@ -18,7 +18,6 @@ import { session } from '@config/session'
 import { multer } from '@middlewares/multer'
 import i18n from '@config/lang'
 import lang from '@middlewares/lang'
-import { morganMiddleware } from '@middlewares/morgan'
 import errorHandler from '@middlewares/error.handler'
 
 async function bootstrap() {
@@ -29,7 +28,6 @@ async function bootstrap() {
   view(app)
   filesystems(app)
   app.use(multer)
-  app.use(morganMiddleware)
   app.use(cors())
   app.use(cookieParser())
   app.use(helmet())
@@ -41,10 +39,10 @@ async function bootstrap() {
   app.use(lang)
   app.use(session)
   app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
-  app.use('/', routes)
-  app.use(errorHandler)
+  app.use('/v1', routes)
   app.use(notFound)
   app.set('io', io)
+  app.use(errorHandler)
 
   const host = process.env.APP_URL || 'localhost'
   const port = process.env.PORT || 6969

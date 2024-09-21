@@ -42,5 +42,7 @@
 	"Auth exception": "Auth exception",
 	"Token is invalid": "Token is invalid",
 	"Missing  token": "Missing  token",
-	"File not found": "File not found"
+	"File not found": "File not found",
+	"Invalid token": "Invalid token",
+	"Not found user": "Not found user"
 }

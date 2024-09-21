@@ -1,5 +1,5 @@
 import { UNPROCESSABLE_ENTITY } from '@constants/http.status.code'
-import HttpHelper from '@utils/http'
+import ValidationException from '@exceptions/validation.exception'
 import { validationResult } from 'express-validator'
 
 export const validate = (validations) => async (req, res, next) => {
@@ -13,10 +13,10 @@ export const validate = (validations) => async (req, res, next) => {
     }, {})
 
     Object.keys(errorMessages).forEach((path) => {
-      errorMessages[path] = errorMessages[path] + '.'
+      errorMessages[path] = errorMessages[path].join('. ') + '.'
     })
 
-    return HttpHelper.json(res, UNPROCESSABLE_ENTITY, errorMessages)
+    return next(new ValidationException(UNPROCESSABLE_ENTITY, errorMessages))
   }
 
   next()

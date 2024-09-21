@@ -2,12 +2,13 @@ import 'dotenv/config'
 import { FORBIDDEN, UNAUTHORIZED } from '@constants/http.status.code'
 import jwt from 'jsonwebtoken'
 import UserRepository from '@repositories/user.repository'
-import HttpHelper from '@utils/http'
+import AuthException from '@exceptions/auth.exception'
+import ForbiddenException from '@exceptions/forbidden.exception'
 
 export const auth = (req, res, next) => {
   const token = req.headers?.authorization?.split(' ')[1]
   if (!token) {
-    return HttpHelper.json(res, UNAUTHORIZED, __('Missing token'))
+    throw new AuthException(UNAUTHORIZED, __('Missing token'))
   }
 
   try {
@@ -15,7 +16,7 @@ export const auth = (req, res, next) => {
     next()
     // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    return HttpHelper.json(res, UNAUTHORIZED, __('Token is invalid'))
+    throw new AuthException(UNAUTHORIZED, __('Invalid token'))
   }
 }
 
@@ -30,23 +31,27 @@ export const authorize =
   async (req, res, next) => {
     const { data: id } = req.auth
 
-    const userWithPermissions = await userRepository.getUserPermissions(id)
+    try {
+      const userWithPermissions = await userRepository.getUserPermissions(id)
 
-    if (!userWithPermissions) {
-      return HttpHelper.json(res, UNAUTHORIZED, __('User not found'))
+      if (!userWithPermissions) {
+        throw new AuthException(UNAUTHORIZED, __('Not found user'))
+      }
+
+      const allPermissions = getUserPermissions(userWithPermissions)
+      const requiredPermissionsArray = Array.isArray(permissions) ? permissions : [permissions]
+
+      const hadRequiredPermissions =
+        option === 'every'
+          ? requiredPermissionsArray.every((permission) => allPermissions.has(permission))
+          : requiredPermissionsArray.some((permission) => allPermissions.has(permission))
+
+      if (!hadRequiredPermissions) {
+        throw new ForbiddenException(FORBIDDEN, __('Forbidden'))
+      }
+
+      next()
+    } catch (error) {
+      next(error)
     }
-
-    const allPermissions = getUserPermissions(userWithPermissions)
-    const requiredPermissionsArray = Array.isArray(permissions) ? permissions : [permissions]
-
-    const hadRequiredPermissions =
-      option === 'every'
-        ? requiredPermissionsArray.every((permission) => allPermissions.has(permission))
-        : requiredPermissionsArray.some((permission) => allPermissions.has(permission))
-
-    if (!hadRequiredPermissions) {
-      return HttpHelper.json(res, FORBIDDEN, __('Forbidden'))
-    }
-
-    next()
   }

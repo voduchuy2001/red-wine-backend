@@ -1,7 +1,7 @@
 import { OK } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
 
-export default class AuthenticateController extends BaseController {
+class AuthenticateController extends BaseController {
   constructor(authService) {
     super()
     this.authService = authService
@@ -18,3 +18,5 @@ export default class AuthenticateController extends BaseController {
     }
   }
 }
+
+export default AuthenticateController

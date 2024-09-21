@@ -1,5 +1,6 @@
 import { OK } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
+
 class ProductController extends BaseController {
   constructor(productService) {
     super()
