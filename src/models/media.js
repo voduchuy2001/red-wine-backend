@@ -6,7 +6,6 @@ class Media extends Model {
 }
 
 export default (sequelize, { BIGINT, INTEGER, STRING }) => {
-
   Media.init(
     {
       mediableType: STRING,

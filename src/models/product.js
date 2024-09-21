@@ -2,10 +2,8 @@
 import { Model } from 'sequelize'
 
 class Product extends Model {
-  static associate({ Brand, Category, Media, ProductVariant }) {
+  static associate({ Brand, Category, Media }) {
     this.belongsTo(Brand, { foreignKey: 'brandId', as: 'brand' })
-
-    this.hasMany(ProductVariant, { foreignKey: 'productId', as: 'variants' })
 
     this.belongsToMany(Category, { foreignKey: 'productId', through: 'ProductCategories', as: 'categories' })
 

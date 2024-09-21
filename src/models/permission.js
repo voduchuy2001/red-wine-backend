@@ -24,7 +24,6 @@ class Permission extends Model {
   }
 }
 
-
 export default (sequelize, { STRING }) => {
   Permission.init(
     {

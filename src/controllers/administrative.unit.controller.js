@@ -17,7 +17,7 @@ class AdministrativeController extends BaseController {
   }
 
   districts(req, res, next) {
-    const {provinceId} = req.params
+    const { provinceId } = req.params
 
     try {
       const districts = this.administrativeUnitService.districts(provinceId)
@@ -28,7 +28,7 @@ class AdministrativeController extends BaseController {
   }
 
   wards(req, res, next) {
-    const {districtId} = req.params
+    const { districtId } = req.params
 
     try {
       const wards = this.administrativeUnitService.wards(districtId)

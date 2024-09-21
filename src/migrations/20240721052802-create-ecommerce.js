@@ -128,158 +128,82 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable('ProductVariants', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.BIGINT
-      },
+    await queryInterface.createTable('SKUs', {
+      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.BIGINT },
       productId: {
         type: Sequelize.BIGINT,
-        references: {
-          model: 'Products',
-          key: 'id'
-        },
+        references: { model: 'Products', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      price: {
-        type: Sequelize.DECIMAL(12, 2),
-        allowNull: false
-      },
-      salePrice: {
-        type: Sequelize.DECIMAL(12, 2)
-      },
-      quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      code: { type: Sequelize.STRING, allowNull: false },
+      price: { type: Sequelize.DOUBLE, allowNull: false },
+      stock: { type: Sequelize.INTEGER }, // new field
+      status: { type: Sequelize.ENUM(['active', 'inactive']) }, // new field
+      createdAt: { allowNull: false, type: Sequelize.DATE },
+      updatedAt: { allowNull: false, type: Sequelize.DATE }
     })
 
-    await queryInterface.createTable('OptionValues', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.BIGINT
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+    await queryInterface.createTable('Attributes', {
+      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.BIGINT },
+      name: { type: Sequelize.STRING, allowNull: false },
+      description: { type: Sequelize.TEXT },
+      isVisible: { type: Sequelize.BOOLEAN },
+      createdAt: { allowNull: false, type: Sequelize.DATE },
+      updatedAt: { allowNull: false, type: Sequelize.DATE }
     })
 
-    await queryInterface.createTable('VariantOptions', {
-      variantId: {
+    await queryInterface.createTable('AttributeOptions', {
+      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.BIGINT },
+      attributeId: {
         type: Sequelize.BIGINT,
-        references: {
-          model: 'ProductVariants',
-          key: 'id'
-        },
+        references: { model: 'Attributes', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      optionValueId: {
-        type: Sequelize.BIGINT,
-        references: {
-          model: 'OptionValues',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      }
+      value: { type: Sequelize.STRING, allowNull: false },
+      isDefault: { type: Sequelize.BOOLEAN },
+      order: { type: Sequelize.TINYINT },
+      createdAt: { allowNull: false, type: Sequelize.DATE },
+      updatedAt: { allowNull: false, type: Sequelize.DATE }
     })
 
-    await queryInterface.createTable('ProductCategories', {
-      productId: {
+    await queryInterface.createTable('AttributeOptionSKUs', {
+      skuId: {
         type: Sequelize.BIGINT,
-        references: {
-          model: 'Products',
-          key: 'id'
-        },
+        references: { model: 'SKUs', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      categoryId: {
+      attributeOptionId: {
         type: Sequelize.BIGINT,
-        references: {
-          model: 'Categories',
-          key: 'id'
-        },
+        references: { model: 'AttributeOptions', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
-      }
+      },
+      quantity: { type: Sequelize.INTEGER }
     })
 
     await queryInterface.createTable('Media', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.BIGINT
-      },
-      mediableType: {
-        type: Sequelize.STRING
-      },
-      mediableId: {
-        type: Sequelize.BIGINT
-      },
-      type: {
-        type: Sequelize.STRING
-      },
-      mimeType: {
-        type: Sequelize.STRING
-      },
-      size: {
-        type: Sequelize.INTEGER
-      },
-      url: {
-        type: Sequelize.STRING
-      },
-      alt: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      id: { allowNull: false, autoIncrement: true, primaryKey: true, type: Sequelize.BIGINT },
+      mediableType: { type: Sequelize.STRING },
+      mediableId: { type: Sequelize.BIGINT },
+      url: { type: Sequelize.STRING, allowNull: false },
+      type: { type: Sequelize.STRING }, // new field
+      altText: { type: Sequelize.STRING }, // new field
+      createdAt: { allowNull: false, type: Sequelize.DATE },
+      updatedAt: { allowNull: false, type: Sequelize.DATE }
     })
-
-    await queryInterface.addIndex('Products', ['sku'])
-    await queryInterface.addIndex('Categories', ['parentId'])
-    await queryInterface.addIndex('ProductVariants', ['productId'])
-    await queryInterface.addIndex('VariantOptions', ['variantId', 'optionValueId'])
-    await queryInterface.addIndex('ProductCategories', ['productId', 'categoryId'])
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Brands')
-    await queryInterface.dropTable('VariantOptions')
-    await queryInterface.dropTable('OptionValues')
-    await queryInterface.dropTable('ProductVariants')
+    await queryInterface.dropTable('AttributeOptionSKUs')
+    await queryInterface.dropTable('AttributeOptions')
+    await queryInterface.dropTable('Attributes')
+    await queryInterface.dropTable('SKUs')
     await queryInterface.dropTable('Products')
+    await queryInterface.dropTable('Brands')
+    await queryInterface.dropTable('ProductCategories')
     await queryInterface.dropTable('Categories')
     await queryInterface.dropTable('Media')
-    await queryInterface.dropTable('ProductCategories')
   }
 }
