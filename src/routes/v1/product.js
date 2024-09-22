@@ -12,7 +12,7 @@ const productRepository = new ProductRepository()
 const productService = new ProductService(productRepository)
 const productController = new ProductController(productService)
 
-router.get('/products', auth, validate(productFilterRequest), productController.index.bind(productController))
+router.get('/product', auth, validate(productFilterRequest), productController.index.bind(productController))
 router.post('/product', auth, validate(createProductRequest), productController.create.bind(productController))
 router.get('/product/:id', productController.show.bind(productController))
 
