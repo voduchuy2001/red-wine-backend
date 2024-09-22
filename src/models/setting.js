@@ -1,18 +1,21 @@
 'use strict'
+
 import { Model } from 'sequelize'
 
-export default (sequelize, DataTypes) => {
-  class Setting extends Model {
-    static associate(models) {}
-  }
+class Setting extends Model {
+  static associate(models) {}
+}
+
+export default (sequelize, { STRING, TEXT }) => {
   Setting.init(
     {
-      key: DataTypes.STRING,
-      value: DataTypes.TEXT
+      key: STRING,
+      value: TEXT
     },
     {
       sequelize,
-      modelName: 'Setting'
+      modelName: 'Setting',
+      tableName: 'Settings'
     }
   )
   return Setting

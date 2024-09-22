@@ -4,7 +4,7 @@ import path from 'path'
 import fs from 'fs'
 import ejs from 'ejs'
 
-export default class Mail {
+class Mail {
   constructor(mailData) {
     this.mailData = mailData
     this.transporter = nodemailer.createTransport(mailConfiguration)
@@ -38,3 +38,5 @@ export default class Mail {
     await this.transporter.sendMail(mailOptions)
   }
 }
+
+export default Mail

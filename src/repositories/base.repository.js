@@ -1,13 +1,13 @@
-export default class BaseRepository {
+class BaseRepository {
   constructor(model) {
     this.model = model
   }
 
-  async findAll(options = null) {
+  async findAll(options = {}) {
     return this.model.findAll(options)
   }
 
-  async findOne(options = null) {
+  async findOne(options = {}) {
     return this.model.findOne(options)
   }
 
@@ -27,10 +27,9 @@ export default class BaseRepository {
     return this.model.destroy({ where: { id } })
   }
 
-  async paginate({ page = 1, limit = 25, ...params } = {}) {
-    page = Number.isInteger(parseInt(page, 10)) ? parseInt(page, 10) : 1
-    limit = Number.isInteger(parseInt(limit, 10)) ? parseInt(limit, 10) : 25
-    const offset = limit * (page - 1)
-    return this.findAll({ ...params, limit, offset })
+  async paginate({ limit = 10, offset = 0, ...params } = {}) {
+    return this.findAll({ limit, offset, ...params })
   }
 }
+
+export default BaseRepository

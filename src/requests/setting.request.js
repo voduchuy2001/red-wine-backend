@@ -1,6 +1,6 @@
 import { body } from 'express-validator'
 
-export const vnpSetting = () => [
+export const vnpSetting = [
   body('value').isObject().withMessage('isObject'),
 
   body('value.enabled').notEmpty().withMessage('notEmpty').isBoolean({ strict: true }).withMessage('isBoolean'),

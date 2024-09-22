@@ -1,13 +1,13 @@
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from '@constants/http.status.code'
+import { BAD_REQUEST, OK, UNAUTHORIZED } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
 
-export default class GoogleOAuthController extends BaseController {
+class GoogleOAuthController extends BaseController {
   constructor(googleOAuthService) {
     super()
     this.googleOAuthService = googleOAuthService
   }
 
-  async redirect(req, res) {
+  async redirect(req, res, next) {
     try {
       const redirectUrl = await this.googleOAuthService.redirect()
 
@@ -17,11 +17,11 @@ export default class GoogleOAuthController extends BaseController {
 
       return super.json(res, OK, __('success'), redirectUrl)
     } catch (error) {
-      return super.json(res, INTERNAL_SERVER_ERROR, __('failure'), error.message)
+      next(error)
     }
   }
 
-  async callback(req, res) {
+  async callback(req, res, next) {
     const { code } = req.query
 
     try {
@@ -37,7 +37,9 @@ export default class GoogleOAuthController extends BaseController {
 
       return super.json(res, OK, __('success'), loggedIn)
     } catch (error) {
-      return super.json(res, INTERNAL_SERVER_ERROR, __('failure'), error.message)
+      next(error)
     }
   }
 }
+
+export default GoogleOAuthController

@@ -1,21 +1,21 @@
-import { INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from '@constants/http.status.code'
+import { OK, UNAUTHORIZED } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
 
-export default class SwaggerAuthController extends BaseController {
+class SwaggerAuthController extends BaseController {
   constructor(swaggerAuthService) {
     super()
     this.swaggerAuthService = swaggerAuthService
   }
 
-  async showLoginForm(req, res) {
+  async showLoginForm(req, res, next) {
     try {
       return super.view(res, 'pages/login')
     } catch (error) {
-      return super.json(res, 500, INTERNAL_SERVER_ERROR, error.message)
+      next(error)
     }
   }
 
-  async login(req, res) {
+  async login(req, res, next) {
     const data = req.body
 
     try {
@@ -29,7 +29,9 @@ export default class SwaggerAuthController extends BaseController {
 
       return super.json(res, OK, __('success'), loggedIn)
     } catch (error) {
-      return super.json(res, 500, INTERNAL_SERVER_ERROR, error.message)
+      next(error)
     }
   }
 }
+
+export default SwaggerAuthController

@@ -1,46 +1,53 @@
 'use strict'
+
 import { Model } from 'sequelize'
-export default (sequelize, DataTypes) => {
-  class Product extends Model {
-    static associate(models) {
-      this.belongsTo(models.Brand, { foreignKey: 'brandId', as: 'brand' })
 
-      this.hasMany(models.Media, {
-        foreignKey: 'mediableId',
-        constraints: false,
-        scope: {
-          mediable: 'Product'
-        },
-        as: 'media'
-      })
+class Product extends Model {
+  static associate({ Brand, Category, Media, SKU }) {
+    this.belongsTo(Brand, {
+      foreignKey: 'brandId',
+      as: 'brand'
+    })
 
-      this.belongsToMany(models.Category, {
-        through: 'ProductCategories',
-        foreignKey: 'productId',
-        as: 'categories',
-        timestamps: false
-      })
+    this.belongsToMany(Category, {
+      foreignKey: 'productId',
+      through: 'ProductCategories',
+      as: 'categories'
+    })
 
-      this.hasMany(models.Variant, { foreignKey: 'productId', as: 'variants' })
-    }
+    this.hasMany(Media, {
+      foreignKey: 'mediableId',
+      constraints: false,
+      scope: {
+        mediableType: 'Product'
+      },
+      as: 'media'
+    })
+
+    this.hasMany(SKU, {
+      foreignKey: 'productId',
+      as: 'skus'
+    })
   }
+}
+
+export default (sequelize, { BIGINT, DECIMAL, INTEGER, STRING, TEXT }) => {
   Product.init(
     {
-      brandId: DataTypes.BIGINT,
-      name: DataTypes.STRING,
-      featured: DataTypes.TINYINT,
-      status: DataTypes.STRING,
-      content: DataTypes.TEXT,
-      description: DataTypes.TEXT,
-      sku: DataTypes.STRING,
-      quantity: DataTypes.INTEGER,
-      order: DataTypes.TINYINT,
-      price: DataTypes.DECIMAL,
-      salePrice: DataTypes.DECIMAL
+      brandId: BIGINT,
+      name: STRING,
+      code: STRING,
+      description: TEXT,
+      status: STRING,
+      price: DECIMAL,
+      salePrice: DECIMAL,
+      quantity: INTEGER,
+      order: INTEGER
     },
     {
       sequelize,
-      modelName: 'Product'
+      modelName: 'Product',
+      tableName: 'Products'
     }
   )
   return Product

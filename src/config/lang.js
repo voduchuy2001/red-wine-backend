@@ -6,6 +6,8 @@ i18n.configure({
   directory: path.join(__dirname, '../lang'),
   defaultLocale: 'en',
   objectNotation: true,
+  fallbacks: { vi: 'en' },
+  // eslint-disable-next-line no-undef
   register: global
 })
 

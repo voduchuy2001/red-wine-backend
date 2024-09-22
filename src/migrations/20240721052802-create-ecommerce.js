@@ -20,13 +20,13 @@ module.exports = {
         type: Sequelize.TEXT
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       featured: {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       },
       order: {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -59,13 +59,13 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       featured: {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       },
       order: {
-        type: Sequelize.TINYINT
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -97,32 +97,27 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      content: {
-        type: Sequelize.TEXT('long')
+      code: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       description: {
         type: Sequelize.TEXT
       },
-      featured: {
-        type: Sequelize.TINYINT
-      },
       status: {
-        type: Sequelize.STRING
-      },
-      sku: {
-        type: Sequelize.STRING
-      },
-      quantity: {
-        type: Sequelize.INTEGER
-      },
-      order: {
-        type: Sequelize.TINYINT
+        type: Sequelize.STRING(50)
       },
       price: {
         type: Sequelize.DECIMAL(12, 2)
       },
       salePrice: {
         type: Sequelize.DECIMAL(12, 2)
+      },
+      quantity: {
+        type: Sequelize.INTEGER
+      },
+      order: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -134,7 +129,7 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable('Variants', {
+    await queryInterface.createTable('SKUs', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -150,20 +145,24 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      sku: {
-        type: Sequelize.STRING(120),
+      code: {
+        type: Sequelize.STRING,
         allowNull: false
       },
       price: {
-        type: Sequelize.DECIMAL(12, 2),
-        allowNull: false
+        type: Sequelize.DECIMAL(12, 2)
       },
       salePrice: {
         type: Sequelize.DECIMAL(12, 2)
       },
-      quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+      stock: {
+        type: Sequelize.INTEGER
+      },
+      status: {
+        type: Sequelize.STRING(50)
+      },
+      isDefault: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -175,7 +174,7 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable('ProductOptions', {
+    await queryInterface.createTable('Attributes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -186,6 +185,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      description: {
+        type: Sequelize.TEXT
+      },
+      isVisible: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -196,17 +201,17 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable('OptionValues', {
+    await queryInterface.createTable('AttributeOptions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.BIGINT
       },
-      optionId: {
+      attributeId: {
         type: Sequelize.BIGINT,
         references: {
-          model: 'ProductOptions',
+          model: 'Attributes',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -216,6 +221,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      order: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -226,45 +234,27 @@ module.exports = {
       }
     })
 
-    await queryInterface.createTable('VariantOptions', {
-      variantId: {
+    await queryInterface.createTable('AttributeOptionSKUs', {
+      skuId: {
         type: Sequelize.BIGINT,
         references: {
-          model: 'Variants',
+          model: 'SKUs',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      optionValueId: {
+      attributeOptionId: {
         type: Sequelize.BIGINT,
         references: {
-          model: 'OptionValues',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      }
-    })
-
-    await queryInterface.createTable('ProductCategories', {
-      productId: {
-        type: Sequelize.BIGINT,
-        references: {
-          model: 'Products',
+          model: 'AttributeOptions',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      categoryId: {
-        type: Sequelize.BIGINT,
-        references: {
-          model: 'Categories',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+      quantity: {
+        type: Sequelize.INTEGER
       }
     })
 
@@ -275,25 +265,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.BIGINT
       },
-      mediable: {
+      mediableType: {
         type: Sequelize.STRING
       },
       mediableId: {
         type: Sequelize.BIGINT
       },
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       type: {
         type: Sequelize.STRING
       },
-      mimeType: {
-        type: Sequelize.STRING
+      isDefault: {
+        type: Sequelize.BOOLEAN
       },
-      size: {
-        type: Sequelize.INTEGER
-      },
-      url: {
-        type: Sequelize.STRING
-      },
-      alt: {
+      altText: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -307,14 +295,14 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Brands')
-    await queryInterface.dropTable('VariantOptions')
-    await queryInterface.dropTable('OptionValues')
-    await queryInterface.dropTable('ProductOptions')
+    await queryInterface.dropTable('AttributeOptionSKUs')
+    await queryInterface.dropTable('AttributeOptions')
+    await queryInterface.dropTable('Attributes')
+    await queryInterface.dropTable('SKUs')
     await queryInterface.dropTable('Products')
-    await queryInterface.dropTable('Categories')
     await queryInterface.dropTable('Brands')
-    await queryInterface.dropTable('Media')
     await queryInterface.dropTable('ProductCategories')
+    await queryInterface.dropTable('Categories')
+    await queryInterface.dropTable('Media')
   }
 }

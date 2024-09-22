@@ -1,10 +1,9 @@
-import { Setting } from '@models'
+import db from '@models'
 import BaseRepository from '@repositories/base.repository'
 
-export default class SettingRepository extends BaseRepository {
+class SettingRepository extends BaseRepository {
   constructor() {
-    super(Setting)
-    console.log(Setting)
+    super(db.Setting)
   }
 
   async getSetting(key = '') {
@@ -16,3 +15,5 @@ export default class SettingRepository extends BaseRepository {
     return await setting.update({ value })
   }
 }
+
+export default SettingRepository

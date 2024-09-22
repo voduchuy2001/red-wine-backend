@@ -1,106 +1,113 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign In</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
-  </head>
-  <body>
-    <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
-      <div class="d-flex align-items-center justify-content-center flex-column">
+</head>
+<body>
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="d-flex align-items-center justify-content-center flex-column">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-10 offset-lg-1">
-              <div class="bg-white shadow-sm rounded">
-                <div class="row">
-                  <div class="col-md-7 ps-0 d-none d-md-block">
-                    <div class="form-right h-100 bg-primary text-white text-center pt-5 p-4">
-                      <h2 class="fs-1">RED WINE</h2>
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="bg-white shadow-sm rounded">
+                        <div class="row">
+                            <div class="col-md-7 ps-0 d-none d-md-block">
+                                <div class="form-right h-100 bg-primary text-white text-center pt-5 p-4">
+                                    <h2 class="fs-1">RED WINE</h2>
 
-                      <div class="py-5">
-                        <figure>
-                          <blockquote class="blockquote">
-                            <p>"<%= __('I do not always test my code, but when I do, I do it in production.') %>"</p>
-                          </blockquote>
-                          <figcaption class="blockquote-footer text-white">
-                            <cite>Vo Duc Huy</cite>
-                          </figcaption>
-                        </figure>
-                      </div>
-                    </div>
-                  </div>
+                                    <div class="py-5">
+                                        <figure>
+                                            <blockquote class="blockquote">
+                                                <p>
+                                                    "<%= __('I do not always test my code, but when I do, I do it in production.') %>
+                                                    "
+                                                </p>
+                                            </blockquote>
+                                            <figcaption class="blockquote-footer text-white">
+                                                <cite>Vo Duc Huy</cite>
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
 
-                  <div class="col-md-5 pe-0">
-                    <div class="text-center my-5">
-                      <h3><%= __('Sign In Below') %></h3>
-                      <div class="text-muted text-center mx-auto">
-                        <%= __('Complete Your Information To Continue') %>
-                      </div>
-                    </div>
+                            <div class="col-md-5 pe-0">
+                                <div class="text-center my-5">
+                                    <h3><%= __('Sign In Below') %></h3>
+                                    <div class="text-muted text-center mx-auto">
+                                        <%= __('Complete Your Information To Continue') %>
+                                    </div>
+                                </div>
 
-                    <div class="form-left h-100 px-5">
-                      <div id="login-error" class="alert alert-danger d-flex align-items-center d-none" role="alert">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-exclamation-circle text-danger me-2 flex-shrink-0"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                          <path
-                            d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"
-                          />
-                        </svg>
-                      </div>
+                                <div class="form-left h-100 px-5">
+                                    <div id="login-error" class="alert alert-danger d-flex align-items-center d-none"
+                                         role="alert">
+                                        <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16"
+                                                height="16"
+                                                fill="currentColor"
+                                                class="bi bi-exclamation-circle text-danger me-2 flex-shrink-0"
+                                                viewBox="0 0 16 16"
+                                        >
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                            <path
+                                                    d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"
+                                            />
+                                        </svg>
+                                    </div>
 
-                      <form id="login-form" class="row g-4">
-                        <div class="col-12">
-                          <label for="username"><%= __('Username') %> <span class="text-danger">*</span></label>
-                          <div class="input-group">
-                            <input
-                              type="text"
-                              class="form-control"
-                              placeholder="<%= __('Username') %>"
-                              name="username"
-                              id="username"
-                            />
-                          </div>
-                          <div id="username-error" class="text-danger form-text"></div>
+                                    <form id="login-form" class="row g-4">
+                                        <div class="col-12">
+                                            <label for="username"><%= __('Username') %> <span
+                                                        class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        placeholder="<%= __('Username') %>"
+                                                        name="username"
+                                                        id="username"
+                                                />
+                                            </div>
+                                            <div id="username-error" class="text-danger form-text"></div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="password"><%= __('Password') %> <span
+                                                        class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <input
+                                                        type="password"
+                                                        class="form-control"
+                                                        placeholder="<%= __('Password') %>"
+                                                        name="password"
+                                                        id="password"
+                                                />
+                                            </div>
+                                            <div id="password-error" class="text-danger form-text"></div>
+                                        </div>
+
+                                        <div class="col-12 mb-5 text-center">
+                                            <button type="submit"
+                                                    class="btn btn-primary px-4 mt-3"><%= __('Sign In Now') %></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="col-12">
-                          <label for="password"><%= __('Password') %> <span class="text-danger">*</span></label>
-                          <div class="input-group">
-                            <input
-                              type="password"
-                              class="form-control"
-                              placeholder="<%= __('Password') %>"
-                              name="password"
-                              id="password"
-                            />
-                          </div>
-                          <div id="password-error" class="text-danger form-text"></div>
-                        </div>
-
-                        <div class="col-12 mb-5 text-center">
-                          <button type="submit" class="btn btn-primary px-4 mt-3"><%= __('Sign In Now') %></button>
-                        </div>
-                      </form>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/swagger.login.js"></script>
-  </body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/swagger.login.js"></script>
+</body>
 </html>
