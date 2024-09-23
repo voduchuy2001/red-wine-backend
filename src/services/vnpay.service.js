@@ -13,6 +13,8 @@ import {
 import crypto from 'crypto'
 import moment from 'moment'
 import { Buffer } from 'buffer'
+import ServiceException from '@exceptions/service.exception'
+import { BAD_REQUEST } from '@constants/http.status.code'
 
 class VNPayService {
   constructor(settingRepository) {
@@ -32,8 +34,18 @@ class VNPayService {
 
   async getVnpSetting() {
     const setting = await this.settingRepository.getSetting(SETTING_KEY.VNPAY)
+
+    if (!setting) {
+      throw new ServiceException(BAD_REQUEST, __('Setting not found'))
+    }
+
     const { enabled, ...data } = JSON.parse(setting.value)
-    return enabled ? data : false
+
+    if (!enabled) {
+      throw new ServiceException(BAD_REQUEST, __('Payment method not available'))
+    }
+
+    return data
   }
 
   hash(secret, data) {
