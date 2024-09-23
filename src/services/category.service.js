@@ -1,7 +1,7 @@
 import BaseService from './base.service'
 
 class CategoryService extends BaseService {
-  constructor(categoryRepository, mediaRepository) {
+  constructor(categoryRepository) {
     super(categoryRepository)
   }
 }

@@ -14,9 +14,14 @@ export const auth = (req, res, next) => {
   try {
     req.auth = jwt.verify(token, process.env.JWT_SECRET_KEY)
     next()
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    throw new AuthException(UNAUTHORIZED, __('Invalid token'))
+    const messages = {
+      JsonWebTokenError: __('Invalid token'),
+      TokenExpiredError: __('Token has expired')
+    }
+
+    const message = messages[error.name] || __('Authentication error')
+    return next(new AuthException(UNAUTHORIZED, message))
   }
 }
 

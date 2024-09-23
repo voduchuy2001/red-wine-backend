@@ -17,7 +17,7 @@ class AuthService {
 
   createUserDto(user) {
     const userDto = new UserDto(user)
-    userDto.token = JWT.generate(user.id, '7d')
+    userDto.token = JWT.generate(user.id, '3d')
     return userDto
   }
 
