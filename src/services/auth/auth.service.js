@@ -11,7 +11,7 @@ class AuthService {
     this.authEvent = authEvent
   }
 
-  async checkEmailExist(email) {
+  async validateEmail(email) {
     return this.userRepository.findByEmail(email)
   }
 
@@ -28,7 +28,7 @@ class AuthService {
   async login(data) {
     const { email, password } = data
 
-    const user = await this.checkEmailExist(email)
+    const user = await this.validateEmail(email)
     if (!user) {
       throw new ServiceException(UNAUTHORIZED, __('User not found'))
     }
@@ -49,7 +49,7 @@ class AuthService {
   async register(data) {
     const { email, password } = data
 
-    const existedUser = await this.checkEmailExist(email)
+    const existedUser = await this.validateEmail(email)
     if (existedUser) {
       throw new ServiceException(BAD_REQUEST, __('Email has been already exist'))
     }
