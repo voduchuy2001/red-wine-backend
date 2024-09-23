@@ -1,4 +1,4 @@
-import BrandController from '@controllers/brand.controller'
+import BrandController from '@controllers/backend/brand.controller'
 import { auth } from '@middlewares/authenticated'
 import { validate } from '@middlewares/validation'
 import BrandRepository from '@repositories/brand.repository'

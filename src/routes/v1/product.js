@@ -1,4 +1,4 @@
-import ProductController from '@controllers/product.controller'
+import ProductController from '@controllers/backend/product.controller'
 import { auth } from '@middlewares/authenticated'
 import { validate } from '@middlewares/validation'
 import ProductRepository from '@repositories/product.repository'
