@@ -7,13 +7,25 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       orderId: {
-        type: Sequelize.BIGINT
+        type: Sequelize.BIGINT,
+        references: {
+          model: 'Orders',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       skuId: {
-        type: Sequelize.BIGINT
+        type: Sequelize.BIGINT,
+        references: {
+          model: 'SKUs',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       quantity: {
         type: Sequelize.INTEGER

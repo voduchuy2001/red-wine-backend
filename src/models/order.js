@@ -17,7 +17,8 @@ export default (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Order'
+      modelName: 'Order',
+      tableName: 'Orders'
     }
   )
   return Order

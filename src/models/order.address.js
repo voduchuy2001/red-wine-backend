@@ -20,7 +20,8 @@ export default (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'OrderAddress'
+      modelName: 'OrderAddress',
+      tableName: 'OrderAddresses'
     }
   )
   return OrderAddress

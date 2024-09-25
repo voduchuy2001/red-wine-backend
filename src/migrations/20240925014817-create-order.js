@@ -7,13 +7,25 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       customerId: {
-        type: Sequelize.BIGINT
+        type: Sequelize.BIGINT,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       userId: {
-        type: Sequelize.BIGINT
+        type: Sequelize.BIGINT,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       code: {
         type: Sequelize.STRING

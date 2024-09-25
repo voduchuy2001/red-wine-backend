@@ -15,7 +15,8 @@ export default (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'OrderHistory'
+      modelName: 'OrderHistory',
+      tableName: 'OrderHistories'
     }
   )
   return OrderHistory
