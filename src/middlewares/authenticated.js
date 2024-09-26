@@ -25,7 +25,7 @@ export const auth = (req, res, next) => {
   }
 }
 
-const getUserPermissions = (user) => {
+const getPermissions = (user) => {
   const rolePermissions = user.roles.flatMap((role) => role.permissions.map((permission) => permission.code))
   const userPermissions = user.permissions.map((permission) => permission.code)
   return new Set([...rolePermissions, ...userPermissions])
@@ -43,7 +43,7 @@ export const authorize =
         throw new AuthException(UNAUTHORIZED, __('Not found user'))
       }
 
-      const allPermissions = getUserPermissions(userWithPermissions)
+      const allPermissions = getPermissions(userWithPermissions)
       const requiredPermissionsArray = Array.isArray(permissions) ? permissions : [permissions]
 
       const hadRequiredPermissions =
