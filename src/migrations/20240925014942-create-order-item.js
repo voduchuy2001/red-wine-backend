@@ -28,13 +28,15 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       quantity: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       price: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(12, 2),
+        allowNull: false
       },
       salePrice: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(12, 2)
       },
       createdAt: {
         allowNull: false,
