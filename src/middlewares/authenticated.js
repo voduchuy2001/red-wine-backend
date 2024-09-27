@@ -5,7 +5,7 @@ import UserRepository from '@repositories/user.repository'
 import AuthException from '@exceptions/auth.exception'
 import ForbiddenException from '@exceptions/forbidden.exception'
 
-export const auth = (req, res, next) => {
+const auth = (req, res, next) => {
   const token = req.headers?.authorization?.split(' ')[1]
   if (!token) {
     throw new AuthException(UNAUTHORIZED, __('Missing token'))
@@ -31,7 +31,7 @@ const getPermissions = (user) => {
   return new Set([...rolePermissions, ...userPermissions])
 }
 
-export const authorize =
+const authorize =
   (permissions, option = 'every', userRepository = new UserRepository()) =>
   async (req, res, next) => {
     const { data: id } = req.auth
@@ -60,3 +60,5 @@ export const authorize =
       next(error)
     }
   }
+
+export { auth, authorize }

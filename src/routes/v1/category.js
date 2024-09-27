@@ -1,6 +1,6 @@
 import CategoryController from '@controllers/backend/category.controller'
 import { auth } from '@middlewares/authenticated'
-import { validate } from '@middlewares/validation'
+import validate from '@middlewares/validation'
 import CategoryRepository from '@repositories/category.repository'
 import { createCategoryRequest } from '@requests/create.category.request'
 import CategoryService from '@services/category.service'

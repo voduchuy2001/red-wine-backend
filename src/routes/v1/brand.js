@@ -1,6 +1,6 @@
 import BrandController from '@controllers/backend/brand.controller'
 import { auth } from '@middlewares/authenticated'
-import { validate } from '@middlewares/validation'
+import validate from '@middlewares/validation'
 import BrandRepository from '@repositories/brand.repository'
 import MediaRepository from '@repositories/media.repository'
 import createBrandRequest from '@requests/create.brand.request'

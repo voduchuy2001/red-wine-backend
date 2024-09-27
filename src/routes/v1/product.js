@@ -1,6 +1,6 @@
 import ProductController from '@controllers/backend/product.controller'
 import { auth } from '@middlewares/authenticated'
-import { validate } from '@middlewares/validation'
+import validate from '@middlewares/validation'
 import ProductRepository from '@repositories/product.repository'
 import createProductRequest from '@requests/create.product.request'
 import productFilterRequest from '@requests/filter.product.request'

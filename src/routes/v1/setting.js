@@ -1,5 +1,5 @@
 import express from 'express'
-import { validate } from '@middlewares/validation'
+import validate from '@middlewares/validation'
 import { vnpSetting } from '@requests/setting.request'
 import { auth } from '@middlewares/authenticated'
 import SettingController from '@controllers/backend/setting.controller'
