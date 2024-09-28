@@ -1,6 +1,6 @@
 {
   "watch": ["src", "documents"],
-  "ext": "js,ejs,json,yaml",
+  "ext": "js,ejs,json,yaml,.env",
   "ignore": ["node_modules"],
-  "exec": "babel-node src/app.js"
+  "exec": "babel-node src/index.js"
 }
