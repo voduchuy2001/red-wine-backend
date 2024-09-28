@@ -28,13 +28,16 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       code: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       total: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(12, 2)
       },
       createdAt: {
         allowNull: false,

@@ -4,7 +4,7 @@ import validate from '@middlewares/validation'
 import ProductRepository from '@repositories/product.repository'
 import createProductRequest from '@requests/create.product.request'
 import productFilterRequest from '@requests/filter.product.request'
-import ProductService from '@services/product.service'
+import ProductService from '@services/backend/product.service'
 import express from 'express'
 
 const router = express.Router()

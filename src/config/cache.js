@@ -15,7 +15,7 @@ class RedisCache {
   }
 
   async get(key) {
-    return await this.client.get(key)
+    return this.client.get(key)
   }
 
   async del(key) {
