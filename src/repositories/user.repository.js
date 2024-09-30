@@ -1,3 +1,5 @@
+import { INTERNAL_SERVER_ERROR, NOT_FOUND } from '@constants/http.status.code'
+import RepositoryException from '@exceptions/repository.exception'
 import db from '@models'
 import BaseRepository from '@repositories/base.repository'
 
@@ -40,8 +42,22 @@ class UserRepository extends BaseRepository {
   }
 
   async updateLastLoginAt(id) {
-    const current = new Date()
-    return super.update(id, { lastLoginAt: current })
+    const transaction = await db.sequelize.transaction()
+
+    try {
+      const current = new Date()
+      const updated = await super.update(id, { lastLoginAt: current }, transaction)
+
+      if (!updated) {
+        throw new RepositoryException(NOT_FOUND, __('Can not update'))
+      }
+
+      await transaction.commit()
+      return updated
+    } catch (error) {
+      await transaction.rollback()
+      throw new RepositoryException(INTERNAL_SERVER_ERROR, error.message)
+    }
   }
 }
 

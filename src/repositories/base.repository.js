@@ -15,16 +15,16 @@ class BaseRepository {
     return this.model.findByPk(id)
   }
 
-  async create(data) {
-    return this.model.create(data)
+  async create(data, transaction = null) {
+    return this.model.create(data, { transaction })
   }
 
-  async update(id, data) {
-    return this.model.update(data, { where: { id } })
+  async update(id, data, transaction = null) {
+    return this.model.update(data, { where: { id }, transaction })
   }
 
-  async remove(id) {
-    return this.model.destroy({ where: { id } })
+  async remove(id, transaction = null) {
+    return this.model.destroy({ where: { id }, transaction })
   }
 
   async paginate({ limit = 10, offset = 0, ...params } = {}) {
