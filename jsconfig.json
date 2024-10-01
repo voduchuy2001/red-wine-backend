@@ -6,8 +6,6 @@
       "@constants/*": ["constants/*"],
       "@controllers/*": ["controllers/*"],
       "@documents/*": ["documents/*"],
-      "@dtos/*": ["dtos/*"],
-      "@events/*": ["events/*"],
       "@exceptions/*": ["exceptions/*"],
       "@middlewares/*": ["middlewares/*"],
       "@models/*": ["models/*"],

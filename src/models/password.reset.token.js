@@ -11,10 +11,11 @@ class PasswordResetToken extends Model {
   }
 }
 
-export default (sequelize, { STRING }) => {
+export default (sequelize, { STRING, BIGINT }) => {
   PasswordResetToken.init(
     {
-      email: STRING,
+      modelable: STRING,
+      modelableId: BIGINT,
       token: STRING
     },
     {

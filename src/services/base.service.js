@@ -3,16 +3,12 @@ class BaseService {
     this.repository = repository
   }
 
-  async findAll(options = null) {
-    return this.repository.findAll(options)
+  async getAll(withRelations = []) {
+    return this.repository.all(withRelations)
   }
 
-  async findOne(options = null) {
-    return this.repository.findOne(options)
-  }
-
-  async findById(id) {
-    return this.repository.findById(id)
+  async getById(id, withRelations = []) {
+    return this.repository.findOrFail(id, withRelations)
   }
 
   async create(data) {
@@ -20,15 +16,33 @@ class BaseService {
   }
 
   async update(id, data) {
-    return this.repository.update(id, data)
+    await this.getById(id)
+    return this.repository.update({ id }, data)
   }
 
-  async remove(id) {
-    return this.repository.remove(id)
+  async delete(id) {
+    await this.getById(id)
+    return this.repository.delete({ id })
   }
 
-  async paginate(options = null) {
-    return this.repository.paginate(options)
+  async count(condition = {}) {
+    return this.repository.count(condition)
+  }
+
+  async findOne(condition = {}, withRelations = []) {
+    return this.repository.find(condition, withRelations)
+  }
+
+  async findByCondition(condition = {}, withRelations = []) {
+    return this.repository.findByCondition(condition, withRelations)
+  }
+
+  async firstOrCreate(condition, defaults) {
+    return this.repository.firstOrCreate(condition, defaults)
+  }
+
+  async advancedGet(params = {}) {
+    return this.repository.advancedGet(params)
   }
 }
 

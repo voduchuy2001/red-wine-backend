@@ -11,12 +11,12 @@ class OrderHistory extends Model {
   }
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { BIGINT, STRING }) => {
   OrderHistory.init(
     {
-      orderId: DataTypes.BIGINT,
-      status: DataTypes.STRING,
-      description: DataTypes.STRING
+      orderId: BIGINT,
+      status: STRING,
+      description: STRING
     },
     {
       sequelize,

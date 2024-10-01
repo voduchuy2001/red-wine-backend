@@ -6,17 +6,17 @@ class OrderAddress extends Model {
   static associate({}) {}
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { BIGINT, STRING }) => {
   OrderAddress.init(
     {
-      orderId: DataTypes.BIGINT,
-      name: DataTypes.STRING,
-      phone: DataTypes.STRING,
-      email: DataTypes.STRING,
-      province: DataTypes.STRING,
-      district: DataTypes.STRING,
-      ward: DataTypes.STRING,
-      type: DataTypes.STRING
+      orderId: BIGINT,
+      name: STRING,
+      phone: STRING,
+      email: STRING,
+      province: STRING,
+      district: STRING,
+      ward: STRING,
+      type: STRING
     },
     {
       sequelize,

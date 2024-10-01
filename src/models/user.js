@@ -33,6 +33,12 @@ class User extends Model {
       timestamps: false
     })
   }
+
+  toJSON() {
+    const attributes = Object.assign({}, this.get())
+    delete attributes.password
+    return attributes
+  }
 }
 
 export default (sequelize, { DATE, STRING }) => {

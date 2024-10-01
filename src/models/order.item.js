@@ -11,14 +11,14 @@ class OrderItem extends Model {
   }
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { BIGINT, DECIMAL, INTEGER }) => {
   OrderItem.init(
     {
-      orderId: DataTypes.BIGINT,
-      skuId: DataTypes.BIGINT,
-      quantity: DataTypes.INTEGER,
-      price: DataTypes.DECIMAL,
-      salePrice: DataTypes.DECIMAL
+      orderId: BIGINT,
+      skuId: BIGINT,
+      quantity: INTEGER,
+      price: DECIMAL,
+      salePrice: DECIMAL
     },
     {
       sequelize,

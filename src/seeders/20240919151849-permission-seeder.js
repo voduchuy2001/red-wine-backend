@@ -5,7 +5,6 @@ module.exports = {
       'Permissions',
       [
         {
-          parentId: null,
           name: 'View Products',
           code: 'view.products',
           description: 'Permission to view products',
@@ -13,7 +12,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Add Products',
           code: 'add.products',
           description: 'Permission to add new products',
@@ -21,7 +19,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Edit Products',
           code: 'edit.products',
           description: 'Permission to edit existing products',
@@ -29,7 +26,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Delete Products',
           code: 'delete.products',
           description: 'Permission to delete products',
@@ -37,7 +33,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Add Orders',
           code: 'add.orders',
           description: 'Permission to add new orders',
@@ -45,7 +40,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'View Orders',
           code: 'view.orders',
           description: 'Permission to view orders',
@@ -53,7 +47,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Update Orders',
           code: 'update.orders',
           description: 'Permission to update orders status',
@@ -61,7 +54,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Delete Orders',
           code: 'delete.orders',
           description: 'Permission to delete orders',
@@ -69,7 +61,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'View Users',
           code: 'view.users',
           description: 'Permission to view users',
@@ -77,7 +68,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Add Users',
           code: 'add.users',
           description: 'Permission to add new users',
@@ -85,7 +75,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Edit Users',
           code: 'edit.users',
           description: 'Permission to edit user details',
@@ -93,7 +82,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Delete Users',
           code: 'delete.users',
           description: 'Permission to delete users',
@@ -101,7 +89,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'View Roles',
           code: 'view.roles',
           description: 'Permission to view roles',
@@ -109,7 +96,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Add Roles',
           code: 'add.roles',
           description: 'Permission to add new roles',
@@ -117,7 +103,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Edit Roles',
           code: 'edit.roles',
           description: 'Permission to edit roles',
@@ -125,7 +110,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Delete Roles',
           code: 'delete.roles',
           description: 'Permission to delete roles',
@@ -133,7 +117,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Manage Settings',
           code: 'manage.settings',
           description: 'Permission to manage system settings',
@@ -141,7 +124,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'View Reports',
           code: 'view.reports',
           description: 'Permission to view system reports',
@@ -149,7 +131,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          parentId: null,
           name: 'Manage Discounts',
           code: 'manage.discounts',
           description: 'Permission to manage discount codes and offers',

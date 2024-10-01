@@ -32,14 +32,14 @@ class Order extends Model {
   }
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { BIGINT, DECIMAL, STRING }) => {
   Order.init(
     {
-      customerId: DataTypes.BIGINT,
-      userId: DataTypes.BIGINT,
-      code: DataTypes.STRING,
-      status: DataTypes.STRING,
-      total: DataTypes.DECIMAL
+      customerId: BIGINT,
+      userId: BIGINT,
+      code: STRING,
+      status: STRING,
+      total: DECIMAL
     },
     {
       sequelize,

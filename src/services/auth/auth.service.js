@@ -2,23 +2,15 @@ import { generateAvatar } from '@utils/avatar'
 import Bcrypt from '@utils/bcrypt'
 import JWT from '@config/jwt'
 import ServiceException from '@exceptions/service.exception'
-import UserDto from '@dtos/user.dto'
-import { BAD_REQUEST, UNAUTHORIZED } from '@constants/http.status.code'
+import { BAD_REQUEST, NOT_FOUND, UNAUTHORIZED } from '@constants/http.status.code'
 
 class AuthService {
-  constructor(userRepository, authEvent) {
+  constructor(userRepository) {
     this.userRepository = userRepository
-    this.authEvent = authEvent
   }
 
   async validateEmail(email) {
     return this.userRepository.findByEmail(email)
-  }
-
-  createUserDto(user) {
-    const userDto = new UserDto(user)
-    userDto.token = JWT.generate(user.id, '3d')
-    return userDto
   }
 
   async validatePassword(inputPassword, userPassword) {
@@ -41,9 +33,9 @@ class AuthService {
 
     const userId = user.id
     await this.userRepository.updateLastLoginAt(userId)
-    this.authEvent.emitUserAction('userLoggedIn', user)
+    const token = JWT.generate(user.id, '3d')
 
-    return this.createUserDto(user)
+    return { token, user }
   }
 
   async register(data) {
@@ -66,9 +58,15 @@ class AuthService {
       throw new ServiceException(BAD_REQUEST, __('User not found'))
     }
 
-    this.authEvent.emitUserAction('userLoggedOut', user)
-
     return true
+  }
+
+  async auth(id) {
+    const authUser = await this.userRepository.auth(id)
+    if (!authUser) {
+      throw new ServiceException(NOT_FOUND, __('Not found user'))
+    }
+    return authUser
   }
 }
 

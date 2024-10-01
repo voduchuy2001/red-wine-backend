@@ -1,6 +1,6 @@
 import Mail from '@config/mail'
 
-export default class OrderConfirm extends Mail {
+class ConfirmOrderEmail extends Mail {
   constructor(mailData) {
     super(mailData)
   }
@@ -22,3 +22,5 @@ export default class OrderConfirm extends Mail {
     return super.content('order.confirmation', context)
   }
 }
+
+export default ConfirmOrderEmail

@@ -3,10 +3,18 @@
 import { Model } from 'sequelize'
 
 class Brand extends Model {
-  static associate({ Product }) {
+  static associate({ Product, Media }) {
     this.hasMany(Product, {
       foreignKey: 'brandId',
       as: 'products'
+    })
+
+    this.hasOne(Media, {
+      foreignKey: 'mediableId',
+      scope: {
+        mediableType: 'brand'
+      },
+      as: 'logo'
     })
   }
 }

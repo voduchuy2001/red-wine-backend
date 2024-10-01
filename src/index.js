@@ -17,8 +17,8 @@ import { session } from '@config/session'
 import multer from '@middlewares/multer'
 import i18n from '@config/lang'
 import lang from '@middlewares/lang'
-import errorHandler from '@middlewares/error.handler'
 import { socketIo } from '@config/socket.io'
+import handleError from '@middlewares/handle.error'
 
 async function bootstrap() {
   const app = express()
@@ -42,7 +42,7 @@ async function bootstrap() {
   app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
   app.use('/v1', routes)
   app.use(notFound)
-  app.use(errorHandler)
+  app.use(handleError)
 
   const version = process.env.VERSION || 'v1'
   const host = process.env.APP_URL || 'localhost'

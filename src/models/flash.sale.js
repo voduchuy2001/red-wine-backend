@@ -13,12 +13,12 @@ class FlashSale extends Model {
   }
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { DATE, STRING }) => {
   FlashSale.init(
     {
-      name: DataTypes.STRING,
-      endDate: DataTypes.DATE,
-      status: DataTypes.STRING
+      name: STRING,
+      endDate: DATE,
+      status: STRING
     },
     {
       sequelize,

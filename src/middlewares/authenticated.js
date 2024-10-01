@@ -36,29 +36,25 @@ const authorize =
   async (req, res, next) => {
     const { data: id } = req.auth
 
-    try {
-      const userWithPermissions = await userRepository.getPermissions(id)
+    const userWithPermissions = await userRepository.getPermissions(id)
 
-      if (!userWithPermissions) {
-        throw new AuthException(UNAUTHORIZED, __('Not found user'))
-      }
-
-      const allPermissions = getPermissions(userWithPermissions)
-      const requiredPermissionsArray = Array.isArray(permissions) ? permissions : [permissions]
-
-      const hadRequiredPermissions =
-        option === 'every'
-          ? requiredPermissionsArray.every((permission) => allPermissions.has(permission))
-          : requiredPermissionsArray.some((permission) => allPermissions.has(permission))
-
-      if (!hadRequiredPermissions) {
-        throw new ForbiddenException(FORBIDDEN, __('Forbidden'))
-      }
-
-      next()
-    } catch (error) {
-      next(error)
+    if (!userWithPermissions) {
+      throw new AuthException(UNAUTHORIZED, __('Not found user'))
     }
+
+    const allPermissions = getPermissions(userWithPermissions)
+    const requiredPermissionsArray = Array.isArray(permissions) ? permissions : [permissions]
+
+    const hadRequiredPermissions =
+      option === 'every'
+        ? requiredPermissionsArray.every((permission) => allPermissions.has(permission))
+        : requiredPermissionsArray.some((permission) => allPermissions.has(permission))
+
+    if (!hadRequiredPermissions) {
+      throw new ForbiddenException(FORBIDDEN, __('Forbidden'))
+    }
+
+    next()
   }
 
 export { auth, authorize }
