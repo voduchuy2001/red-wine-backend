@@ -48,7 +48,7 @@ async function bootstrap() {
   const host = process.env.APP_URL || 'localhost'
   const port = process.env.PORT || 6969
   server.listen(port, () => {
-    console.log(`${host}:${port}/${version}`)
+    console.log(`[${host}:${port}/${version}]`)
   })
 }
 

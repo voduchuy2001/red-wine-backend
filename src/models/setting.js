@@ -3,7 +3,7 @@
 import { Model } from 'sequelize'
 
 class Setting extends Model {
-  static associate(models) {}
+  static associate({}) {}
 }
 
 export default (sequelize, { STRING, TEXT }) => {

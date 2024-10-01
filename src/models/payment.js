@@ -3,7 +3,7 @@
 import { Model } from 'sequelize'
 
 class Payment extends Model {
-  static associate() {}
+  static associate({}) {}
 }
 
 export default (sequelize, DataTypes) => {

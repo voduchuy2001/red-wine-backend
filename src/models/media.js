@@ -3,7 +3,7 @@
 import { Model } from 'sequelize'
 
 class Media extends Model {
-  static associate(models) {}
+  static associate({}) {}
 }
 
 export default (sequelize, { BIGINT, BOOLEAN, STRING }) => {

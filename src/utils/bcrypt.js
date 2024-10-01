@@ -1,10 +1,12 @@
 import bcrypt from 'bcryptjs'
 
-const SALT = 10
-
 class Bcrypt {
+  constructor(SALT = 10) {
+    this.SALT = SALT
+  }
+
   async hashPassword(password) {
-    return bcrypt.hash(password, SALT)
+    return bcrypt.hash(password, this.SALT)
   }
 
   async comparePassword(password, hashedPassword) {

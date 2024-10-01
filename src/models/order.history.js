@@ -3,7 +3,12 @@
 import { Model } from 'sequelize'
 
 class OrderHistory extends Model {
-  static associate(models) {}
+  static associate({ Order }) {
+    this.belongsTo(Order, {
+      foreignKey: 'orderId',
+      as: 'order'
+    })
+  }
 }
 
 export default (sequelize, DataTypes) => {

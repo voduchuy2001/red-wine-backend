@@ -3,13 +3,15 @@
 import { Model } from 'sequelize'
 
 class OrderItem extends Model {
-  static associate(models) {}
+  static associate({ Order }) {
+    this.belongsTo(Order, {
+      foreignKey: 'orderId',
+      as: 'order'
+    })
+  }
 }
 
 export default (sequelize, DataTypes) => {
-  class OrderItem extends Model {
-    static associate(models) {}
-  }
   OrderItem.init(
     {
       orderId: DataTypes.BIGINT,

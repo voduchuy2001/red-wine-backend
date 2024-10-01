@@ -40,6 +40,7 @@ export default (sequelize, { DATE, STRING }) => {
     {
       avatar: STRING,
       name: STRING,
+      username: STRING,
       email: STRING,
       password: STRING,
       lastLoginAt: DATE,
