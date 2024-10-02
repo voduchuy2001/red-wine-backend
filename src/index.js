@@ -28,7 +28,6 @@ async function bootstrap() {
 
   view(app)
   filesystems(app)
-  app.use(multer)
   app.use(cors())
   app.use(cookieParser())
   app.use(helmet())
@@ -41,6 +40,7 @@ async function bootstrap() {
   app.use(session)
   app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
   app.use('/v1', routes)
+  app.use(multer)
   app.use(notFound)
   app.use(handleError)
 

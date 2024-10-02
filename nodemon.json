@@ -1,5 +1,5 @@
 {
-  "watch": ["src", "documents"],
+  "watch": ["src", "documents", ".env"],
   "ext": "js,ejs,json,yaml,.env",
   "ignore": ["node_modules"],
   "exec": "babel-node src/index.js"

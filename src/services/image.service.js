@@ -5,14 +5,14 @@ import ServiceException from '@exceptions/service.exception'
 import { INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
 
 class ImageService {
-  async upload(input, outputPath) {
+  async upload(fileInput, outputPath) {
     try {
       const dir = path.dirname(outputPath)
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true })
       }
 
-      fs.writeFileSync(outputPath, input)
+      fs.writeFileSync(outputPath, fileInput)
 
       return outputPath
     } catch (error) {
@@ -45,14 +45,15 @@ class ImageService {
     }
   }
 
-  async storeAs(input, outputPath, fileName) {
+  async storeAs(fileInput, outputPath, fileName) {
     try {
       if (!fs.existsSync(outputPath)) {
         fs.mkdirSync(outputPath, { recursive: true })
       }
 
       const filePath = path.join(outputPath, fileName)
-      fs.writeFileSync(filePath, input)
+      const content = fs.readFileSync(fileInput)
+      fs.writeFileSync(filePath, content)
 
       return fileName
     } catch (error) {

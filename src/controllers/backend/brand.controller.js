@@ -1,6 +1,6 @@
 import { OK } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
-import path from 'path'
+import Storage from '@utils/storage'
 
 class BrandController extends BaseController {
   constructor(brandService, imageService) {
@@ -28,7 +28,7 @@ class BrandController extends BaseController {
       let image = null
       if (logo) {
         const { filename, path: filePath } = logo
-        const outputPath = path.join(__dirname, '../../public/images/brand/')
+        const outputPath = Storage.publicPath('images/brand')
         image = await this.imageService.storeAs(filePath, outputPath, filename)
       }
       await this.brandService.create(data, image)
