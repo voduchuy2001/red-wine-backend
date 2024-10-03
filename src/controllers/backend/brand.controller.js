@@ -13,8 +13,8 @@ class BrandController extends BaseController {
     const data = req.query
 
     try {
-      const brands = await this.brandService.index(data)
-      return super.json(res, OK, __('Success'), brands)
+      const brands = await this.brandService.getBrands(data)
+      return super.json(res, OK, __('Get data success'), brands)
     } catch (error) {
       next(error)
     }
@@ -31,7 +31,7 @@ class BrandController extends BaseController {
         const outputPath = Storage.publicPath('images/brand')
         image = await this.imageService.storeAs(filePath, outputPath, filename)
       }
-      await this.brandService.create(data, image)
+      await this.brandService.createBrand(data, image)
       return super.json(res, OK, __('success'))
     } catch (error) {
       next(error)

@@ -98,21 +98,20 @@ class BaseRepository {
     return record
   }
 
-  async advancedGet({ condition, order_by, paginate, select, take, with: withRelations } = {}) {
+  async advancedGet({ condition, orderBy, paginate, select, with: withRelations } = {}) {
     const query = {
       where: condition || {},
-      order: order_by || [],
-      limit: take || null,
+      order: orderBy || [],
       include: withRelations || [],
-      attributes: select || ['*']
+      attributes: select.length > 0 ? select : undefined
     }
 
     if (paginate) {
-      const { per_page, current_paged } = paginate
+      const { perPage, currentPage } = paginate
       return await this.model.findAndCountAll({
         ...query,
-        offset: (current_paged - 1) * per_page,
-        limit: per_page
+        offset: (currentPage - 1) * perPage,
+        limit: perPage
       })
     }
 
