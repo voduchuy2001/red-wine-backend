@@ -10,15 +10,14 @@ import http from 'http'
 import swaggerUiExpress from 'swagger-ui-express'
 import { specs } from '@config/swagger'
 import { view } from '@config/view'
-import { filesystems } from '@config/filesystems'
+import fileSystems from '@config/file.systems'
 import cookieParser from 'cookie-parser'
 import { authenticated } from '@middlewares/swagger'
 import { session } from '@config/session'
 import i18n from '@config/lang'
 import lang from '@middlewares/lang'
 import { socketIo } from '@config/socket.io'
-import handleError from '@middlewares/handle.error'
-import multer from '@middlewares/multer'
+import ErrorHandler from '@middlewares/error.handler'
 
 async function bootstrap() {
   const app = express()
@@ -27,8 +26,7 @@ async function bootstrap() {
   io.listen(server)
 
   view(app)
-  filesystems(app)
-  app.use(multer)
+  fileSystems(app)
   app.use(cors())
   app.use(cookieParser())
   app.use(helmet())
@@ -42,7 +40,7 @@ async function bootstrap() {
   app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
   app.use('/v1', routes)
   app.use(notFound)
-  app.use(handleError)
+  app.use(ErrorHandler.handle)
 
   const version = process.env.VERSION || 'v1'
   const host = process.env.APP_URL || 'localhost'

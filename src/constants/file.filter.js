@@ -1,6 +1,4 @@
-export const ALLOWED_EXTENSIONS = ['.png', '.jpg', '.gif', '.jpeg']
-
-export const FILE_LIMITER = {
+export const FILE_FILTER = {
   LIMIT_PART_COUNT: 'Too many parts',
   LIMIT_FILE_SIZE: 'File too large',
   LIMIT_FILE_COUNT: 'Too many files',

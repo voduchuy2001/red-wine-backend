@@ -7,7 +7,7 @@ import AuthService from '@services/auth/auth.service'
 import loginRequest from '@requests/login.request'
 import registerRequest from '@requests/register.request'
 import UserRepository from '@repositories/user.repository'
-import { auth } from '@middlewares/authenticated'
+import auth from '@middlewares/authenticated'
 import AuthController from '@controllers/auth/auth.controller'
 import LogoutController from '@controllers/auth/logout.controller'
 import refreshTokenRequest from '@requests/refresh.token.request'
@@ -27,6 +27,6 @@ router.post('/login', authLimiter, validate(loginRequest), loginController.login
 router.post('/logout', auth, validate(logoutRequest), logoutController.logout.bind(logoutController))
 router.post('/register', validate(registerRequest), registerController.register.bind(registerController))
 router.get('/authenticated', auth, authenticatedController.auth.bind(authenticatedController))
-router.post('/refresh-token', auth, validate(refreshTokenRequest), authenticatedController.refreshToken.bind(authenticatedController))
+router.post('/refresh-token', validate(refreshTokenRequest), authenticatedController.refreshToken.bind(authenticatedController))
 
 export default router

@@ -1,5 +1,5 @@
 import BrandController from '@controllers/backend/brand.controller'
-import { auth } from '@middlewares/authenticated'
+import auth from '@middlewares/authenticated'
 import validate from '@middlewares/validation'
 import BrandRepository from '@repositories/brand.repository'
 import createBrandRequest from '@requests/create.brand.request'
@@ -15,6 +15,6 @@ const imageService = new ImageService()
 const brandController = new BrandController(brandService, imageService)
 
 router.get('/brand', auth, brandController.index.bind(brandController))
-router.post('/brand', Multer.uploadSingle('logo', ['.png']), auth, validate(createBrandRequest), brandController.create.bind(brandController))
+router.post('/brand', auth, Multer.uploadSingle('logo'), validate(createBrandRequest), brandController.create.bind(brandController))
 
 export default router

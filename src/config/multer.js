@@ -3,11 +3,14 @@ import path from 'path'
 import fs from 'fs'
 import { v4 as uuidv4 } from 'uuid'
 import Storage from '@utils/storage'
+import MulterException from '@exceptions/multer.exception'
+import { BAD_REQUEST } from '@constants/http.status.code'
 
 class Multer {
-  constructor(storageOption = process.env.STORAGE_LOCATION || 'disk') {
-    this.storageOption = storageOption
+  constructor(storageOption, fileSize) {
+    this.storageOption = storageOption || 'disk'
     this.defaultExtensions = this.defaultAllowedExtensions()
+    this.fileSize = fileSize || 5 * 1024 * 1024
   }
 
   defaultAllowedExtensions() {
@@ -53,7 +56,7 @@ class Multer {
       const fileExt = path.extname(file.originalname).toLowerCase()
 
       if (!allowedExtensions.includes(fileExt)) {
-        return callback(new multer.MulterError('INVALID_EXTENSION'), false)
+        return callback(new MulterException(BAD_REQUEST, 'INVALID_EXTENSION'), false)
       }
 
       callback(null, true)
@@ -61,11 +64,15 @@ class Multer {
   }
 
   multerConfig(allowedExtensions) {
+    const storageOptions = {
+      memory: multer.memoryStorage(),
+      disk: multer.diskStorage(this.diskStorageConfig())
+    }
     return {
-      storage: this.storageOption === 'memory' ? multer.memoryStorage() : multer.diskStorage(this.diskStorageConfig()),
+      storage: storageOptions[this.storageOption],
       fileFilter: this.fileFilter(allowedExtensions),
       limits: {
-        fileSize: 1024 * 1024 * 5 // 5MB
+        fileSize: this.fileSize
       }
     }
   }
