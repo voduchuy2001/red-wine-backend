@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 
 class Bcrypt {
-  constructor(SALT = 10) {
-    this.SALT = SALT
+  constructor() {
+    this.SALT = process.env.BCRYPT_ROUNDS || 10
   }
 
   async hashPassword(password) {

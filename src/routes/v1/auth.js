@@ -10,6 +10,8 @@ import UserRepository from '@repositories/user.repository'
 import { auth } from '@middlewares/authenticated'
 import AuthController from '@controllers/auth/auth.controller'
 import LogoutController from '@controllers/auth/logout.controller'
+import refreshTokenRequest from '@requests/refresh.token.request'
+import logoutRequest from '@requests/logout.request'
 
 const router = express.Router()
 const authLimiter = limiter(5 * 60 * 1000, 10)
@@ -22,8 +24,9 @@ const authenticatedController = new AuthController(authService)
 const logoutController = new LogoutController(authService)
 
 router.post('/login', authLimiter, validate(loginRequest), loginController.login.bind(loginController))
-router.post('/logout', auth, logoutController.logout.bind(logoutController))
+router.post('/logout', auth, validate(logoutRequest), logoutController.logout.bind(logoutController))
 router.post('/register', validate(registerRequest), registerController.register.bind(registerController))
 router.get('/authenticated', auth, authenticatedController.auth.bind(authenticatedController))
+router.post('/refresh-token', auth, validate(refreshTokenRequest), authenticatedController.refreshToken.bind(authenticatedController))
 
 export default router

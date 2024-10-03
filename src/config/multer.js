@@ -7,7 +7,28 @@ import Storage from '@utils/storage'
 class Multer {
   constructor(storageOption = process.env.STORAGE_LOCATION || 'disk') {
     this.storageOption = storageOption
-    this.defaultExtensions = ['.jpg', '.png']
+    this.defaultExtensions = this.defaultAllowedExtensions()
+  }
+
+  defaultAllowedExtensions() {
+    return [
+      '.png',
+      '.gif',
+      '.bmp',
+      '.svg',
+      '.wav',
+      '.mp4',
+      '.mov',
+      '.avi',
+      '.wmv',
+      '.mp3',
+      '.m4a',
+      '.jpg',
+      '.jpeg',
+      '.mpga',
+      '.webp',
+      '.wma'
+    ]
   }
 
   diskStorageConfig() {

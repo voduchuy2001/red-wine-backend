@@ -14,11 +14,11 @@ import { filesystems } from '@config/filesystems'
 import cookieParser from 'cookie-parser'
 import { authenticated } from '@middlewares/swagger'
 import { session } from '@config/session'
-import multer from '@middlewares/multer'
 import i18n from '@config/lang'
 import lang from '@middlewares/lang'
 import { socketIo } from '@config/socket.io'
 import handleError from '@middlewares/handle.error'
+import multer from '@middlewares/multer'
 
 async function bootstrap() {
   const app = express()
@@ -28,6 +28,7 @@ async function bootstrap() {
 
   view(app)
   filesystems(app)
+  app.use(multer)
   app.use(cors())
   app.use(cookieParser())
   app.use(helmet())
@@ -40,7 +41,6 @@ async function bootstrap() {
   app.use(session)
   app.use('/api-docs', authenticated, swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
   app.use('/v1', routes)
-  app.use(multer)
   app.use(notFound)
   app.use(handleError)
 

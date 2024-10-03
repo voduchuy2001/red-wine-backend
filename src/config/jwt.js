@@ -1,12 +1,36 @@
+import { UNAUTHORIZED } from '@constants/http.status.code'
+import AuthException from '@exceptions/auth.exception'
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
 
 class JWT {
-  static generate(data, expiresIn = '15m') {
-    const key = process.env.JWT_SECRET_KEY
+  tokenTypes() {
+    return {
+      accessToken: process.env.ACCESS_TOKEN_KEY,
+      refreshToken: process.env.REFRESH_TOKEN_KEY
+    }
+  }
 
-    return jwt.sign({ data }, key, { expiresIn })
+  generate(data, expiresIn = '15m', type = 'accessToken') {
+    const types = this.tokenTypes()
+    return jwt.sign({ data }, types[type], { expiresIn })
+  }
+
+  verify(token, type = 'accessToken') {
+    const types = this.tokenTypes()
+
+    try {
+      return jwt.verify(token, types[type])
+    } catch (error) {
+      const messages = {
+        JsonWebTokenError: __('Invalid token'),
+        TokenExpiredError: __('Token has expired')
+      }
+
+      const message = messages[error.name] || __('Authentication error')
+      throw new AuthException(UNAUTHORIZED, message)
+    }
   }
 }
 
-export default JWT
+export default new JWT()

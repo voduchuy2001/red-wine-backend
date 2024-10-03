@@ -47,5 +47,9 @@
 	"Not found user": "Not found user",
 	"Token has expired": "Token has expired",
 	"Failed to create logo": "Failed to create logo",
-	"Invalid file extension(s)": "Invalid file extension(s)"
+	"Invalid file extension(s)": "Invalid file extension(s)",
+	"Multer exception": "Multer exception",
+	"Login success": "Login success",
+	"Authentication error": "Authentication error",
+	"Not found refresh token": "Not found refresh token"
 }

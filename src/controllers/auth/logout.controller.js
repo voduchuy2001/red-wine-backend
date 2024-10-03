@@ -8,10 +8,10 @@ class LogoutController extends BaseController {
   }
 
   async logout(req, res, next) {
-    const data = req.auth
+    const { refreshToken } = req.body
 
     try {
-      await this.authService.logout(data)
+      await this.authService.logout(refreshToken)
       return super.json(res, OK, __('success'))
     } catch (error) {
       next(error)

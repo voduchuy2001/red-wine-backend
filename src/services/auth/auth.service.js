@@ -3,6 +3,8 @@ import Bcrypt from '@utils/bcrypt'
 import JWT from '@config/jwt'
 import ServiceException from '@exceptions/service.exception'
 import { BAD_REQUEST, NOT_FOUND, UNAUTHORIZED } from '@constants/http.status.code'
+import RedisCache from '@config/cache'
+import { v4 as uuidv4 } from 'uuid'
 
 class AuthService {
   constructor(userRepository) {
@@ -33,9 +35,14 @@ class AuthService {
 
     const userId = user.id
     await this.userRepository.updateLastLoginAt(userId)
-    const token = JWT.generate(userId, '3d')
+    const accessToken = JWT.generate(userId, '15m')
 
-    return { token, user }
+    const sessionId = 'session-' + uuidv4()
+    const refreshToken = JWT.generate({ userId, sessionId }, '1d', 'refreshToken')
+    await RedisCache.set(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
+    await RedisCache.sadd(`user:sessions:${userId}`, sessionId)
+
+    return { accessToken, refreshToken }
   }
 
   async register(data) {
@@ -51,14 +58,15 @@ class AuthService {
     return await this.userRepository.create({ email, avatar, password: hashedPassword })
   }
 
-  async logout(data) {
-    const { data: id } = data
-    const user = await this.userRepository.findOne({ where: id })
-    if (!user) {
-      throw new ServiceException(BAD_REQUEST, __('User not found'))
+  async logout(refreshToken) {
+    try {
+      const decoded = JWT.verify(refreshToken, 'refreshToken')
+      const { userId, sessionId } = decoded
+      await RedisCache.srem(`user:sessions:${userId}`, sessionId)
+      return true
+    } catch (error) {
+      throw new ServiceException(error.status || UNAUTHORIZED, error.message)
     }
-
-    return true
   }
 
   async auth(id) {
@@ -67,6 +75,23 @@ class AuthService {
       throw new ServiceException(NOT_FOUND, __('Not found user'))
     }
     return authUser
+  }
+
+  async refreshToken(refreshToken) {
+    try {
+      const decoded = JWT.verify(refreshToken, 'refreshToken')
+      const { userId, sessionId } = decoded.data
+
+      const existRefreshToken = await RedisCache.get(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
+
+      if (!existRefreshToken || existRefreshToken !== refreshToken) {
+        throw new ServiceException(UNAUTHORIZED, __('Not found refresh token'))
+      }
+
+      return JWT.generate(userId, '15m')
+    } catch (error) {
+      throw new ServiceException(error.status || UNAUTHORIZED, error.message)
+    }
   }
 }
 

@@ -17,6 +17,17 @@ class AuthController extends BaseController {
       next(error)
     }
   }
+
+  async refreshToken(req, res, next) {
+    const { refreshToken } = req.body
+
+    try {
+      const accessToken = await this.authService.refreshToken(refreshToken)
+      return super.json(res, OK, __('Success'), accessToken)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 export default AuthController
