@@ -38,9 +38,8 @@ class AuthService {
     const accessToken = JWT.generate(userId, '15m')
 
     const sessionId = 'session-' + uuidv4()
-    const refreshToken = JWT.generate({ userId, sessionId }, '1d', 'refreshToken')
+    const refreshToken = JWT.generate({ userId, sessionId }, '7d', 'refreshToken')
     await RedisCache.set(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
-    await RedisCache.sadd(`user:sessions:${userId}`, sessionId)
 
     return { accessToken, refreshToken }
   }
@@ -61,8 +60,15 @@ class AuthService {
   async logout(refreshToken) {
     try {
       const decoded = JWT.verify(refreshToken, 'refreshToken')
-      const { userId, sessionId } = decoded
-      await RedisCache.srem(`user:sessions:${userId}`, sessionId)
+      const { userId, sessionId } = decoded.data
+      const existRefreshToken = await RedisCache.get(`auth:user:${userId}:${sessionId}`)
+
+      if (!existRefreshToken) {
+        throw new ServiceException(NOT_FOUND, __('Refresh token not found'))
+      }
+
+      await RedisCache.del(`auth:user:${userId}:${sessionId}`)
+
       return true
     } catch (error) {
       throw new ServiceException(error.status || UNAUTHORIZED, error.message)
@@ -84,7 +90,7 @@ class AuthService {
 
       const existRefreshToken = await RedisCache.get(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
 
-      if (!existRefreshToken || existRefreshToken !== refreshToken) {
+      if (!existRefreshToken) {
         throw new ServiceException(UNAUTHORIZED, __('Not found refresh token'))
       }
 
