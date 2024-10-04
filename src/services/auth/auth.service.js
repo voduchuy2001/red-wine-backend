@@ -41,7 +41,7 @@ class AuthService {
     const refreshToken = JWT.generate({ userId, sessionId }, '7d', 'refreshToken')
     await RedisCache.set(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
 
-    return { accessToken, refreshToken }
+    return { accessToken, refreshToken, sessionId }
   }
 
   async register(data) {
