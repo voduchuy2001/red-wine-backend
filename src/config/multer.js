@@ -4,7 +4,7 @@ import fs from 'fs'
 import { v4 as uuidv4 } from 'uuid'
 import Storage from '@utils/storage'
 import MulterException from '@exceptions/multer.exception'
-import { BAD_REQUEST } from '@constants/http.status.code'
+import { BAD_REQUEST, UNPROCESSABLE_ENTITY } from '@constants/http.status.code'
 
 class Multer {
   constructor(storageOption, fileSize) {
@@ -56,7 +56,7 @@ class Multer {
       const fileExt = path.extname(file.originalname).toLowerCase()
 
       if (!allowedExtensions.includes(fileExt)) {
-        return callback(new MulterException(BAD_REQUEST, 'INVALID_EXTENSION'), false)
+        return callback(new MulterException(UNPROCESSABLE_ENTITY, 'INVALID_EXTENSION'), false)
       }
 
       callback(null, true)

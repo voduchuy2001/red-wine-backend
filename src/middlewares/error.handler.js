@@ -15,7 +15,7 @@ class ErrorHandler {
 
     if (err instanceof MulterException) {
       const message = FILE_FILTER[err.message] || 'An error occurred'
-      return res.status(err.status || 400).json({ status: err.status || 400, message })
+      return res.status(err.status).json({ status: err.status || 400, message })
     }
 
     return res.status(INTERNAL_SERVER_ERROR).json({
