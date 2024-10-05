@@ -66,19 +66,6 @@ class BaseRepository {
     return record
   }
 
-  applyConditions(query, conditions = {}) {
-    Object.keys(conditions).forEach((field) => {
-      const value = conditions[field]
-      if (Array.isArray(value)) {
-        const [condition, val] = value
-        query.where[field] = { [Op[condition]]: val }
-      } else {
-        query.where[field] = value
-      }
-    })
-    return query
-  }
-
   async getByWhereIn(column, values = [], additionalCondition = {}) {
     return this.model.findAll({
       where: {
@@ -96,26 +83,6 @@ class BaseRepository {
       throw new RepositoryException(NOT_FOUND, __(`Record not found with ID ${id}`))
     }
     return record
-  }
-
-  async advancedGet({ condition, orderBy, paginate, select, with: withRelations } = {}) {
-    const query = {
-      where: condition || {},
-      order: orderBy || [],
-      include: withRelations || [],
-      attributes: select.length > 0 ? select : undefined
-    }
-
-    if (paginate) {
-      const { perPage, currentPage } = paginate
-      return await this.model.findAndCountAll({
-        ...query,
-        offset: (currentPage - 1) * perPage,
-        limit: perPage
-      })
-    }
-
-    return await this.model.findAll(query)
   }
 
   async forceDelete(condition) {
