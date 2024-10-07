@@ -35,7 +35,7 @@ class AuthService {
 
     const userId = user.id
     await this.userRepository.updateLastLoginAt(userId)
-    const accessToken = JWT.generate(userId, '15m')
+    const accessToken = JWT.generate(userId, '1d')
 
     const sessionId = 'session-' + uuidv4()
     const refreshToken = JWT.generate({ userId, sessionId }, '7d', 'refreshToken')

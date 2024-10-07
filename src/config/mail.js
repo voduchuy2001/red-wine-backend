@@ -1,4 +1,4 @@
-import { mailConfiguration } from '@constants/mail'
+import { MAIL_CONFIGURATION } from '@constants/mail'
 import nodemailer from 'nodemailer'
 import path from 'path'
 import fs from 'fs'
@@ -7,7 +7,7 @@ import ejs from 'ejs'
 class Mail {
   constructor(mailData) {
     this.mailData = mailData
-    this.transporter = nodemailer.createTransport(mailConfiguration)
+    this.transporter = nodemailer.createTransport(MAIL_CONFIGURATION)
   }
 
   envelop() {

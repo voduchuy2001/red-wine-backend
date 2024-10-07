@@ -1,4 +1,4 @@
-export const mailConfiguration = {
+export const MAIL_CONFIGURATION = {
   service: process.env.MAIL_SERVICE,
   secure: true,
   auth: {

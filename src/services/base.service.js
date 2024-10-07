@@ -4,46 +4,50 @@ class BaseService {
   }
 
   /**
-   * Retrieves all records from the repository with optional relations.
+   * Retrieves all records from the repository with optional relations and options.
    *
    * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @param {Object} options - Additional options for the query (e.g., order, limit, offset).
    * @returns {Promise} A promise that resolves with all records fetched from the repository.
    */
-  async getAll(withRelations = []) {
-    return this.repository.all(withRelations)
+  async getAll(withRelations = [], options = {}) {
+    return this.repository.all(withRelations, options)
   }
 
   /**
-   * Finds a record by its ID from the repository with optional relations.
+   * Finds a record by its ID from the repository with optional relations and options.
    *
    * @param {number} id - The ID of the record to find.
    * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @param {Object} options - Additional options for the query.
    * @returns {Promise} A promise that resolves with the record fetched from the repository.
    */
-  async find(id, withRelations = []) {
-    return this.repository.findById(id, withRelations)
+  async find(id, withRelations = [], options = {}) {
+    return this.repository.findOrFail(id, withRelations, options)
   }
 
   /**
-   * Finds a single record from the repository based on the provided condition with optional relations.
+   * Finds a single record from the repository based on the provided condition with optional relations and options.
    *
    * @param {Object} condition - The condition to match the record.
    * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @param {Object} options - Additional options for the query.
    * @returns {Promise} A promise that resolves with the record fetched from the repository.
    */
-  async findOne(condition, withRelations = []) {
-    return this.repository.find(condition, withRelations)
+  async findOne(condition, withRelations = [], options = {}) {
+    return this.repository.find(condition, withRelations, options)
   }
 
   /**
-   * Finds all records from the repository based on the provided condition with optional relations.
+   * Finds all records from the repository based on the provided condition with optional relations and options.
    *
    * @param {Object} condition - The condition to match the records.
    * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @param {Object} options - Additional options for the query.
    * @returns {Promise} A promise that resolves with all records fetched from the repository.
    */
-  async findAll(condition = {}, withRelations = []) {
-    return this.repository.findByConditions(condition, withRelations)
+  async findAll(condition = {}, withRelations = [], options = {}) {
+    return this.repository.findByConditions(condition, withRelations, options)
   }
 
   /**
@@ -54,7 +58,7 @@ class BaseService {
    * @returns {Promise} A promise that resolves with the newly created record.
    */
   async create(data, transaction = null) {
-    return this.repository.create(data, { transaction })
+    return this.repository.create(data, transaction)
   }
 
   /**
@@ -66,7 +70,7 @@ class BaseService {
    * @returns {Promise} A promise that resolves after updating the records in the repository.
    */
   async update(condition, data, transaction = null) {
-    return this.repository.update(condition, data, { transaction })
+    return this.repository.update(condition, data, transaction)
   }
 
   /**
@@ -77,7 +81,7 @@ class BaseService {
    * @returns {Promise} A promise that resolves after deleting the records from the repository.
    */
   async delete(condition, transaction = null) {
-    return this.repository.delete(condition, { transaction })
+    return this.repository.delete(condition, transaction)
   }
 
   /**
@@ -100,7 +104,7 @@ class BaseService {
    * @returns {Promise} A promise that resolves with the first matched or newly created record.
    */
   async firstOrCreate(condition, defaults, transaction = null) {
-    return this.repository.firstOrCreate(condition, defaults, { transaction })
+    return this.repository.firstOrCreate(condition, defaults, transaction)
   }
 
   /**
@@ -112,7 +116,7 @@ class BaseService {
    * @returns {Promise} A promise that resolves with the first matched or newly created record.
    */
   async firstOrNew(condition, transaction = null) {
-    return this.repository.firstOrNew(condition, { transaction })
+    return this.repository.firstOrNew(condition, transaction)
   }
 
   /**
@@ -146,7 +150,7 @@ class BaseService {
    * @returns {Promise} A promise that resolves after permanently deleting the records from the repository.
    */
   async forceDelete(condition, transaction = null) {
-    return this.repository.forceDelete(condition, { transaction })
+    return this.repository.forceDelete(condition, transaction)
   }
 
   /**
@@ -157,7 +161,7 @@ class BaseService {
    * @returns {Promise} A promise that resolves after restoring the records in the repository.
    */
   async restore(condition, transaction = null) {
-    return this.repository.restore(condition, { transaction })
+    return this.repository.restore(condition, transaction)
   }
 
   /**
@@ -167,10 +171,11 @@ class BaseService {
    * @param {number} pageSize - The number of records per page (default is 10).
    * @param {Object} condition - The condition to match the records.
    * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @param {Object} options - Additional options for the query.
    * @returns {Promise} A promise that resolves with the paginated records fetched from the repository.
    */
-  async paginate(page = 1, pageSize = 10, condition = {}, withRelations = []) {
-    return this.repository.findAndCountAll(condition, withRelations, { limit: pageSize, offset: (page - 1) * pageSize })
+  async paginate(page = 1, pageSize = 10, condition = {}, withRelations = [], options = {}) {
+    return this.repository.findAndCountAll(condition, withRelations, { offset: (page - 1) * pageSize }, options)
   }
 }
 

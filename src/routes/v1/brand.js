@@ -5,16 +5,17 @@ import BrandRepository from '@repositories/brand.repository'
 import createBrandRequest from '@requests/create.brand.request'
 import BrandService from '@services/backend/brand.service'
 import express from 'express'
-import ImageService from '@services/image.service'
 import Multer from '@config/multer'
+import getBrandsRequest from '@requests/get.brands.request'
+import updateBrandRequest from '@requests/update.brand.request'
 
 const router = express.Router()
 const brandRepository = new BrandRepository()
 const brandService = new BrandService(brandRepository)
-const imageService = new ImageService()
-const brandController = new BrandController(brandService, imageService)
+const brandController = new BrandController(brandService)
 
-router.get('/brand', auth, brandController.index.bind(brandController))
+router.get('/brand', auth, validate(getBrandsRequest), brandController.index.bind(brandController))
 router.post('/brand', auth, Multer.uploadSingle('logo'), validate(createBrandRequest), brandController.create.bind(brandController))
+router.put('/brand/:id', auth, Multer.uploadSingle('logo'), validate(updateBrandRequest), brandController.update.bind(brandController))
 
 export default router

@@ -3,10 +3,9 @@ import BaseController from '@controllers/base.controller'
 import Storage from '@utils/storage'
 
 class BrandController extends BaseController {
-  constructor(brandService, imageService) {
+  constructor(brandService) {
     super()
     this.brandService = brandService
-    this.imageService = imageService
   }
 
   async index(req, res, next) {
@@ -25,13 +24,26 @@ class BrandController extends BaseController {
     const logo = req.file
 
     try {
-      let image = null
-      if (logo) {
-        const { filename, path: filePath } = logo
-        const outputPath = Storage.publicPath('images/brand')
-        image = await this.imageService.storeAs(filePath, outputPath, filename)
-      }
+      const outputPath = Storage.publicPath('images/brand')
+      const image = logo ? await Storage.storeAs(logo.path, outputPath, logo.filename) : null
+
       await this.brandService.createBrand(data, image)
+      return super.json(res, OK, __('success'))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async update(req, res, next) {
+    const { id } = req.params
+    const data = req.body
+    const logo = req.file
+
+    try {
+      const outputPath = Storage.publicPath('images/brand')
+      const image = logo ? await Storage.storeAs(logo.path, outputPath, logo.filename) : null
+
+      await this.brandService.updateBrand(id, data, image)
       return super.json(res, OK, __('success'))
     } catch (error) {
       next(error)

@@ -1,6 +1,6 @@
-const { Op } = require('sequelize')
-const RepositoryException = require('@exceptions/repository.exception')
-const { NOT_FOUND } = require('@constants/http.status.code')
+import { Op } from 'sequelize'
+import RepositoryException from '@exceptions/repository.exception'
+import { NOT_FOUND } from '@constants/http.status.code'
 
 class BaseRepository {
   constructor(model) {
@@ -8,15 +8,16 @@ class BaseRepository {
   }
 
   /**
-   * Retrieves all records from the database with optional relations.
+   * Retrieves all records from the database with optional relations and options.
    *
    * @param {Array} withRelations - The optional relations to include in the query.
+   * @param {Object} options - The additional query options (e.g., order, limit, offset).
    * @returns {Promise} A promise that resolves with the retrieved records.
    * @throws {RepositoryException} If an error occurs while fetching the records.
    */
-  async all(withRelations = []) {
+  async all(withRelations = [], options = {}) {
     try {
-      return this.model.findAll({ include: withRelations })
+      return this.model.findAll({ include: withRelations, ...options })
     } catch (error) {
       throw new RepositoryException('Error fetching all records', error)
     }
@@ -27,11 +28,12 @@ class BaseRepository {
    *
    * @param {number} id - The ID of the record to find.
    * @param {Array} withRelations - The optional relations to include in the query.
+   * @param {Object} options - Additional query options.
    * @returns {Promise} A promise that resolves with the found record.
    * @throws {RepositoryException} If the record with the given ID is not found.
    */
-  async findById(id, withRelations = []) {
-    const record = await this.model.findByPk(id, { include: withRelations })
+  async findById(id, withRelations = [], options = {}) {
+    const record = await this.model.findByPk(id, { include: withRelations, ...options })
     if (!record) {
       throw new RepositoryException(NOT_FOUND, `Record not found with ID ${id}`)
     }
@@ -39,32 +41,34 @@ class BaseRepository {
   }
 
   /**
-   * Finds a single record based on the provided condition with optional relations.
+   * Finds a single record based on the provided condition with optional relations and options.
    *
    * @param {Object} condition - The condition to match the record.
    * @param {Array} withRelations - The optional relations to include in the query.
+   * @param {Object} options - Additional query options.
    * @returns {Promise} A promise that resolves with the found record.
    * @throws {RepositoryException} If an error occurs while fetching the record.
    */
-  async find(condition = {}, withRelations = []) {
+  async find(condition = {}, withRelations = [], options = {}) {
     try {
-      return this.model.findOne({ where: condition, include: withRelations })
+      return this.model.findOne({ where: condition, include: withRelations, ...options })
     } catch (error) {
       throw new RepositoryException('Error fetching record', error)
     }
   }
 
   /**
-   * Finds records based on the provided conditions with optional relations.
+   * Finds records based on the provided conditions with optional relations and options.
    *
    * @param {Object} condition - The conditions to match the records.
    * @param {Array} withRelations - The optional relations to include in the query.
+   * @param {Object} options - Additional query options.
    * @returns {Promise} A promise that resolves with the found records.
    * @throws {RepositoryException} If an error occurs while fetching the records.
    */
-  async findByConditions(condition = {}, withRelations = []) {
+  async findByConditions(condition = {}, withRelations = [], options = {}) {
     try {
-      return this.model.findAll({ where: condition, include: withRelations })
+      return this.model.findAll({ where: condition, include: withRelations, ...options })
     } catch (error) {
       throw new RepositoryException('Error fetching records by condition', error)
     }
@@ -168,15 +172,16 @@ class BaseRepository {
   }
 
   /**
-   * Finds a record by its ID with optional relations.
+   * Finds a record by its ID with optional relations and options.
    *
    * @param {number} id - The ID of the record to find.
    * @param {Array} withRelations - The optional relations to include in the query.
+   * @param {Object} options - Additional query options.
    * @returns {Promise} A promise that resolves with the found record.
    * @throws {RepositoryException} If the record with the given ID is not found.
    */
-  async findOrFail(id, withRelations = []) {
-    const record = await this.model.findByPk(id, { include: withRelations })
+  async findOrFail(id, withRelations = [], options = {}) {
+    const record = await this.model.findByPk(id, { include: withRelations, ...options })
     if (!record) {
       throw new RepositoryException(NOT_FOUND, `Record not found with ID ${id}`)
     }
@@ -215,18 +220,35 @@ class BaseRepository {
   }
 
   /**
-   * Finds and counts all records from the database based on the provided condition and optional relations.
+   * Retrieves records from the database that match the specified condition,
+   * along with related records, while also supporting pagination and sorting.
    *
-   * @param {Object} condition - The condition to match the records.
-   * @param {Array} withRelations - The optional relations to include in the query.
-   * @param {Object} pagination - The pagination settings for limiting and offsetting the results.
-   * @param {number} pagination.limit - The maximum number of records to retrieve.
-   * @param {number} pagination.offset - The number of records to skip before starting to return data.
-   * @returns {Promise} A promise that resolves with an object containing the found records and the total count.
+   * @param {Object} condition - The condition to filter records.
+   * @param {Array} withRelations - An array of relations to include in the results.
+   * @param {Object} pagination - Pagination parameters.
+   * @param {number} pagination.limit - The maximum number of records to return (default is 10).
+   * @param {number} pagination.offset - The number of records to skip before starting to collect the result set (default is 0).
+   * @param {Object} options - Additional options for the query.
+   * @param {Array} options.order - An array of order clauses for sorting the results, where each clause is an array with a column name and direction (e.g., [['columnName', 'ASC']]).
+   *
+   * @returns {Promise<Object>} A promise that resolves to an object containing:
+   *   - {Array} rows - The array of retrieved records.
+   *   - {number} count - The total number of records matching the condition.
+   *
+   * @throws {Error} Throws an error if the query fails due to database issues or invalid parameters.
    */
-  async findAndCountAll(condition = {}, withRelations = [], pagination = { limit: 10, offset: 0 }) {
+  async findAndCountAll(condition = {}, withRelations = [], pagination = { limit: 10, offset: 0 }, options = {}) {
     const { limit, offset } = pagination
-    return this.model.findAndCountAll({ where: condition, include: withRelations, limit, offset })
+    const { order } = options
+
+    return this.model.findAndCountAll({
+      where: condition,
+      include: withRelations,
+      limit,
+      offset,
+      order,
+      ...options
+    })
   }
 }
 

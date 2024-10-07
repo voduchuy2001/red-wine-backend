@@ -9,7 +9,7 @@ import {
   VNP_PRODUCT_CODE,
   VNP_RETURN_URL,
   VNP_VERSION
-} from '@constants/vnp.api'
+} from '@constants/index'
 import crypto from 'crypto'
 import moment from 'moment'
 import { Buffer } from 'buffer'
@@ -34,13 +34,11 @@ class VNPayService {
 
   async getVnpSetting() {
     const setting = await this.settingRepository.getSetting(SETTING_KEY.VNPAY)
-
     if (!setting) {
       throw new ServiceException(BAD_REQUEST, __('Setting not found'))
     }
 
     const { enabled, ...data } = JSON.parse(setting.value)
-
     if (!enabled) {
       throw new ServiceException(BAD_REQUEST, __('Payment method not available'))
     }
@@ -59,15 +57,12 @@ class VNPayService {
   resolveUrlString(host, endpoint) {
     host = host.trim()
     endpoint = endpoint.trim()
-
     if (host.endsWith('/') || host.endsWith('\\)')) {
       host = host.slice(0, -1)
     }
-
     if (endpoint.startsWith('/') || endpoint.startsWith('\\)')) {
       host = host.slice(0, -1)
     }
-
     return `${host}/${endpoint}`
   }
 
@@ -128,9 +123,8 @@ class VNPayService {
     return redirectUrl.toString()
   }
 
-  getResponseByStatusCode(responseCode = '', locale = VNP_LOCALE, responseMap = RESPONSE_MAP) {
-    const respondText = responseMap.get(responseCode) || responseMap.get('default')
-    return respondText[locale]
+  getResponseByStatusCode(responseCode = '', responseMap = RESPONSE_MAP) {
+    return responseMap[responseCode] || responseMap['default']
   }
 
   async verifyIpn(query = '') {
@@ -142,7 +136,7 @@ class VNPayService {
     const outputResults = {
       isVerified: true,
       isSuccess: queryData.vnp_ResponseCode === '00',
-      message: this.getResponseByStatusCode(queryData.vnp_ResponseCode?.toString() || '', VNP_LOCALE)
+      message: this.getResponseByStatusCode(queryData.vnp_ResponseCode?.toString() || '')
     }
 
     const searchParams = new URLSearchParams()

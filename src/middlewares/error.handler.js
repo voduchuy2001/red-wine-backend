@@ -2,7 +2,7 @@ import logger from '@config/logging'
 import { INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
 import HttpException from '@exceptions/http.exception'
 import MulterException from '@exceptions/multer.exception'
-import { FILE_FILTER } from '@constants'
+import { FILE_FILTER } from '@constants/index'
 
 class ErrorHandler {
   handle(err, req, res, next) {
