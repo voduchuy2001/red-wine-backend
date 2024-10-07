@@ -4,7 +4,7 @@ import fs from 'fs'
 import { v4 as uuidv4 } from 'uuid'
 import Storage from '@utils/storage'
 import MulterException from '@exceptions/multer.exception'
-import { BAD_REQUEST, UNPROCESSABLE_ENTITY } from '@constants/http.status.code'
+import { UNPROCESSABLE_ENTITY } from '@constants/http.status.code'
 
 class Multer {
   constructor(storageOption, fileSize) {

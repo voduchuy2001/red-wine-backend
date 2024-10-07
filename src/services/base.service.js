@@ -4,165 +4,173 @@ class BaseService {
   }
 
   /**
-   * Lấy tất cả bản ghi (có thể kèm quan hệ)
-   * @param {Array} withRelations
-   * @returns {Promise<Array>}
+   * Retrieves all records from the repository with optional relations.
+   *
+   * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @returns {Promise} A promise that resolves with all records fetched from the repository.
    */
   async getAll(withRelations = []) {
     return this.repository.all(withRelations)
   }
 
   /**
-   * Tìm bản ghi theo ID (có thể kèm quan hệ)
-   * @param {Number} id
-   * @param {Array} withRelations
-   * @returns {Promise<Object>}
+   * Finds a record by its ID from the repository with optional relations.
+   *
+   * @param {number} id - The ID of the record to find.
+   * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @returns {Promise} A promise that resolves with the record fetched from the repository.
    */
-  async findById(id, withRelations = []) {
+  async find(id, withRelations = []) {
     return this.repository.findById(id, withRelations)
   }
 
   /**
-   * Tìm một bản ghi theo điều kiện (có thể kèm quan hệ)
-   * @param {Object} condition
-   * @param {Array} withRelations
-   * @returns {Promise<Object>}
+   * Finds a single record from the repository based on the provided condition with optional relations.
+   *
+   * @param {Object} condition - The condition to match the record.
+   * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @returns {Promise} A promise that resolves with the record fetched from the repository.
    */
   async findOne(condition, withRelations = []) {
     return this.repository.find(condition, withRelations)
   }
 
   /**
-   * Tìm tất cả các bản ghi theo điều kiện (có thể kèm quan hệ)
-   * @param {Object} condition
-   * @param {Array} withRelations
-   * @returns {Promise<Array>}
+   * Finds all records from the repository based on the provided condition with optional relations.
+   *
+   * @param {Object} condition - The condition to match the records.
+   * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @returns {Promise} A promise that resolves with all records fetched from the repository.
    */
-  async findAllByCondition(condition, withRelations = []) {
-    return this.repository.findByCondition(condition, withRelations)
+  async findAll(condition = {}, withRelations = []) {
+    return this.repository.findByConditions(condition, withRelations)
   }
 
   /**
-   * Tạo một bản ghi mới
-   * @param {Object} data
-   * @returns {Promise<Object>}
+   * Creates a new record in the repository.
+   *
+   * @param {Object} data - The data for the new record.
+   * @param {Object} transaction - The transaction object (optional).
+   * @returns {Promise} A promise that resolves with the newly created record.
    */
-  async create(data) {
-    return this.repository.create(data)
+  async create(data, transaction = null) {
+    return this.repository.create(data, { transaction })
   }
 
   /**
-   * Cập nhật bản ghi theo điều kiện
-   * @param {Object} condition
-   * @param {Object} data
-   * @returns {Promise<Object>}
+   * Updates records in the repository based on the provided condition and data.
+   *
+   * @param {Object} condition - The condition to match the records to be updated.
+   * @param {Object} data - The new data to update the records with.
+   * @param {Object} transaction - The transaction object (optional).
+   * @returns {Promise} A promise that resolves after updating the records in the repository.
    */
-  async update(condition, data) {
-    return this.repository.update(condition, data)
+  async update(condition, data, transaction = null) {
+    return this.repository.update(condition, data, { transaction })
   }
 
   /**
-   * Xóa bản ghi theo điều kiện
-   * @param {Object} condition
-   * @returns {Promise<Number>} Số lượng bản ghi đã xóa
+   * Deletes records from the repository based on the provided condition.
+   *
+   * @param {Object} condition - The condition to match the records for deletion.
+   * @param {Object} transaction - The transaction object (optional).
+   * @returns {Promise} A promise that resolves after deleting the records from the repository.
    */
-  async delete(condition) {
-    return this.repository.delete(condition)
+  async delete(condition, transaction = null) {
+    return this.repository.delete(condition, { transaction })
   }
 
   /**
-   * Đếm số lượng bản ghi theo điều kiện
-   * @param {Object} condition
-   * @returns {Promise<Number>}
+   * Counts the number of records in the repository based on the provided condition.
+   *
+   * @param {Object} condition - The condition to match the records for counting.
+   * @returns {Promise} A promise that resolves with the count of records.
    */
   async count(condition = {}) {
     return this.repository.count(condition)
   }
 
   /**
-   * Tìm hoặc tạo bản ghi mới nếu không tồn tại
-   * @param {Object} condition
-   * @param {Object} defaults
-   * @returns {Promise<Object>}
+   * Retrieves the first record from the repository that matches the provided condition,
+   * or creates a new record with the given defaults if no match is found.
+   *
+   * @param {Object} condition - The condition to match the record.
+   * @param {Object} defaults - The default values for creating a new record.
+   * @param {Object} transaction - The transaction object (optional).
+   * @returns {Promise} A promise that resolves with the first matched or newly created record.
    */
-  async firstOrCreate(condition, defaults) {
-    return this.repository.firstOrCreate(condition, defaults)
+  async firstOrCreate(condition, defaults, transaction = null) {
+    return this.repository.firstOrCreate(condition, defaults, { transaction })
   }
 
   /**
-   * Tìm hoặc khởi tạo một bản ghi mới mà không lưu vào DB
-   * @param {Object} condition
-   * @returns {Promise<Object>}
+   * Retrieves the first record from the repository that matches the provided condition,
+   * or creates a new record if no match is found.
+   *
+   * @param {Object} condition - The condition to match the record.
+   * @param {Object} transaction - The transaction object (optional).
+   * @returns {Promise} A promise that resolves with the first matched or newly created record.
    */
-  async firstOrNew(condition) {
-    return this.repository.firstOrNew(condition)
+  async firstOrNew(condition, transaction = null) {
+    return this.repository.firstOrNew(condition, { transaction })
   }
 
   /**
-   * Lấy các bản ghi với điều kiện "where in"
-   * @param {String} column
-   * @param {Array} values
-   * @param {Object} additionalCondition
-   * @returns {Promise<Array>}
+   * Retrieves records from the repository based on a column and an array of values with optional additional conditions.
+   *
+   * @param {string} column - The column to match the values against.
+   * @param {Array} values - An array of values to match in the specified column.
+   * @param {Object} additionalCondition - Additional conditions to apply to the query (default is an empty object).
+   * @returns {Promise} A promise that resolves with the records fetched from the repository.
    */
   async getByWhereIn(column, values, additionalCondition = {}) {
     return this.repository.getByWhereIn(column, values, additionalCondition)
   }
 
   /**
-   * Tìm một bản ghi hoặc ném ngoại lệ nếu không tồn tại
-   * @param {Number} id
-   * @param {Array} withRelations
-   * @returns {Promise<Object>}
+   * Finds a record by its ID from the repository with optional relations.
+   *
+   * @param {number} id - The ID of the record to find.
+   * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @returns {Promise} A promise that resolves with the record fetched from the repository.
    */
   async findOrFail(id, withRelations = []) {
     return this.repository.findOrFail(id, withRelations)
   }
 
   /**
-   * Xóa vĩnh viễn một bản ghi
-   * @param {Object} condition
-   * @returns {Promise<Boolean>}
+   * Deletes records permanently from the repository based on the provided condition.
+   *
+   * @param {Object} condition - The condition to match the records for permanent deletion.
+   * @param {Object} transaction - The transaction object (optional).
+   * @returns {Promise} A promise that resolves after permanently deleting the records from the repository.
    */
-  async forceDelete(condition) {
-    return this.repository.forceDelete(condition)
+  async forceDelete(condition, transaction = null) {
+    return this.repository.forceDelete(condition, { transaction })
   }
 
   /**
-   * Khôi phục một bản ghi đã bị xóa (paranoid)
-   * @param {Object} condition
-   * @returns {Promise<Boolean>}
+   * Restores records in the repository based on the provided condition.
+   *
+   * @param {Object} condition - The condition to match the records for restoration.
+   * @param {Object} transaction - The transaction object (optional).
+   * @returns {Promise} A promise that resolves after restoring the records in the repository.
    */
-  async restore(condition) {
-    return this.repository.restore(condition)
+  async restore(condition, transaction = null) {
+    return this.repository.restore(condition, { transaction })
   }
 
   /**
-   * Phân trang kết quả với điều kiện và các quan hệ
-   * @param {Number} page - Số trang hiện tại
-   * @param {Number} pageSize - Số bản ghi mỗi trang
-   * @param {Object} condition - Điều kiện lọc dữ liệu
-   * @param {Array} withRelations - Các quan hệ cần load
-   * @returns {Promise<Object>} - Trả về đối tượng chứa kết quả và thông tin phân trang
+   * Retrieves records from the repository with optional relations based on pagination parameters.
+   *
+   * @param {number} page - The page number for pagination (default is 1).
+   * @param {number} pageSize - The number of records per page (default is 10).
+   * @param {Object} condition - The condition to match the records.
+   * @param {Array} withRelations - An array of relations to be included in the query results.
+   * @returns {Promise} A promise that resolves with the paginated records fetched from the repository.
    */
   async paginate(page = 1, pageSize = 10, condition = {}, withRelations = []) {
-    const offset = (page - 1) * pageSize
-    const { count: totalItems, rows: data } = await this.repository.model.findAndCountAll({
-      where: condition,
-      include: withRelations,
-      limit: pageSize,
-      offset: offset
-    })
-
-    return {
-      data,
-      pagination: {
-        currentPage: page,
-        pageSize,
-        totalItems,
-        totalPages: Math.ceil(totalItems / pageSize)
-      }
-    }
+    return this.repository.findAndCountAll(condition, withRelations, { limit: pageSize, offset: (page - 1) * pageSize })
   }
 }
 

@@ -10,7 +10,7 @@ class SwaggerAuthService {
       throw new ServiceException(400, __('User not found'))
     }
 
-    return Bcrypt.comparePassword(password, swaggerAccount.password)
+    return Bcrypt.compare(password, swaggerAccount.password)
   }
 }
 

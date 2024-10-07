@@ -5,11 +5,11 @@ class Bcrypt {
     this.SALT = process.env.BCRYPT_ROUNDS || 10
   }
 
-  async hashPassword(password) {
+  async hash(password) {
     return bcrypt.hash(password, this.SALT)
   }
 
-  async comparePassword(password, hashedPassword) {
+  async compare(password, hashedPassword) {
     return bcrypt.compare(password, hashedPassword)
   }
 }

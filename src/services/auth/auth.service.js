@@ -16,7 +16,7 @@ class AuthService {
   }
 
   async validatePassword(inputPassword, userPassword) {
-    return Bcrypt.comparePassword(inputPassword, userPassword)
+    return Bcrypt.compare(inputPassword, userPassword)
   }
 
   async login(data) {
@@ -52,7 +52,7 @@ class AuthService {
       throw new ServiceException(BAD_REQUEST, __('Email has been already exist'))
     }
 
-    const hashedPassword = await Bcrypt.hashPassword(password)
+    const hashedPassword = await Bcrypt.hash(password)
     const avatar = generateAvatar(email, 200) || null
     return await this.userRepository.create({ email, avatar, password: hashedPassword })
   }
