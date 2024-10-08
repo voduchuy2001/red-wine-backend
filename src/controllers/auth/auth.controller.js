@@ -12,7 +12,7 @@ class AuthController extends BaseController {
 
     try {
       const authUser = await this.authService.auth(id)
-      return super.json(res, OK, __('Success'), authUser)
+      return this.json(res, OK, __('Success'), authUser)
     } catch (error) {
       next(error)
     }
@@ -23,7 +23,7 @@ class AuthController extends BaseController {
 
     try {
       const accessToken = await this.authService.refreshToken(refreshToken)
-      return super.json(res, OK, __('Success'), accessToken)
+      return this.json(res, OK, __('Success'), accessToken)
     } catch (error) {
       next(error)
     }

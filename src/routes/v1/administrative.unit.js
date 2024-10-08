@@ -1,5 +1,5 @@
 import express from 'express'
-import AdministrativeUnitController from '@controllers/backend/administrative.unit.controller'
+import AdministrativeUnitController from '@controllers/administrative.unit.controller'
 import AdministrativeUnitService from '@services/administrative.unit.service'
 
 const router = express.Router()

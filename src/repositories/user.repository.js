@@ -7,11 +7,11 @@ class UserRepository extends BaseRepository {
   }
 
   async findByEmail(email) {
-    return super.find({ email })
+    return this.find({ email })
   }
 
   async getPermissions(id) {
-    return super.findById(id, [
+    return this.findById(id, [
       {
         model: db.Role,
         as: 'roles',
@@ -37,11 +37,11 @@ class UserRepository extends BaseRepository {
 
   async updateLastLoginAt(id) {
     const current = new Date()
-    return super.update({ id }, { lastLoginAt: current })
+    return this.update({ id }, { lastLoginAt: current })
   }
 
   async auth(id) {
-    return super.find({ id }, [
+    return this.find({ id }, [
       {
         model: db.Role,
         as: 'roles',

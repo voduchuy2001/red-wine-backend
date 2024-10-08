@@ -13,7 +13,7 @@ class SettingController extends BaseController {
     try {
       await this.settingService.vnpSetting(value)
 
-      return super.json(res, OK, __('success'))
+      return this.json(res, OK, __('success'))
     } catch (error) {
       next(error)
     }

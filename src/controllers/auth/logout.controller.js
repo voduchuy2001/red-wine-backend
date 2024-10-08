@@ -12,7 +12,7 @@ class LogoutController extends BaseController {
 
     try {
       await this.authService.logout(refreshToken)
-      return super.json(res, OK, __('success'))
+      return this.json(res, OK, __('success'))
     } catch (error) {
       next(error)
     }

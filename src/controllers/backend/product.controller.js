@@ -13,7 +13,7 @@ class ProductController extends BaseController {
     try {
       const products = await this.productService.index(data)
 
-      return super.json(res, OK, __('success'), products)
+      return this.json(res, OK, __('success'), products)
     } catch (error) {
       next(error)
     }
@@ -25,7 +25,7 @@ class ProductController extends BaseController {
     try {
       const product = await this.productService.show(id)
 
-      return super.json(res, OK, __('success'), product)
+      return this.json(res, OK, __('success'), product)
     } catch (error) {
       next(error)
     }
@@ -37,7 +37,7 @@ class ProductController extends BaseController {
     try {
       await this.productService.create(data)
 
-      return super.json(res, OK, __('success'))
+      return this.json(res, OK, __('success'))
     } catch (error) {
       next(error)
     }

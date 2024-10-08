@@ -26,7 +26,7 @@ class BrandService extends BaseService {
     const transaction = await db.sequelize.transaction()
 
     try {
-      const brand = await super.create(data, transaction)
+      const brand = await this.create(data, transaction)
       if (image) {
         await this.createLogo(brand, image, transaction)
       }

@@ -13,7 +13,7 @@ class BrandController extends BaseController {
 
     try {
       const brands = await this.brandService.getBrands(data)
-      return super.json(res, OK, __('Get data success'), brands)
+      return this.json(res, OK, __('Get data success'), brands)
     } catch (error) {
       next(error)
     }
@@ -28,7 +28,7 @@ class BrandController extends BaseController {
       const image = logo ? await Storage.storeAs(logo.path, outputPath, logo.filename) : null
 
       await this.brandService.createBrand(data, image)
-      return super.json(res, OK, __('success'))
+      return this.json(res, OK, __('success'))
     } catch (error) {
       next(error)
     }
@@ -44,7 +44,7 @@ class BrandController extends BaseController {
       const image = logo ? await Storage.storeAs(logo.path, outputPath, logo.filename) : null
 
       await this.brandService.updateBrand(id, data, image)
-      return super.json(res, OK, __('success'))
+      return this.json(res, OK, __('success'))
     } catch (error) {
       next(error)
     }

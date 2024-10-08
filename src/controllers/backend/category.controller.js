@@ -12,7 +12,7 @@ class CategoryController extends BaseController {
 
     try {
       const categories = await this.categoryService.index(data)
-      return super.json(res, OK, __('Success'), categories)
+      return this.json(res, OK, __('Success'), categories)
     } catch (error) {
       next(error)
     }
@@ -23,7 +23,7 @@ class CategoryController extends BaseController {
 
     try {
       await this.categoryService.create(data)
-      return super.json(res, OK, __('Success'))
+      return this.json(res, OK, __('Success'))
     } catch (error) {
       next(error)
     }

@@ -12,7 +12,7 @@ class LoginController extends BaseController {
 
     try {
       const loggedIn = await this.authService.login(data)
-      return super.json(res, OK, __('Login success'), loggedIn)
+      return this.json(res, OK, __('Login success'), loggedIn)
     } catch (error) {
       next(error)
     }
