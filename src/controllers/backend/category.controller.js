@@ -11,7 +11,7 @@ class CategoryController extends BaseController {
     const data = req.query
 
     try {
-      const categories = await this.categoryService.index(data)
+      const categories = await this.categoryService.getCategories(data)
       return this.json(res, OK, __('Success'), categories)
     } catch (error) {
       next(error)
@@ -20,9 +20,10 @@ class CategoryController extends BaseController {
 
   async create(req, res, next) {
     const data = req.body
+    const image = req.file
 
     try {
-      await this.categoryService.create(data)
+      await this.categoryService.createCategory(data, image)
       return this.json(res, OK, __('Success'))
     } catch (error) {
       next(error)

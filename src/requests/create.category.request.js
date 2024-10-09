@@ -1,17 +1,16 @@
-import CATEGORY_STATUS from '@constants/category.status'
 import { body } from 'express-validator'
 
 export const createCategoryRequest = [
-  body('name').notEmpty().bail().withMessage('notEmpty').isLength({ max: 100 }).withMessage('tooLong'),
+  body('name').notEmpty().bail().withMessage('Not empty').isLength({ max: 100 }).withMessage('Lte 100'),
 
   body('status')
     .optional({ checkFalsy: true })
     .bail()
     .isString()
     .bail()
-    .withMessage('isString')
-    .isIn(CATEGORY_STATUS)
-    .withMessage(`isIn ${Object.keys(CATEGORY_STATUS)}`),
+    .withMessage('Must be a string')
+    .isIn(['active', 'inactive'])
+    .withMessage('Is in: active, inactive'),
 
   body('featured')
     .optional({ checkFalsy: true })
@@ -19,7 +18,7 @@ export const createCategoryRequest = [
     .bail()
     .isInt()
     .bail()
-    .withMessage('isInt'),
+    .withMessage('Must be a integer'),
 
-  body('order').optional({ checkFalsy: true }).bail().isInt().bail().withMessage('isInt')
+  body('order').optional({ checkFalsy: true }).bail().isInt().bail().withMessage('Must be a integer')
 ]
