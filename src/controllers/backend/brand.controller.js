@@ -1,6 +1,5 @@
 import { OK } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
-import Storage from '@utils/storage'
 
 class BrandController extends BaseController {
   constructor(brandService) {
@@ -24,10 +23,7 @@ class BrandController extends BaseController {
     const logo = req.file
 
     try {
-      const outputPath = Storage.publicPath('images/brand')
-      const image = logo ? await Storage.storeAs(logo.path, outputPath, logo.filename) : null
-
-      await this.brandService.createBrand(data, image)
+      await this.brandService.createBrand(data, logo)
       return this.json(res, OK, __('success'))
     } catch (error) {
       next(error)
@@ -40,10 +36,7 @@ class BrandController extends BaseController {
     const logo = req.file
 
     try {
-      const outputPath = Storage.publicPath('images/brand')
-      const image = logo ? await Storage.storeAs(logo.path, outputPath, logo.filename) : null
-
-      await this.brandService.updateBrand(id, data, image)
+      await this.brandService.updateBrand(id, data, logo)
       return this.json(res, OK, __('success'))
     } catch (error) {
       next(error)

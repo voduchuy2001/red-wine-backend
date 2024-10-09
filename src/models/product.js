@@ -3,7 +3,7 @@
 import { Model } from 'sequelize'
 
 class Product extends Model {
-  static associate({ Brand, Category, Media, SKU, FlashSale }) {
+  static associate({ Brand, Category, SKU, FlashSale }) {
     this.belongsTo(Brand, {
       foreignKey: 'brandId',
       as: 'brand'
@@ -13,15 +13,6 @@ class Product extends Model {
       foreignKey: 'productId',
       through: 'ProductCategories',
       as: 'categories'
-    })
-
-    this.hasMany(Media, {
-      foreignKey: 'mediableId',
-      constraints: false,
-      scope: {
-        mediableType: 'Product'
-      },
-      as: 'media'
     })
 
     this.hasMany(SKU, {

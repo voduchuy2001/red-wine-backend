@@ -11,26 +11,28 @@ class BrandService extends BaseService {
     super(brandRepository)
   }
 
+  async storeImage(logo) {
+    if (!logo) return null
+
+    const outputPath = Storage.publicPath('images/brand')
+    return await Storage.storeAs(logo.path, outputPath, logo.filename)
+  }
+
   async getBrands({ page = 1, pageSize = 10, filterBy, q = '', sortBy = 'createdAt', order = 'desc' }) {
-    const condition = { name: { [Op.like]: `%${q}%` }, status: filterBy }
+    const condition = {
+      name: { [Op.like]: `%${q}%` },
+      status: filterBy
+    }
     const orderOptions = [[sortBy, order]]
 
-    return this.paginate(page, pageSize, condition, [{ model: db.Media, as: 'logo' }], { order: orderOptions })
+    return this.paginate(page, pageSize, condition, null, { order: orderOptions })
   }
 
-  async createLogo(brand, image, transaction = null) {
-    return brand.createLogo({ url: image }, { transaction })
-  }
-
-  async createBrand(data, image = null) {
+  async createBrand(data = {}, logo = null) {
     const transaction = await db.sequelize.transaction()
-
     try {
-      const brand = await this.create(data, transaction)
-      if (image) {
-        await this.createLogo(brand, image, transaction)
-      }
-
+      const image = await this.storeImage(logo)
+      const brand = await this.create({ ...data, image }, transaction)
       await transaction.commit()
       return brand
     } catch (error) {
@@ -39,28 +41,17 @@ class BrandService extends BaseService {
     }
   }
 
-  async updateBrand(id, data, image = null) {
+  async updateBrand(id, data = {}, logo = null) {
     const brand = await this.findOrFail(id)
+
     if (!brand) {
       throw new NotFoundException(__('Brand not found'))
     }
 
-    console.log(db.Brand.prototype)
-
     const transaction = await db.sequelize.transaction()
     try {
-      if (image) {
-        const oldLogo = await brand.getLogo()
-        if (oldLogo) {
-          await Storage.unlink(`images/brand/${oldLogo.url}`, 'public')
-          await brand.removeLogo(oldLogo, { transaction })
-        }
-
-        await this.createLogo(brand, image, transaction)
-      }
-
-      await brand.update(data, { transaction })
-
+      const image = await this.storeImage(logo)
+      await brand.update({ ...data, image }, { transaction })
       await transaction.commit()
       return brand
     } catch (error) {

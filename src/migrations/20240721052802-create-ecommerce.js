@@ -13,6 +13,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      logo: {
+        type: Sequelize.STRING
+      },
       website: {
         type: Sequelize.STRING
       },
@@ -121,6 +124,30 @@ module.exports = {
       },
       order: {
         type: Sequelize.INTEGER
+      },
+      featured: {
+        type: Sequelize.INTEGER
+      },
+      length: {
+        type: Sequelize.DOUBLE
+      },
+      wide: {
+        type: Sequelize.DOUBLE
+      },
+      height: {
+        type: Sequelize.DOUBLE
+      },
+      weight: {
+        type: Sequelize.DOUBLE
+      },
+      views: {
+        type: Sequelize.DOUBLE
+      },
+      image: {
+        type: Sequelize.STRING
+      },
+      images: {
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -260,42 +287,6 @@ module.exports = {
         type: Sequelize.INTEGER
       }
     })
-
-    await queryInterface.createTable('Media', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.BIGINT
-      },
-      mediableType: {
-        type: Sequelize.STRING
-      },
-      mediableId: {
-        type: Sequelize.BIGINT
-      },
-      url: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      type: {
-        type: Sequelize.STRING
-      },
-      isDefault: {
-        type: Sequelize.BOOLEAN
-      },
-      altText: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('AttributeOptionSKUs')
@@ -306,6 +297,5 @@ module.exports = {
     await queryInterface.dropTable('Brands')
     await queryInterface.dropTable('ProductCategories')
     await queryInterface.dropTable('Categories')
-    await queryInterface.dropTable('Media')
   }
 }

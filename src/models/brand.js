@@ -3,18 +3,10 @@
 import { Model } from 'sequelize'
 
 class Brand extends Model {
-  static associate({ Product, Media }) {
+  static associate({ Product }) {
     this.hasMany(Product, {
       foreignKey: 'brandId',
       as: 'products'
-    })
-
-    this.hasOne(Media, {
-      foreignKey: 'mediableId',
-      scope: {
-        mediableType: 'brand'
-      },
-      as: 'logo'
     })
   }
 }
@@ -23,6 +15,7 @@ export default (sequelize, { STRING, TEXT, INTEGER }) => {
   Brand.init(
     {
       name: STRING,
+      logo: STRING,
       website: STRING,
       description: TEXT,
       status: STRING,

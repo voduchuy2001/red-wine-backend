@@ -3,42 +3,44 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const timestamp = new Date()
+
     const settings = [
       {
         key: 'logo',
         value: null,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: timestamp,
+        updatedAt: timestamp
       },
       {
         key: 'social-links',
         value: null,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: timestamp,
+        updatedAt: timestamp
       },
       {
         key: 'hotline',
         value: null,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: timestamp,
+        updatedAt: timestamp
       },
       {
         key: 'address',
         value: null,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: timestamp,
+        updatedAt: timestamp
       },
       {
         key: 'email',
         value: null,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: timestamp,
+        updatedAt: timestamp
       },
       {
         key: 'vnpay',
         value: null,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        createdAt: timestamp,
+        updatedAt: timestamp
       }
     ]
 
