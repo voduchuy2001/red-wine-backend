@@ -42,6 +42,17 @@ class BrandController extends BaseController {
       next(error)
     }
   }
+
+  async delete(req, res, next) {
+    const { id } = req.params
+
+    try {
+      await this.brandService.deleteBrand(id)
+      return this.json(res, OK, __('success'))
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 export default BrandController

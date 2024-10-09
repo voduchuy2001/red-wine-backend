@@ -11,11 +11,13 @@ class BrandService extends BaseService {
     super(brandRepository)
   }
 
-  async storeImage(logo) {
-    if (!logo) return null
+  async storeImage(image) {
+    if (!image) {
+      return null
+    }
 
     const outputPath = Storage.publicPath('images/brand')
-    return await Storage.storeAs(logo.path, outputPath, logo.filename)
+    return await Storage.storeAs(image.path, outputPath, image.filename)
   }
 
   async getBrands({ page = 1, pageSize = 10, filterBy, q = '', sortBy = 'createdAt', order = 'desc' }) {
@@ -24,15 +26,14 @@ class BrandService extends BaseService {
       status: filterBy
     }
     const orderOptions = [[sortBy, order]]
-
     return this.paginate(page, pageSize, condition, null, { order: orderOptions })
   }
 
-  async createBrand(data = {}, logo = null) {
+  async createBrand(data = {}, image = null) {
     const transaction = await db.sequelize.transaction()
     try {
-      const image = await this.storeImage(logo)
-      const brand = await this.create({ ...data, image }, transaction)
+      const logo = await this.storeImage(image)
+      const brand = await this.create({ ...data, logo }, transaction)
       await transaction.commit()
       return brand
     } catch (error) {
@@ -41,7 +42,7 @@ class BrandService extends BaseService {
     }
   }
 
-  async updateBrand(id, data = {}, logo = null) {
+  async updateBrand(id, data = {}, image = null) {
     const brand = await this.findOrFail(id)
 
     if (!brand) {
@@ -50,10 +51,25 @@ class BrandService extends BaseService {
 
     const transaction = await db.sequelize.transaction()
     try {
-      const image = await this.storeImage(logo)
-      await brand.update({ ...data, image }, { transaction })
+      const logo = await this.storeImage(image)
+      await brand.update({ ...data, logo }, { transaction })
       await transaction.commit()
       return brand
+    } catch (error) {
+      await transaction.rollback()
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
+  }
+
+  async deleteBrand(id) {
+    console.log(id)
+    const brand = await this.findOrFail(id)
+
+    const transaction = await db.sequelize.transaction()
+    try {
+      await brand.destroy({ transaction })
+      await transaction.commit()
+      return true
     } catch (error) {
       await transaction.rollback()
       throw new SystemException(INTERNAL_SERVER_ERROR, error.message)

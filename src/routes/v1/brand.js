@@ -17,5 +17,6 @@ const brandController = new BrandController(brandService)
 router.get('/brand', auth, validate(getBrandsRequest), brandController.index.bind(brandController))
 router.post('/brand', auth, Multer.uploadSingle('logo'), validate(createBrandRequest), brandController.create.bind(brandController))
 router.put('/brand/:id', auth, Multer.uploadSingle('logo'), validate(updateBrandRequest), brandController.update.bind(brandController))
+router.delete('/brand/:id', auth, brandController.delete.bind(brandController))
 
 export default router

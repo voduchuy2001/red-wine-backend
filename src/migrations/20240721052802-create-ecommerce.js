@@ -23,7 +23,8 @@ module.exports = {
         type: Sequelize.TEXT
       },
       status: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        allowNull: false
       },
       featured: {
         type: Sequelize.INTEGER
@@ -62,7 +63,8 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        allowNull: false
       },
       featured: {
         type: Sequelize.INTEGER
@@ -111,7 +113,8 @@ module.exports = {
         type: Sequelize.TEXT
       },
       status: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        allowNull: false
       },
       price: {
         type: Sequelize.DECIMAL(12, 2)
@@ -189,7 +192,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        allowNull: false
       },
       isDefault: {
         type: Sequelize.BOOLEAN

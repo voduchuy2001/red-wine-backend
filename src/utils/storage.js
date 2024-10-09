@@ -39,16 +39,20 @@ class Storage {
 
   async optimize(outputPath, options = { width: 800, format: 'jpeg', quality: 80 }) {
     try {
+      if (!outputPath || typeof outputPath !== 'string') {
+        throw new ServiceException(BAD_REQUEST, __('Invalid output path provided'))
+      }
+      const tempFilePath = `${outputPath}.tmp`
       await sharp(outputPath)
         .resize(options.width)
         .toFormat(options.format, { quality: options.quality })
-        .toFile(outputPath)
+        .toFile(tempFilePath)
 
-      const optimizedFileSize = fs.statSync(outputPath).size
+      const optimizedFileSize = fs.statSync(tempFilePath).size
       if (!optimizedFileSize) {
         throw new ServiceException(BAD_REQUEST, __('Failed to get file size after optimization'))
       }
-
+      fs.renameSync(tempFilePath, outputPath)
       return { optimizedFileSize, outputPath }
     } catch (error) {
       throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
