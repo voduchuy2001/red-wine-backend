@@ -1,0 +1,227 @@
+[
+  {
+    "name": "Category",
+    "code": "category",
+    "description": "Manage categories"
+  },
+  {
+    "name": "View",
+    "code": "category.index",
+    "description": "View categories"
+  },
+  {
+    "name": "Add",
+    "code": "category.create",
+    "description": "Add category"
+  },
+  {
+    "name": "Edit",
+    "code": "category.update",
+    "description": "Edit category"
+  },
+  {
+    "name": "Delete",
+    "code": "category.delete",
+    "description": "Delete category"
+  },
+  {
+    "name": "Brand",
+    "code": "brand",
+    "description": "Manage brands"
+  },
+  {
+    "name": "View",
+    "code": "brand.index",
+    "description": "View brands"
+  },
+  {
+    "name": "Add",
+    "code": "brand.create",
+    "description": "Add brand"
+  },
+  {
+    "name": "Edit",
+    "code": "brand.update",
+    "description": "Edit brand"
+  },
+  {
+    "name": "Delete",
+    "code": "brand.delete",
+    "description": "Delete brand"
+  },
+  {
+    "name": "Product",
+    "code": "product",
+    "description": "Manage products"
+  },
+  {
+    "name": "View",
+    "code": "product.index",
+    "description": "View products"
+  },
+  {
+    "name": "Add",
+    "code": "product.create",
+    "description": "Add product"
+  },
+  {
+    "name": "Edit",
+    "code": "product.update",
+    "description": "Edit product"
+  },
+  {
+    "name": "Delete",
+    "code": "product.delete",
+    "description": "Delete product"
+  },
+  {
+    "name": "Order",
+    "code": "order",
+    "description": "Manage orders"
+  },
+  {
+    "name": "View",
+    "code": "order.index",
+    "description": "View orders"
+  },
+  {
+    "name": "Add",
+    "code": "order.create",
+    "description": "Add order"
+  },
+  {
+    "name": "Edit",
+    "code": "order.update",
+    "description": "Edit order"
+  },
+  {
+    "name": "Delete",
+    "code": "order.delete",
+    "description": "Delete order"
+  },
+  {
+    "name": "Attribute",
+    "code": "attribute",
+    "description": "Manage attributes"
+  },
+  {
+    "name": "View",
+    "code": "attribute.index",
+    "description": "View attributes"
+  },
+  {
+    "name": "Add",
+    "code": "attribute.create",
+    "description": "Add attribute"
+  },
+  {
+    "name": "Edit",
+    "code": "attribute.update",
+    "description": "Edit attribute"
+  },
+  {
+    "name": "Delete",
+    "code": "attribute.delete",
+    "description": "Delete attribute"
+  },
+  {
+    "name": "Option",
+    "code": "option",
+    "description": "Manage options"
+  },
+  {
+    "name": "View",
+    "code": "option.index",
+    "description": "View options"
+  },
+  {
+    "name": "Add",
+    "code": "option.create",
+    "description": "Add option"
+  },
+  {
+    "name": "Edit",
+    "code": "option.update",
+    "description": "Edit option"
+  },
+  {
+    "name": "Delete",
+    "code": "option.delete",
+    "description": "Delete option"
+  },
+  {
+    "name": "Discount",
+    "code": "discount",
+    "description": "Manage discounts"
+  },
+  {
+    "name": "View",
+    "code": "discount.index",
+    "description": "View discounts"
+  },
+  {
+    "name": "Add",
+    "code": "discount.create",
+    "description": "Add discount"
+  },
+  {
+    "name": "Edit",
+    "code": "discount.update",
+    "description": "Edit discount"
+  },
+  {
+    "name": "Delete",
+    "code": "discount.delete",
+    "description": "Delete discount"
+  },
+  {
+    "name": "Review",
+    "code": "review",
+    "description": "Manage reviews"
+  },
+  {
+    "name": "View",
+    "code": "review.index",
+    "description": "View reviews"
+  },
+  {
+    "name": "Add",
+    "code": "review.create",
+    "description": "Add review"
+  },
+  {
+    "name": "Edit",
+    "code": "review.update",
+    "description": "Edit review"
+  },
+  {
+    "name": "Delete",
+    "code": "review.delete",
+    "description": "Delete review"
+  },
+  {
+    "name": "Invoice",
+    "code": "invoice",
+    "description": "Manage invoices"
+  },
+  {
+    "name": "View",
+    "code": "invoice.index",
+    "description": "View invoices"
+  },
+  {
+    "name": "Add",
+    "code": "invoice.create",
+    "description": "Add invoice"
+  },
+  {
+    "name": "Edit",
+    "code": "invoice.update",
+    "description": "Edit invoice"
+  },
+  {
+    "name": "Delete",
+    "code": "invoice.delete",
+    "description": "Delete invoice"
+  }
+]

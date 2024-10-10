@@ -1,4 +1,4 @@
-import db from '@models/index'
+import db from '@models'
 import BaseRepository from '@repositories/base.repository'
 
 class CategoryRepository extends BaseRepository {

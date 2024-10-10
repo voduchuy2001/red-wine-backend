@@ -43,5 +43,6 @@
   "Token is invalid": "Token is invalid",
   "Missing  token": "Missing  token",
   "File not found": "File not found",
-  "Invalid token": "Invalid token"
+  "Invalid token": "Invalid token",
+  "Token has expired": "Token has expired"
 }

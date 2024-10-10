@@ -2,6 +2,8 @@
 
 import { Model } from 'sequelize'
 
+const PROTECTED_ATTRIBUTES = ['password']
+
 class User extends Model {
   static associate({ Permission, Role, PasswordResetToken }) {
     this.belongsToMany(Role, {
@@ -33,6 +35,14 @@ class User extends Model {
       timestamps: false
     })
   }
+
+  toJSON() {
+    const attributes = Object.assign({}, this.get())
+    for (const attribute of PROTECTED_ATTRIBUTES) {
+      delete attributes[attribute]
+    }
+    return attributes
+  }
 }
 
 export default (sequelize, { DATE, STRING }) => {
@@ -40,6 +50,7 @@ export default (sequelize, { DATE, STRING }) => {
     {
       avatar: STRING,
       name: STRING,
+      username: STRING,
       email: STRING,
       password: STRING,
       lastLoginAt: DATE,

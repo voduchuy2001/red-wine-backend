@@ -9,7 +9,7 @@ class SwaggerAuthController extends BaseController {
 
   async showLoginForm(req, res, next) {
     try {
-      return super.view(res, 'pages/login')
+      return this.view(res, 'pages/login')
     } catch (error) {
       next(error)
     }
@@ -22,12 +22,12 @@ class SwaggerAuthController extends BaseController {
       const loggedIn = await this.swaggerAuthService.login(data)
 
       if (!loggedIn) {
-        return super.json(res, UNAUTHORIZED, __('failure'))
+        return this.json(res, UNAUTHORIZED, __('failure'))
       }
 
       req.session.authenticated = true
 
-      return super.json(res, OK, __('success'), loggedIn)
+      return this.json(res, OK, __('success'), loggedIn)
     } catch (error) {
       next(error)
     }

@@ -1,5 +1,5 @@
 import express from 'express'
-import { validate } from '@middlewares/validation'
+import validate from '@middlewares/validation'
 import { limiter } from '@config/rate.limit'
 import { authenticate } from '@middlewares/swagger'
 import SwaggerAuthController from '@controllers/auth/swagger.auth.controller'

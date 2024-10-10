@@ -1,7 +1,8 @@
+import { FORBIDDEN } from '@constants/http.status.code'
 import HttpException from '@exceptions/http.exception'
 
 class ForbiddenException extends HttpException {
-  constructor(status = 400, message = __('Forbidden exception')) {
+  constructor(status = FORBIDDEN, message = __('Forbidden exception')) {
     super(status, message)
   }
 }

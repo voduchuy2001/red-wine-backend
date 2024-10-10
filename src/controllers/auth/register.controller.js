@@ -12,7 +12,7 @@ class RegisterController extends BaseController {
 
     try {
       await this.authService.register(data)
-      return super.json(res, CREATED, __('success'))
+      return this.json(res, CREATED, __('success'))
     } catch (error) {
       next(error)
     }

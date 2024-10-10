@@ -1,7 +1,8 @@
+import { BAD_REQUEST } from '@constants/http.status.code'
 import HttpException from '@exceptions/http.exception'
 
 class ServiceException extends HttpException {
-  constructor(status = 400, message = __('Service exception')) {
+  constructor(status = BAD_REQUEST, message = __('Service exception')) {
     super(status, message)
   }
 }
