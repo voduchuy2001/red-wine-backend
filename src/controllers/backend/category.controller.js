@@ -29,6 +29,30 @@ class CategoryController extends BaseController {
       next(error)
     }
   }
+
+  async update(req, res, next) {
+    const { id } = req.params
+    const data = req.body
+    const image = req.file
+
+    try {
+      await this.categoryService.updateCategory(id, data, image)
+      return this.json(res, OK, __('Success'))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async delete(req, res, next) {
+    const { id } = req.params
+
+    try {
+      await this.categoryService.deleteCategory(id)
+      return this.json(res, OK, __('Success'))
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 export default CategoryController

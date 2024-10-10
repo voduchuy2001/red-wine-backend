@@ -43,6 +43,7 @@ class CategoryService extends BaseService {
   }
 
   async updateCategory(id, data = {}, image = null) {
+    console.log('check: >>>', id, data, image)
     const category = await this.findOrFail(id)
 
     if (!category) {
@@ -61,8 +62,7 @@ class CategoryService extends BaseService {
     }
   }
 
-  async deleteBrand(id) {
-    console.log(id)
+  async deleteCategory(id) {
     const brand = await this.findOrFail(id)
 
     const transaction = await db.sequelize.transaction()
