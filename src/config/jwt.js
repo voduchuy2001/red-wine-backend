@@ -1,33 +1,49 @@
-import { UNAUTHORIZED } from '@constants/http.status.code'
+import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from '@constants/http.status.code'
 import AuthException from '@exceptions/auth.exception'
+import SystemException from '@exceptions/system.exception'
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
 
 class JWT {
-  tokenTypes() {
-    return {
-      accessToken: process.env.ACCESS_TOKEN_KEY,
-      refreshToken: process.env.REFRESH_TOKEN_KEY
+  constructor() {
+    const { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } = process.env
+
+    this.tokenKeys = {
+      accessToken: ACCESS_TOKEN_KEY,
+      refreshToken: REFRESH_TOKEN_KEY
+    }
+
+    if (!ACCESS_TOKEN_KEY || !REFRESH_TOKEN_KEY) {
+      throw new SystemException(INTERNAL_SERVER_ERROR, __('Token keys are not set in environment'))
     }
   }
 
-  generate(data, expiresIn = '15m', type = 'accessToken') {
-    const types = this.tokenTypes()
-    return jwt.sign({ data }, types[type], { expiresIn })
+  generate(data, expiresIn = '30m', type = 'accessToken') {
+    const key = this.tokenKeys[type]
+
+    if (!key) {
+      throw new SystemException(INTERNAL_SERVER_ERROR, __('Not allowed token type'))
+    }
+
+    return jwt.sign({ data }, key, { expiresIn })
   }
 
   verify(token, type = 'accessToken') {
-    const types = this.tokenTypes()
+    const key = this.tokenKeys[type]
+
+    if (!key) {
+      throw new SystemException(INTERNAL_SERVER_ERROR, __('Not allowed token type'))
+    }
 
     try {
-      return jwt.verify(token, types[type])
+      return jwt.verify(token, key)
     } catch (error) {
-      const messages = {
+      const errorMessages = {
         JsonWebTokenError: __('Invalid token'),
         TokenExpiredError: __('Token has expired')
       }
 
-      const message = messages[error.name] || __('Authentication error')
+      const message = errorMessages[error.name] || __('Authentication error')
       throw new AuthException(UNAUTHORIZED, message)
     }
   }

@@ -1,4 +1,4 @@
-import { GOOGLE_SERVICE } from '@config/services'
+import GOOGLE_SERVICE from '@config/services'
 import JWT from '@config/jwt'
 import { OAuth2Client } from 'google-auth-library'
 

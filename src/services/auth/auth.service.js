@@ -21,37 +21,30 @@ class AuthService {
 
   async login(data) {
     const { email, password } = data
-
     const user = await this.validateEmail(email)
     if (!user) {
       throw new ServiceException(UNAUTHORIZED, __('User not found'))
     }
-
     const userPassword = user.password
     const matchedPassword = await this.validatePassword(password, userPassword)
     if (!matchedPassword) {
       throw new ServiceException(UNAUTHORIZED, __('Password does not match'))
     }
-
     const userId = user.id
     await this.userRepository.updateLastLoginAt(userId)
-    const accessToken = JWT.generate(userId, '1d')
-
+    const accessToken = JWT.generate(userId, '30m')
     const sessionId = 'session-' + uuidv4()
     const refreshToken = JWT.generate({ userId, sessionId }, '7d', 'refreshToken')
     await RedisCache.set(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
-
     return { accessToken, refreshToken, sessionId }
   }
 
   async register(data) {
     const { email, password } = data
-
     const existedUser = await this.validateEmail(email)
     if (existedUser) {
       throw new ServiceException(BAD_REQUEST, __('Email has been already exist'))
     }
-
     const hashedPassword = await Bcrypt.hash(password)
     const avatar = generateAvatar(email, 200) || null
     return await this.userRepository.create({ email, avatar, password: hashedPassword })
@@ -61,14 +54,8 @@ class AuthService {
     try {
       const decoded = JWT.verify(refreshToken, 'refreshToken')
       const { userId, sessionId } = decoded.data
-      const existRefreshToken = await RedisCache.get(`auth:user:${userId}:${sessionId}`)
-
-      if (!existRefreshToken) {
-        throw new ServiceException(NOT_FOUND, __('Refresh token not found'))
-      }
-
+      await RedisCache.get(`auth:user:${userId}:${sessionId}`)
       await RedisCache.del(`auth:user:${userId}:${sessionId}`)
-
       return true
     } catch (error) {
       throw new ServiceException(error.status || UNAUTHORIZED, error.message)
@@ -87,14 +74,8 @@ class AuthService {
     try {
       const decoded = JWT.verify(refreshToken, 'refreshToken')
       const { userId, sessionId } = decoded.data
-
-      const existRefreshToken = await RedisCache.get(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
-
-      if (!existRefreshToken) {
-        throw new ServiceException(UNAUTHORIZED, __('Not found refresh token'))
-      }
-
-      return JWT.generate(userId, '15m')
+      await RedisCache.get(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
+      return JWT.generate(userId, '30m')
     } catch (error) {
       throw new ServiceException(error.status || UNAUTHORIZED, error.message)
     }
