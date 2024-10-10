@@ -6,15 +6,15 @@ import createCategoryRequest from '@requests/create.category.request'
 import CategoryService from '@services/backend/category.service'
 import Multer from '@config/multer'
 import express from 'express'
-import authorize from '@middlewares/authorize'
 import updateCategoryRequest from '@requests/update.category.request'
+import getCategoriesRequest from '@requests/get.categories.request'
 
 const router = express.Router()
 const categoryRepository = new CategoryRepository()
 const categoryService = new CategoryService(categoryRepository)
 const categoryController = new CategoryController(categoryService)
 
-router.get('/category', auth, authorize('234'), categoryController.index.bind(categoryController))
+router.get('/category', auth, validate(getCategoriesRequest), categoryController.index.bind(categoryController))
 router.post('/category', auth, Multer.uploadSingle('image'), validate(createCategoryRequest), categoryController.create.bind(categoryController))
 router.put('/category/:id', auth, Multer.uploadSingle('image'), validate(updateCategoryRequest), categoryController.update.bind(categoryController))
 router.delete('/category/:id', auth, categoryController.delete.bind(categoryController))
