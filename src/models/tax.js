@@ -6,13 +6,13 @@ class Tax extends Model {
   static associate(models) {}
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { DOUBLE, INTEGER, STRING }) => {
   Tax.init(
     {
-      title: DataTypes.STRING,
-      percentage: DataTypes.DOUBLE,
-      priority: DataTypes.INTEGER,
-      status: DataTypes.STRING
+      title: STRING,
+      percentage: DOUBLE,
+      priority: INTEGER,
+      status: STRING
     },
     {
       sequelize,

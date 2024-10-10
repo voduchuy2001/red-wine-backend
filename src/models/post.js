@@ -6,17 +6,17 @@ class Post extends Model {
   static associate(models) {}
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { BIGINT, INTEGER, STRING, TEXT }) => {
   Post.init(
     {
-      authorId: DataTypes.BIGINT,
-      name: DataTypes.STRING,
-      description: DataTypes.STRING,
-      content: DataTypes.TEXT,
-      status: DataTypes.STRING,
-      featured: DataTypes.INTEGER,
-      image: DataTypes.STRING,
-      views: DataTypes.BIGINT
+      authorId: BIGINT,
+      name: STRING,
+      description: STRING,
+      content: TEXT,
+      status: STRING,
+      featured: INTEGER,
+      image: STRING,
+      views: BIGINT
     },
     {
       sequelize,

@@ -6,14 +6,14 @@ class Payment extends Model {
   static associate({}) {}
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { BIGINT, DECIMAL, STRING }) => {
   Payment.init(
     {
-      orderId: DataTypes.BIGINT,
-      customerId: DataTypes.BIGINT,
-      amount: DataTypes.DECIMAL,
-      channel: DataTypes.STRING,
-      status: DataTypes.STRING
+      orderId: BIGINT,
+      customerId: BIGINT,
+      amount: DECIMAL,
+      channel: STRING,
+      status: STRING
     },
     {
       sequelize,

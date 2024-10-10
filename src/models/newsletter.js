@@ -6,12 +6,12 @@ class Newsletter extends Model {
   static associate(models) {}
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { STRING }) => {
   Newsletter.init(
     {
-      email: DataTypes.STRING,
-      name: DataTypes.STRING,
-      status: DataTypes.STRING
+      email: STRING,
+      name: STRING,
+      status: STRING
     },
     {
       sequelize,

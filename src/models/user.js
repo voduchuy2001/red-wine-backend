@@ -38,7 +38,7 @@ class User extends Model {
 
   toJSON() {
     const attributes = Object.assign({}, this.get())
-    for (let attribute of PROTECTED_ATTRIBUTES) {
+    for (const attribute of PROTECTED_ATTRIBUTES) {
       delete attributes[attribute]
     }
     return attributes

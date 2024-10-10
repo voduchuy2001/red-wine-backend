@@ -6,15 +6,15 @@ class Currency extends Model {
   static associate(models) {}
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { DOUBLE, STRING, TINYINT }) => {
   Currency.init(
     {
-      title: DataTypes.STRING,
-      symbol: DataTypes.STRING,
-      isPrefixSymbol: DataTypes.TINYINT,
-      decimals: DataTypes.TINYINT,
-      isDefault: DataTypes.TINYINT,
-      exchangeRate: DataTypes.DOUBLE
+      title: STRING,
+      symbol: STRING,
+      isPrefixSymbol: TINYINT,
+      decimals: TINYINT,
+      isDefault: TINYINT,
+      exchangeRate: DOUBLE
     },
     {
       sequelize,

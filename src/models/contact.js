@@ -6,16 +6,16 @@ class Contact extends Model {
   static associate(models) {}
 }
 
-export default (sequelize, DataTypes) => {
+export default (sequelize, { STRING, TEXT }) => {
   Contact.init(
     {
-      name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      phone: DataTypes.STRING,
-      address: DataTypes.STRING,
-      subject: DataTypes.STRING,
-      content: DataTypes.TEXT,
-      status: DataTypes.STRING
+      name: STRING,
+      email: STRING,
+      phone: STRING,
+      address: STRING,
+      subject: STRING,
+      content: TEXT,
+      status: STRING
     },
     {
       sequelize,

@@ -1,6 +1,6 @@
 import { body } from 'express-validator'
 
-export const vnpSetting = [
+const vnpSettingRequest = [
   body('value').isObject().withMessage('isObject'),
 
   body('value.enabled').notEmpty().withMessage('notEmpty').isBoolean({ strict: true }).withMessage('isBoolean'),
@@ -27,3 +27,5 @@ export const vnpSetting = [
     .isLength({ max: 120 })
     .withMessage('isLength')
 ]
+
+export default vnpSettingRequest
