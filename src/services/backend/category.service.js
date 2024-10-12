@@ -20,10 +20,13 @@ class CategoryService extends BaseService {
     return await Storage.storeAs(image.path, outputPath, image.filename)
   }
 
-  async getCategories({ page = 1, pageSize = 10, filterBy = null, q = '', sortBy = 'createdAt', order = 'desc' }) {
-    const condition = {
-      name: { [Op.like]: `%${q}%` },
-      status: filterBy
+  async getCategories({ page = 1, pageSize = 10, filterBy = '', q = '', sortBy = 'createdAt', order = 'desc' }) {
+    const condition = {}
+    if (q) {
+      condition.name = { [Op.like]: `%${q}%` }
+    }
+    if (filterBy) {
+      condition.status = filterBy
     }
     const orderOptions = [[sortBy, order]]
     return this.paginate(page, pageSize, condition, null, { order: orderOptions })

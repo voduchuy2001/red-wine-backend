@@ -7,13 +7,14 @@ const createBrandRequest = [
   body('website').optional().bail().isURL().bail().withMessage('Must be an url'),
 
   body('status')
-    .optional()
+    .notEmpty()
+    .withMessage('Not empty')
     .isString()
-    .withMessage('isString')
+    .withMessage('Must be a string')
     .isIn(Object.values(BRAND_STATUS))
     .withMessage(`Only accept: ${Object.values(BRAND_STATUS)}`),
 
-  body('featured').optional().if(body('featured').notEmpty()).isInt().withMessage('Must be an integer'),
+  body('featured').optional({ checkFalsy: true }).bail().isBoolean().bail().withMessage('Must be boolean'),
 
   body('order').optional().isInt().withMessage('Must be an integer')
 ]

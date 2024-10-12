@@ -1,12 +1,12 @@
-export const VNP_PAYMENT_GATEWAY_SANDBOX_HOST = process.env.VNP_SANDBOX_HOST_API
-export const VNP_PAYMENT_ENDPOINT = process.env.VNP_PAYMENT_ENDPOINT
-export const VNP_VERSION = process.env.VNP_VERSION
-export const VNP_CURRENCY_CODE = process.env.VNP_CURRENCY_CODE
-export const VNP_DEFAULT_COMMAND = process.env.VNP_DEFAULT_COMMAND
-export const VNP_LOCALE = process.env.VNP_LOCALE
-export const VNP_RETURN_URL = process.env.VNP_RETURN_URL
+const VNP_PAYMENT_GATEWAY_SANDBOX_HOST = process.env.VNP_SANDBOX_HOST_API
+const VNP_PAYMENT_ENDPOINT = process.env.VNP_PAYMENT_ENDPOINT
+const VNP_VERSION = process.env.VNP_VERSION
+const VNP_CURRENCY_CODE = process.env.VNP_CURRENCY_CODE
+const VNP_DEFAULT_COMMAND = process.env.VNP_DEFAULT_COMMAND
+const VNP_LOCALE = process.env.VNP_LOCALE
+const VNP_RETURN_URL = process.env.VNP_RETURN_URL
 
-export const VNP_PRODUCT_CODE = {
+const VNP_PRODUCT_CODE = {
   FoodConsumption: '100000',
   PhoneTablet: '110000',
   ElectricAppliance: '120000',
@@ -29,9 +29,9 @@ export const VNP_PRODUCT_CODE = {
   Other: 'other'
 }
 
-export const WRONG_CHECKSUM_KEY = 'WRONG_CHECKSUM_KEY'
+const WRONG_CHECKSUM_KEY = 'WRONG_CHECKSUM_KEY'
 
-export const RESPONSE_MAP = {
+const RESPONSE_MAP = {
   '00': 'Approved',
   '01': 'Transaction is already exist',
   '02': 'Invalid merchant (check vnp_TmnCode value)',
@@ -50,4 +50,17 @@ export const RESPONSE_MAP = {
   75: 'Banking system is under maintenance',
   WRONG_CHECKSUM_KEY: 'Wrong checksum',
   default: 'Failure'
+}
+
+export {
+  VNP_PAYMENT_GATEWAY_SANDBOX_HOST,
+  VNP_PAYMENT_ENDPOINT,
+  VNP_VERSION,
+  VNP_CURRENCY_CODE,
+  VNP_DEFAULT_COMMAND,
+  VNP_LOCALE,
+  VNP_RETURN_URL,
+  VNP_PRODUCT_CODE,
+  WRONG_CHECKSUM_KEY,
+  RESPONSE_MAP
 }

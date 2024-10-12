@@ -13,7 +13,7 @@ const getBrandsRequest = [
   query('pageSize').optional().isInt({ min: 1 }).withMessage('Must be at least 1'),
 
   query('filterBy')
-    .optional()
+    .optional({ checkFalsy: true })
     .isIn(['published', 'pending', 'draft'])
     .withMessage('Only accepted: published, pending, draft'),
 

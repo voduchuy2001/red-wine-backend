@@ -4,21 +4,14 @@ const updateCategoryRequest = [
   body('name').notEmpty().bail().withMessage('Not empty').isLength({ max: 100 }).withMessage('Lte 100'),
 
   body('status')
-    .optional({ checkFalsy: true })
-    .bail()
+    .notEmpty()
+    .withMessage('Not empty')
     .isString()
-    .bail()
     .withMessage('Must be a string')
-    .isIn(['active', 'inactive'])
-    .withMessage('Is in: active, inactive'),
+    .isIn(['published', 'draft', 'pending'])
+    .withMessage('Is in: published, draft, pending'),
 
-  body('featured')
-    .optional({ checkFalsy: true })
-    .if(body('featured').notEmpty())
-    .bail()
-    .isInt()
-    .bail()
-    .withMessage('Must be a integer'),
+  body('featured').optional({ checkFalsy: true }).bail().isBoolean().bail().withMessage('Must be boolean'),
 
   body('order').optional({ checkFalsy: true }).bail().isInt().bail().withMessage('Must be a integer')
 ]

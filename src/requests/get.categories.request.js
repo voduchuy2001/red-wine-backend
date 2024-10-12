@@ -12,7 +12,10 @@ const getCategoriesRequest = [
 
   query('pageSize').optional().isInt({ min: 1 }).withMessage('Must be at least 1'),
 
-  query('filterBy').optional().isIn(['active', 'inactive']).withMessage('Only accepted: active, inactive'),
+  query('filterBy')
+    .optional({ checkFalsy: true })
+    .isIn(['published', 'pending', 'draft'])
+    .withMessage('Only accepted: published, pending, draft'),
 
   query('sortBy').optional().isIn(['name', 'order', 'createdAt']).withMessage('Only accepted: name, order, createdAt'),
 
