@@ -1,6 +1,7 @@
 const CATEGORY_STATUS = {
-  ACTIVE: 'active',
-  INACTIVE: 'inactive'
+  PUBLISHED: 'published',
+  DRAFT: 'draft',
+  PENDING: 'pending'
 }
 
 export default CATEGORY_STATUS

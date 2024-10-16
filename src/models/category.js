@@ -30,7 +30,8 @@ export default (sequelize, { BIGINT, STRING, INTEGER }) => {
       name: STRING,
       status: STRING,
       featured: INTEGER,
-      order: INTEGER
+      order: INTEGER,
+      image: STRING
     },
     {
       sequelize,

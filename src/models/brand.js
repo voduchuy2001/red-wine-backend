@@ -15,6 +15,7 @@ export default (sequelize, { STRING, TEXT, INTEGER }) => {
   Brand.init(
     {
       name: STRING,
+      logo: STRING,
       website: STRING,
       description: TEXT,
       status: STRING,

@@ -2,36 +2,21 @@ import BRAND_STATUS from '@constants/brand.status'
 import { body } from 'express-validator'
 
 const createBrandRequest = [
-  body('name')
-    .notEmpty()
-    .bail()
-    .withMessage('notEmpty')
-    .isLength({ max: 200 })
-    .bail()
-    .withMessage('isLength', { max: 100 }),
+  body('name').notEmpty().withMessage('Not empty').isLength({ max: 200 }).withMessage('Lte 200'),
 
-  body('logo').optional({ checkFalsy: true }).bail().isURL().bail().withMessage('isURL'),
-
-  body('website').optional({ checkFalsy: true }).bail().isURL().bail().withMessage('isURL'),
+  body('website').optional().bail().isURL().bail().withMessage('Must be an url'),
 
   body('status')
-    .optional({ checkFalsy: true })
-    .bail()
+    .notEmpty()
+    .withMessage('Not empty')
     .isString()
-    .bail()
-    .withMessage('isString')
-    .isIn(BRAND_STATUS)
-    .withMessage(`isIn ${Object.keys(BRAND_STATUS)}`),
+    .withMessage('Must be a string')
+    .isIn(Object.values(BRAND_STATUS))
+    .withMessage(`Only accept: ${Object.values(BRAND_STATUS)}`),
 
-  body('featured')
-    .optional({ checkFalsy: true })
-    .if(body('featured').notEmpty())
-    .bail()
-    .isInt()
-    .bail()
-    .withMessage('isInt'),
+  body('featured').optional({ checkFalsy: true }).bail().isBoolean().bail().withMessage('Must be boolean'),
 
-  body('order').optional({ checkFalsy: true }).bail().isInt().bail().withMessage('isInt')
+  body('order').optional().isInt().withMessage('Must be an integer')
 ]
 
 export default createBrandRequest

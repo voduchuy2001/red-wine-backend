@@ -1,5 +1,7 @@
-export const PRODUCT_STATUS = {
-  ACTIVE: 'active',
-  INACTIVE: 'inactive',
-  DRAFT: 'draft'
+const PRODUCT_STATUS = {
+  PUBLISHED: 'published',
+  DRAFT: 'draft',
+  PENDING: 'pending'
 }
+
+export default PRODUCT_STATUS

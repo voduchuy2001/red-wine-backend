@@ -8,15 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.BIGINT
       },
-      parentId: {
-        type: Sequelize.BIGINT,
-        references: {
-          model: 'Permissions',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
       name: {
         type: Sequelize.STRING(50),
         allowNull: false

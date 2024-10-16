@@ -8,15 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.BIGINT
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'email'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+      modelable: {
+        type: Sequelize.STRING
+      },
+      modelableId: {
+        type: Sequelize.BIGINT
       },
       token: {
         type: Sequelize.STRING
