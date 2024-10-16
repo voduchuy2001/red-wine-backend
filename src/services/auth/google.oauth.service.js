@@ -5,9 +5,12 @@ import SystemException from '@exceptions/system.exception'
 import { INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
 import RedisCache from '@config/cache'
 import { v4 as uuidv4 } from 'uuid'
+import BaseService from '@services/base.service'
+import db from '@models/index'
 
-class GoogleOAuthService {
+class GoogleOAuthService extends BaseService {
   constructor(userRepository) {
+    super(userRepository)
     this.userRepository = userRepository
     this.oAuth2Client = new OAuth2Client(
       GOOGLE_SERVICE.clientID,
@@ -47,11 +50,18 @@ class GoogleOAuthService {
   }
 
   async registerOrUpdateUser(email, name, picture) {
-    const user =
-      (await this.userRepository.findByEmail(email)) ||
-      (await this.userRepository.create({ email, name, avatar: picture }))
-    const current = new Date()
-    return await user.update({ lastLoginAt: current })
+    const transaction = await db.sequelize.transaction()
+
+    try {
+      const { record: user } = await this.firstOrCreate({ email }, { email, name, avatar: picture }, transaction)
+      const current = new Date()
+      await user.update({ lastLoginAt: current }, { transaction })
+      await transaction.commit()
+      return user
+    } catch (error) {
+      await transaction.rollback()
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
   }
 }
 

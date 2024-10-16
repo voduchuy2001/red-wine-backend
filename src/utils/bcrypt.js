@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 
 class Bcrypt {
   constructor() {
-    this.SALT = process.env.BCRYPT_ROUNDS || 10
+    this.SALT = parseInt(process.env.BCRYPT_ROUNDS, 10) || 10
   }
 
   async hash(password) {
