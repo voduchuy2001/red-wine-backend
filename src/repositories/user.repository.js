@@ -21,8 +21,8 @@ class UserRepository extends BaseRepository {
           model: db.Permission,
           as: 'permissions',
           attributes: ['id', 'code', 'name', 'description'],
-          required: false
-          // through: { attributes: [] }
+          required: false,
+          through: { attributes: [] }
         }
       },
       {
