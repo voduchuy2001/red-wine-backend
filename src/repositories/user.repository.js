@@ -6,10 +6,6 @@ class UserRepository extends BaseRepository {
     super(db.User)
   }
 
-  async findByEmail(email) {
-    return this.find({ email })
-  }
-
   async getPermissions(id) {
     return this.findById(id, [
       {
@@ -35,9 +31,9 @@ class UserRepository extends BaseRepository {
     ])
   }
 
-  async updateLastLoginAt(id) {
+  async updateLastLoginAt(id, transaction) {
     const current = new Date()
-    return this.update({ id }, { lastLoginAt: current })
+    return this.update({ id }, { lastLoginAt: current }, transaction)
   }
 
   async auth(id) {

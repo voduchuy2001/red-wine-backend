@@ -2,17 +2,21 @@ import { generateAvatar } from '@utils/avatar'
 import Bcrypt from '@utils/bcrypt'
 import JWT from '@config/jwt'
 import ServiceException from '@exceptions/service.exception'
-import { BAD_REQUEST, NOT_FOUND, UNAUTHORIZED } from '@constants/http.status.code'
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND, UNAUTHORIZED } from '@constants/http.status.code'
 import RedisCache from '@config/cache'
 import { v4 as uuidv4 } from 'uuid'
+import BaseService from '@services/base.service'
+import SystemException from '@exceptions/system.exception'
+import db from '@models/index'
+import NotFoundException from '@exceptions/not.found.exception'
 
-class AuthService {
+class AuthService extends BaseService {
   constructor(userRepository) {
-    this.userRepository = userRepository
+    super(userRepository)
   }
 
   async validateEmail(email) {
-    return this.userRepository.findByEmail(email)
+    return this.findOne({ email })
   }
 
   async validatePassword(inputPassword, userPassword) {
@@ -31,7 +35,16 @@ class AuthService {
       throw new ServiceException(UNAUTHORIZED, __('Password does not match'))
     }
     const userId = user.id
-    await this.userRepository.updateLastLoginAt(userId)
+
+    const transaction = await db.sequelize.transaction()
+    try {
+      await this.repository.updateLastLoginAt(userId, transaction)
+      await transaction.commit()
+    } catch (error) {
+      await transaction.rollback()
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
+
     const accessToken = JWT.generate(userId, '30m')
     const sessionId = 'session-' + uuidv4()
     const refreshToken = JWT.generate({ userId, sessionId }, '7d', 'refreshToken')
@@ -47,7 +60,15 @@ class AuthService {
     }
     const hashedPassword = await Bcrypt.hash(password)
     const avatar = generateAvatar(email, 200) || null
-    return await this.userRepository.create({ email, avatar, password: hashedPassword })
+    const transaction = await db.sequelize.transaction()
+    try {
+      const user = await this.create({ email, avatar, password: hashedPassword }, transaction)
+      await transaction.commit()
+      return user
+    } catch (error) {
+      await transaction.rollback()
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
   }
 
   async logout(refreshToken) {
@@ -63,7 +84,7 @@ class AuthService {
   }
 
   async auth(id) {
-    const authUser = await this.userRepository.auth(id)
+    const authUser = await this.repository.auth(id)
     if (!authUser) {
       throw new ServiceException(NOT_FOUND, __('Not found user'))
     }
@@ -78,6 +99,13 @@ class AuthService {
       return JWT.generate(userId, '30m')
     } catch (error) {
       throw new ServiceException(error.status || UNAUTHORIZED, error.message)
+    }
+  }
+
+  async sendResetLinkEmail(email) {
+    const user = await this.validateEmail(email)
+    if (!user) {
+      throw new NotFoundException(NOT_FOUND, __('User not found'))
     }
   }
 }
