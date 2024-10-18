@@ -15,6 +15,9 @@ import logoutRequest from '@requests/logout.request'
 import sendVerifyEmailRequest from '@requests/send.verify.email.request'
 import VerificationController from '@controllers/auth/verification.controller'
 import verifyEmailRequest from '@requests/verify.email.request'
+import ForgotPasswordController from '@controllers/auth/forgot.password.controller'
+import forgotPasswordRequest from '@requests/forgot.password.request'
+import resetPasswordRequest from '@requests/reset.password.request'
 
 const router = express.Router()
 const authLimiter = limiter(5 * 60 * 1000, 10)
@@ -26,6 +29,7 @@ const registerController = new RegisterController(authService)
 const authenticatedController = new AuthController(authService)
 const logoutController = new LogoutController(authService)
 const verificationController = new VerificationController(authService)
+const forgotPasswordController = new ForgotPasswordController(authService)
 
 router.post('/login', authLimiter, validate(loginRequest), loginController.login.bind(loginController))
 router.post('/logout', auth, validate(logoutRequest), logoutController.logout.bind(logoutController))
@@ -34,5 +38,7 @@ router.get('/authenticated', auth, authenticatedController.auth.bind(authenticat
 router.post('/refresh-token', validate(refreshTokenRequest), authenticatedController.refreshToken.bind(authenticatedController))
 router.post('/email/verify', validate(sendVerifyEmailRequest), verificationController.sendVerifyEmail.bind(verificationController))
 router.post('/email/verified', validate(verifyEmailRequest), verificationController.verifyEmail.bind(verificationController))
+router.post('/forgot-password', validate(forgotPasswordRequest), forgotPasswordController.sendResetLinkEmail.bind(forgotPasswordController))
+router.post('/reset-password', validate(resetPasswordRequest), forgotPasswordController.resetPassword.bind(forgotPasswordController))
 
 export default router

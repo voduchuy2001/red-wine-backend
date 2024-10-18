@@ -18,11 +18,6 @@ class User extends Model {
       timestamps: false
     })
 
-    this.hasMany(PasswordResetToken, {
-      foreignKey: 'email',
-      as: 'resetPasswordTokens'
-    })
-
     this.belongsToMany(Permission, {
       through: {
         model: 'ModelHasPermissions',

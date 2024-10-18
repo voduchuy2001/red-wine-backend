@@ -1,7 +1,9 @@
 import { body } from 'express-validator'
 
-const registerRequest = [
+const resetPasswordRequest = [
   body('email').notEmpty().bail().withMessage('notEmpty').isEmail().bail().withMessage('isEmail'),
+
+  body('otp').notEmpty().withMessage('Not empty').isString().withMessage('Must be a string'),
 
   body('password')
     .notEmpty()
@@ -13,4 +15,4 @@ const registerRequest = [
     )
 ]
 
-export default registerRequest
+export default resetPasswordRequest

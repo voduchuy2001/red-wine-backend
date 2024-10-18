@@ -11,6 +11,7 @@ import db from '@models/index'
 import NotFoundException from '@exceptions/not.found.exception'
 import Otp from '@utils/otp'
 import VerificationEmail from '@mail/verification.email'
+import ForgotPasswordEmail from '@mail/forgot.password.email'
 
 class AuthService extends BaseService {
   constructor(userRepository) {
@@ -151,6 +152,55 @@ class AuthService extends BaseService {
       return user
     } catch (error) {
       await transaction.rollback()
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
+  }
+
+  async sendResetLinkEmail(email) {
+    const user = await this.validateEmail(email)
+    if (!user) {
+      throw new NotFoundException(NOT_FOUND, __('User not found'))
+    }
+
+    const otp = Otp.generate(6)
+    const key = `forgot-password:user:${email}`
+    const EXP_TIME = 60 // 60 minutes
+
+    const data = { to: email, otp, expirationTime: EXP_TIME }
+    const verificationEmail = new ForgotPasswordEmail(data)
+    try {
+      await RedisCache.setex(key, otp, EXP_TIME * 60 * 60)
+      await verificationEmail.send()
+    } catch (error) {
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
+  }
+
+  async resetPassword(email, otp, password) {
+    const key = `forgot-password:user:${email}`
+
+    const storedOtp = await RedisCache.get(key)
+    if (!storedOtp) {
+      throw new NotFoundException(NOT_FOUND, __('OTP not found or expired'))
+    }
+
+    if (storedOtp !== otp) {
+      throw new ServiceException(BAD_REQUEST, __('Invalid OTP'))
+    }
+
+    const user = await this.findOne({ email })
+    if (!user) {
+      throw new NotFoundException(NOT_FOUND, __('Not found user'))
+    }
+
+    const transaction = await db.sequelize.transaction()
+    try {
+      const hashedPassword = await Bcrypt.hash(password)
+      await user.update({ password: hashedPassword }, { transaction })
+      await transaction.commit()
+      await RedisCache.del(key)
+      return user
+    } catch (error) {
       throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
     }
   }
