@@ -12,7 +12,7 @@ class TaxService extends BaseService {
   async getTaxes({ page = 1, pageSize = 10, filterBy = '', q = '', sortBy = 'createdAt', order = 'desc' }) {
     const condition = {}
     if (q) {
-      condition.name = { [Op.like]: `%${q}%` }
+      condition.title = { [Op.like]: `%${q}%` }
     }
     if (filterBy) {
       condition.status = filterBy
@@ -25,6 +25,20 @@ class TaxService extends BaseService {
     const transaction = await db.sequelize.transaction()
     try {
       const tax = await this.create(data, transaction)
+      await transaction.commit()
+      return tax
+    } catch (error) {
+      await transaction.rollback()
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
+  }
+
+  async updateTax(id, data) {
+    const tax = await this.findOrFail(id)
+
+    const transaction = await db.sequelize.transaction()
+    try {
+      await tax.update(data, { transaction })
       await transaction.commit()
       return tax
     } catch (error) {

@@ -39,6 +39,18 @@ class TaxController extends BaseController {
       next(error)
     }
   }
+
+  async update(req, res, next) {
+    const { id } = req.params
+    const data = req.body
+
+    try {
+      await this.taxService.updateTax(id, data)
+      return this.json(res, OK, __('Success'))
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 export default TaxController
