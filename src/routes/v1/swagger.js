@@ -2,8 +2,8 @@ import express from 'express'
 import validate from '@middlewares/validation'
 import { limiter } from '@config/rate.limit'
 import { authenticate } from '@middlewares/swagger'
-import SwaggerAuthController from '@controllers/auth/swagger.auth.controller'
-import SwaggerAuthService from '@services/swagger/swagger.auth.service'
+import SwaggerAuthController from '@controllers/swagger.auth.controller'
+import SwaggerAuthService from '@services/swagger.auth.service'
 import swaggerRequest from '@requests/swagger.request'
 
 const router = express.Router()

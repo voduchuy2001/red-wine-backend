@@ -1,7 +1,7 @@
 import express from 'express'
 import validate from '@middlewares/validation'
 import auth from '@middlewares/authenticated'
-import SettingController from '@controllers/backend/setting.controller'
+import SettingController from '@controllers/setting.controller'
 import SettingService from '@services/setting.service'
 import vnpaySettingRequest from '@requests/vnpay.setting.request'
 

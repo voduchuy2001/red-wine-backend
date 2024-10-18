@@ -1,14 +1,13 @@
-import { Op } from 'sequelize'
-import BaseService from '../base.service'
-import SystemException from '@exceptions/system.exception'
+import BaseService from '@services/base.service'
 import { INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
 import db from '@models/index'
-import NotFoundException from '@exceptions/not.found.exception'
+import SystemException from '@exceptions/system.exception'
+import { Op } from 'sequelize'
 import Storage from '@utils/storage'
 
-class CategoryService extends BaseService {
-  constructor(categoryRepository) {
-    super(categoryRepository)
+class BrandService extends BaseService {
+  constructor(brandRepository) {
+    super(brandRepository)
   }
 
   async storeImage(image) {
@@ -16,11 +15,11 @@ class CategoryService extends BaseService {
       return null
     }
 
-    const outputPath = Storage.publicPath('images/category')
+    const outputPath = Storage.publicPath('images/brand')
     return await Storage.storeAs(image.path, outputPath, image.filename)
   }
 
-  async getCategories({ page = 1, pageSize = 10, filterBy = '', q = '', sortBy = 'createdAt', order = 'desc' }) {
+  async getBrands({ page = 1, pageSize = 10, filterBy = '', q = '', sortBy = 'createdAt', order = 'desc' }) {
     const condition = {}
     if (q) {
       condition.name = { [Op.like]: `%${q}%` }
@@ -32,35 +31,35 @@ class CategoryService extends BaseService {
     return this.paginate(page, pageSize, condition, null, { order: orderOptions })
   }
 
-  async createCategory(data = {}, image = null) {
+  async createBrand(data = {}, image = null) {
     const transaction = await db.sequelize.transaction()
     try {
       const logo = await this.storeImage(image)
-      const category = await this.create({ ...data, image: logo }, transaction)
+      const brand = await this.create({ ...data, logo }, transaction)
       await transaction.commit()
-      return category
+      return brand
     } catch (error) {
       await transaction.rollback()
       throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
     }
   }
 
-  async updateCategory(id, data = {}, image = null) {
-    const category = await this.findOrFail(id)
+  async updateBrand(id, data = {}, image = null) {
+    const brand = await this.findOrFail(id)
 
     const transaction = await db.sequelize.transaction()
     try {
       const logo = await this.storeImage(image)
-      await category.update({ ...data, image: logo }, { transaction })
+      await brand.update({ ...data, logo }, { transaction })
       await transaction.commit()
-      return category
+      return brand
     } catch (error) {
       await transaction.rollback()
       throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
     }
   }
 
-  async deleteCategory(id) {
+  async deleteBrand(id) {
     const brand = await this.findOrFail(id)
 
     const transaction = await db.sequelize.transaction()
@@ -75,4 +74,4 @@ class CategoryService extends BaseService {
   }
 }
 
-export default CategoryService
+export default BrandService
