@@ -1,4 +1,4 @@
-import { OK, UNAUTHORIZED } from '@constants/http.status.code'
+import { OK } from '@constants/http.status.code'
 import BaseController from '@controllers/base.controller'
 
 class SwaggerAuthController extends BaseController {
@@ -19,15 +19,8 @@ class SwaggerAuthController extends BaseController {
     const data = req.body
 
     try {
-      const loggedIn = await this.swaggerAuthService.login(data)
-
-      if (!loggedIn) {
-        return this.json(res, UNAUTHORIZED, __('failure'))
-      }
-
-      req.session.authenticated = true
-
-      return this.json(res, OK, __('success'), loggedIn)
+      await this.swaggerAuthService.login(data, req)
+      return this.json(res, OK, __('Success'))
     } catch (error) {
       next(error)
     }
