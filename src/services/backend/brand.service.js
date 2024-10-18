@@ -48,10 +48,6 @@ class BrandService extends BaseService {
   async updateBrand(id, data = {}, image = null) {
     const brand = await this.findOrFail(id)
 
-    if (!brand) {
-      throw new NotFoundException(__('Brand not found'))
-    }
-
     const transaction = await db.sequelize.transaction()
     try {
       const logo = await this.storeImage(image)
@@ -65,7 +61,6 @@ class BrandService extends BaseService {
   }
 
   async deleteBrand(id) {
-    console.log(id)
     const brand = await this.findOrFail(id)
 
     const transaction = await db.sequelize.transaction()

@@ -46,12 +46,7 @@ class CategoryService extends BaseService {
   }
 
   async updateCategory(id, data = {}, image = null) {
-    console.log('check: >>>', id, data, image)
     const category = await this.findOrFail(id)
-
-    if (!category) {
-      throw new NotFoundException(__('Category not found'))
-    }
 
     const transaction = await db.sequelize.transaction()
     try {

@@ -8,7 +8,7 @@ const validate = (validations) => async (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     const messages = errors.array().reduce((accumulator, { path, msg }) => {
-      accumulator[path] = [...(accumulator[path] || []), msg]
+      accumulator[path] = [...(accumulator[path] || []), __(msg)]
       return accumulator
     }, {})
 
