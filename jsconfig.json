@@ -2,20 +2,51 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@config/*": ["config/*"],
-      "@constants/*": ["constants/*"],
-      "@controllers/*": ["controllers/*"],
-      "@documents/*": ["documents/*"],
-      "@exceptions/*": ["exceptions/*"],
-      "@middlewares/*": ["middlewares/*"],
-      "@models/*": ["models/*"],
-      "@repositories/*": ["repositories/*"],
-      "@requests/*": ["requests/*"],
-      "@routes/*": ["routes/*"],
-      "@services/*": ["services/*"],
-      "@utils/*": ["utils/*"],
-      "@storage/*": ["storage/*"],
-      "@public/*": ["public/*"]
+      "@config/*": [
+        "config/*"
+      ],
+      "@constants/*": [
+        "constants/*"
+      ],
+      "@controllers/*": [
+        "controllers/*"
+      ],
+      "@documents/*": [
+        "documents/*"
+      ],
+      "@exceptions/*": [
+        "exceptions/*"
+      ],
+      "@mail/*": [
+        "mail/*"
+      ],
+      "@middlewares/*": [
+        "middlewares/*"
+      ],
+      "@models/*": [
+        "models/*"
+      ],
+      "@repositories/*": [
+        "repositories/*"
+      ],
+      "@requests/*": [
+        "requests/*"
+      ],
+      "@routes/*": [
+        "routes/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@storage/*": [
+        "storage/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ]
     }
   }
 }

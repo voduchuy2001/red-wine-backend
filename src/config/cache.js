@@ -20,6 +20,14 @@ class RedisCache {
     }
   }
 
+  async setex(key, value, expiry = 3600) {
+    try {
+      await this.client.setex(key, value, expiry)
+    } catch (error) {
+      throw new CacheException(BAD_REQUEST, error.message)
+    }
+  }
+
   async get(key) {
     try {
       return this.client.get(key)

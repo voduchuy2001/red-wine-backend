@@ -3,6 +3,8 @@ import nodemailer from 'nodemailer'
 import path from 'path'
 import fs from 'fs'
 import ejs from 'ejs'
+import { INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
+import SystemException from '@exceptions/system.exception'
 
 class Mail {
   constructor(mailData) {
@@ -35,7 +37,11 @@ class Mail {
       attachments: this.attachments()
     }
 
-    await this.transporter.sendMail(mailOptions)
+    try {
+      await this.transporter.sendMail(mailOptions)
+    } catch (error) {
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
   }
 }
 

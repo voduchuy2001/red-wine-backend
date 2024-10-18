@@ -1,16 +1,21 @@
 {
-  "presets": ["@babel/preset-env"],
+  "presets": [
+    "@babel/preset-env"
+  ],
   "plugins": [
     [
       "module-resolver",
       {
-        "root": ["."],
+        "root": [
+          "."
+        ],
         "alias": {
           "@config": "./src/config",
           "@constants": "./src/constants",
           "@controllers": "./src/controllers",
           "@documents": "./src/documents",
           "@exceptions": "./src/exceptions",
+          "@mail": "./src/mail",
           "@middlewares": "./src/middlewares",
           "@models": "./src/models",
           "@repositories": "./src/repositories",

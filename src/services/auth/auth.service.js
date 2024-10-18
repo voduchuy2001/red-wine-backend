@@ -9,6 +9,8 @@ import BaseService from '@services/base.service'
 import SystemException from '@exceptions/system.exception'
 import db from '@models/index'
 import NotFoundException from '@exceptions/not.found.exception'
+import Otp from '@utils/otp'
+import VerificationEmail from '@mail/verification.email'
 
 class AuthService extends BaseService {
   constructor(userRepository) {
@@ -103,9 +105,21 @@ class AuthService extends BaseService {
   }
 
   async sendResetLinkEmail(email) {
-    const user = await this.validateEmail(email)
+    const user = await this.findOne({ email, emailVerifiedAt: null })
     if (!user) {
-      throw new NotFoundException(NOT_FOUND, __('User not found'))
+      throw new NotFoundException(NOT_FOUND, __('Not found user'))
+    }
+
+    const otp = Otp.generate(6)
+    const key = `verify:user:${email}}:${otp}`
+
+    const mailData = { to: email, otp }
+    const verificationEmail = new VerificationEmail(mailData)
+    try {
+      await RedisCache.setex(key, otp, 5 * 60 * 60)
+      await verificationEmail.send('auth.verification')
+    } catch (error) {
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
     }
   }
 }

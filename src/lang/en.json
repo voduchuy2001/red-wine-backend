@@ -66,5 +66,6 @@
 	"Failed to create brand": "Failed to create brand",
 	"Not found file path": " %s",
 	"Must be boolean": "Must be boolean",
-	"Attribute already exists": "Attribute already exists"
+	"Attribute already exists": "Attribute already exists",
+	"Password recovery code has been sent to email": "Password recovery code has been sent to email"
 }
