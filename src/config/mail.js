@@ -1,20 +1,22 @@
-import { mailConfiguration } from '@constants/mail'
+import { MAIL_CONFIGURATION } from '@constants/mail'
 import nodemailer from 'nodemailer'
 import path from 'path'
 import fs from 'fs'
 import ejs from 'ejs'
+import { INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
+import SystemException from '@exceptions/system.exception'
 
 class Mail {
-  constructor(mailData) {
-    this.mailData = mailData
-    this.transporter = nodemailer.createTransport(mailConfiguration)
+  constructor(data) {
+    this.data = data
+    this.transporter = nodemailer.createTransport(MAIL_CONFIGURATION)
   }
 
   envelop() {
     return {
-      from: this.mailData.from || process.env.MAIL_FROM_ADDRESS,
-      to: this.mailData.to,
-      subject: this.mailData.subject
+      from: this.data.from || process.env.MAIL_FROM_ADDRESS,
+      to: this.data.to,
+      subject: this.data.subject
     }
   }
 
@@ -35,7 +37,11 @@ class Mail {
       attachments: this.attachments()
     }
 
-    await this.transporter.sendMail(mailOptions)
+    try {
+      await this.transporter.sendMail(mailOptions)
+    } catch (error) {
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
   }
 }
 

@@ -7,7 +7,7 @@ class SettingRepository extends BaseRepository {
   }
 
   async getSetting(key = '') {
-    return await super.findOne({ where: { key } })
+    return await this.find({ key })
   }
 
   async updateSetting(key, value) {

@@ -12,10 +12,10 @@ class GoogleOAuthController extends BaseController {
       const redirectUrl = await this.googleOAuthService.redirect()
 
       if (!redirectUrl) {
-        return super.json(res, BAD_REQUEST, __('failure'))
+        return this.json(res, BAD_REQUEST, __('failure'))
       }
 
-      return super.json(res, OK, __('success'), redirectUrl)
+      return this.json(res, OK, __('success'), redirectUrl)
     } catch (error) {
       next(error)
     }
@@ -26,16 +26,16 @@ class GoogleOAuthController extends BaseController {
 
     try {
       if (!code) {
-        return super.json(res, UNAUTHORIZED, __('failure'))
+        return this.json(res, UNAUTHORIZED, __('failure'))
       }
 
       const loggedIn = await this.googleOAuthService.callback(code)
 
       if (!loggedIn) {
-        return super.json(res, UNAUTHORIZED, __('failure'))
+        return this.json(res, UNAUTHORIZED, __('failure'))
       }
 
-      return super.json(res, OK, __('success'), loggedIn)
+      return this.json(res, OK, __('success'), loggedIn)
     } catch (error) {
       next(error)
     }

@@ -1,25 +1,19 @@
-import CATEGORY_STATUS from '@constants/category.status'
 import { body } from 'express-validator'
 
-export const createCategoryRequest = [
-  body('name').notEmpty().bail().withMessage('notEmpty').isLength({ max: 100 }).withMessage('tooLong'),
+const createCategoryRequest = [
+  body('name').notEmpty().bail().withMessage('Not empty').isLength({ max: 100 }).withMessage('Lte 100'),
 
   body('status')
-    .optional({ checkFalsy: true })
-    .bail()
+    .notEmpty()
+    .withMessage('Not empty')
     .isString()
-    .bail()
-    .withMessage('isString')
-    .isIn(CATEGORY_STATUS)
-    .withMessage(`isIn ${Object.keys(CATEGORY_STATUS)}`),
+    .withMessage('Must be a string')
+    .isIn(['published', 'draft', 'pending'])
+    .withMessage('Is in: published, draft, pending'),
 
-  body('featured')
-    .optional({ checkFalsy: true })
-    .if(body('featured').notEmpty())
-    .bail()
-    .isInt()
-    .bail()
-    .withMessage('isInt'),
+  body('featured').optional({ checkFalsy: true }).bail().isBoolean().bail().withMessage('Must be boolean'),
 
-  body('order').optional({ checkFalsy: true }).bail().isInt().bail().withMessage('isInt')
+  body('order').optional({ checkFalsy: true }).bail().isInt().bail().withMessage('Must be a integer')
 ]
+
+export default createCategoryRequest

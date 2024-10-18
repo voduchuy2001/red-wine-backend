@@ -1,0 +1,227 @@
+[
+  {
+    "name": "Danh mục",
+    "code": "category",
+    "description": "Quản lý danh mục"
+  },
+  {
+    "name": "Xem",
+    "code": "category.index",
+    "description": "Xem danh mục"
+  },
+  {
+    "name": "Thêm",
+    "code": "category.create",
+    "description": "Thêm danh mục"
+  },
+  {
+    "name": "Sửa",
+    "code": "category.update",
+    "description": "Sửa danh mục"
+  },
+  {
+    "name": "Xóa",
+    "code": "category.delete",
+    "description": "Xóa danh mục"
+  },
+  {
+    "name": "Nhãn hàng",
+    "code": "brand",
+    "description": "Quản lý nhãn hàng"
+  },
+  {
+    "name": "Xem",
+    "code": "brand.index",
+    "description": "Xem nhãn hàng"
+  },
+  {
+    "name": "Thêm",
+    "code": "brand.create",
+    "description": "Thêm nhãn hàng"
+  },
+  {
+    "name": "Sửa",
+    "code": "brand.update",
+    "description": "Sửa nhãn hàng"
+  },
+  {
+    "name": "Xóa",
+    "code": "brand.delete",
+    "description": "Xóa nhãn hàng"
+  },
+  {
+    "name": "Sản phẩm",
+    "code": "product",
+    "description": "Quản lý sản phẩm"
+  },
+  {
+    "name": "Xem",
+    "code": "product.index",
+    "description": "Xem sản phẩm"
+  },
+  {
+    "name": "Thêm",
+    "code": "product.create",
+    "description": "Thêm sản phẩm"
+  },
+  {
+    "name": "Sửa",
+    "code": "product.update",
+    "description": "Sửa sản phẩm"
+  },
+  {
+    "name": "Xóa",
+    "code": "product.delete",
+    "description": "Xóa sản phẩm"
+  },
+  {
+    "name": "Đơn hàng",
+    "code": "order",
+    "description": "Quản lý đơn hàng"
+  },
+  {
+    "name": "Xem",
+    "code": "order.index",
+    "description": "Xem đơn hàng"
+  },
+  {
+    "name": "Thêm",
+    "code": "order.create",
+    "description": "Thêm đơn hàng"
+  },
+  {
+    "name": "Sửa",
+    "code": "order.update",
+    "description": "Sửa đơn hàng"
+  },
+  {
+    "name": "Xóa",
+    "code": "order.delete",
+    "description": "Xóa đơn hàng"
+  },
+  {
+    "name": "Thuộc tính",
+    "code": "attribute",
+    "description": "Quản lý thuộc tính"
+  },
+  {
+    "name": "Xem",
+    "code": "attribute.index",
+    "description": "Xem thuộc tính"
+  },
+  {
+    "name": "Thêm",
+    "code": "attribute.create",
+    "description": "Thêm thuộc tính"
+  },
+  {
+    "name": "Sửa",
+    "code": "attribute.update",
+    "description": "Sửa thuộc tính"
+  },
+  {
+    "name": "Xóa",
+    "code": "attribute.delete",
+    "description": "Xóa thuộc tính"
+  },
+  {
+    "name": "Lựa chọn",
+    "code": "option",
+    "description": "Quản lý lựa chọn"
+  },
+  {
+    "name": "Xem",
+    "code": "option.index",
+    "description": "Xem lựa chọn"
+  },
+  {
+    "name": "Thêm",
+    "code": "option.create",
+    "description": "Thêm lựa chọn"
+  },
+  {
+    "name": "Sửa",
+    "code": "option.update",
+    "description": "Sửa lựa chọn"
+  },
+  {
+    "name": "Xóa",
+    "code": "option.delete",
+    "description": "Xóa lựa chọn"
+  },
+  {
+    "name": "Giảm giá",
+    "code": "discount",
+    "description": "Quản lý giảm giá"
+  },
+  {
+    "name": "Xem",
+    "code": "discount.index",
+    "description": "Xem giảm giá"
+  },
+  {
+    "name": "Thêm",
+    "code": "discount.create",
+    "description": "Thêm giảm giá"
+  },
+  {
+    "name": "Sửa",
+    "code": "discount.update",
+    "description": "Sửa giảm giá"
+  },
+  {
+    "name": "Xóa",
+    "code": "discount.delete",
+    "description": "Xóa giảm giá"
+  },
+  {
+    "name": "Đánh giá",
+    "code": "review",
+    "description": "Quản lý đánh giá"
+  },
+  {
+    "name": "Xem",
+    "code": "review.index",
+    "description": "Xem đánh giá"
+  },
+  {
+    "name": "Thêm",
+    "code": "review.create",
+    "description": "Thêm đánh giá"
+  },
+  {
+    "name": "Sửa",
+    "code": "review.update",
+    "description": "Sửa đánh giá"
+  },
+  {
+    "name": "Xóa",
+    "code": "review.delete",
+    "description": "Xóa đánh giá"
+  },
+  {
+    "name": "Hóa đơn",
+    "code": "invoice",
+    "description": "Quản lý hóa đơn"
+  },
+  {
+    "name": "Xem",
+    "code": "invoice.index",
+    "description": "Xem hóa đơn"
+  },
+  {
+    "name": "Thêm",
+    "code": "invoice.create",
+    "description": "Thêm hóa đơn"
+  },
+  {
+    "name": "Sửa",
+    "code": "invoice.update",
+    "description": "Sửa hóa đơn"
+  },
+  {
+    "name": "Xóa",
+    "code": "invoice.delete",
+    "description": "Xóa hóa đơn"
+  }
+]

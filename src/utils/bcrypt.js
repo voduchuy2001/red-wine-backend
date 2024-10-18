@@ -1,13 +1,15 @@
 import bcrypt from 'bcryptjs'
 
-const SALT = 10
-
 class Bcrypt {
-  async hashPassword(password) {
-    return bcrypt.hash(password, SALT)
+  constructor() {
+    this.SALT = parseInt(process.env.BCRYPT_ROUNDS, 10) || 10
   }
 
-  async comparePassword(password, hashedPassword) {
+  async hash(password) {
+    return bcrypt.hash(password, this.SALT)
+  }
+
+  async compare(password, hashedPassword) {
     return bcrypt.compare(password, hashedPassword)
   }
 }

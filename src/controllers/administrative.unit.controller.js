@@ -10,7 +10,7 @@ class AdministrativeController extends BaseController {
   provinces(req, res, next) {
     try {
       const provinces = this.administrativeUnitService.provinces()
-      return super.json(res, OK, __('Success'), provinces)
+      return this.json(res, OK, __('Success'), provinces)
     } catch (error) {
       next(error)
     }
@@ -21,7 +21,7 @@ class AdministrativeController extends BaseController {
 
     try {
       const districts = this.administrativeUnitService.districts(provinceId)
-      return super.json(res, OK, __('Success'), districts)
+      return this.json(res, OK, __('Success'), districts)
     } catch (error) {
       next(error)
     }
@@ -32,7 +32,7 @@ class AdministrativeController extends BaseController {
 
     try {
       const wards = this.administrativeUnitService.wards(districtId)
-      return super.json(res, OK, __('Success'), wards)
+      return this.json(res, OK, __('Success'), wards)
     } catch (error) {
       next(error)
     }
