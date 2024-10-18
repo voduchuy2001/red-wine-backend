@@ -104,21 +104,53 @@ class AuthService extends BaseService {
     }
   }
 
-  async sendResetLinkEmail(email) {
+  async sendVerifyEmail(email) {
     const user = await this.findOne({ email, emailVerifiedAt: null })
+    if (!user) {
+      throw new NotFoundException(NOT_FOUND, __('Not found user or user has been verified'))
+    }
+
+    const otp = Otp.generate(6)
+    const key = `verify:user:${email}`
+    const EXP_TIME = 5 // 5 minutes
+
+    const data = { to: email, otp, expirationTime: EXP_TIME }
+    const verificationEmail = new VerificationEmail(data)
+    try {
+      await RedisCache.setex(key, otp, EXP_TIME * 60 * 60)
+      await verificationEmail.send()
+    } catch (error) {
+      throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
+    }
+  }
+
+  async verifyEmail(email, otp) {
+    const key = `verify:user:${email}`
+
+    const storedOtp = await RedisCache.get(key)
+    if (!storedOtp) {
+      throw new NotFoundException(NOT_FOUND, __('OTP not found or expired'))
+    }
+
+    if (storedOtp !== otp) {
+      throw new ServiceException(BAD_REQUEST, __('Invalid OTP'))
+    }
+
+    const user = await this.findOne({ email })
     if (!user) {
       throw new NotFoundException(NOT_FOUND, __('Not found user'))
     }
 
-    const otp = Otp.generate(6)
-    const key = `verify:user:${email}}:${otp}`
+    const transaction = await db.sequelize.transaction()
 
-    const mailData = { to: email, otp }
-    const verificationEmail = new VerificationEmail(mailData)
     try {
-      await RedisCache.setex(key, otp, 5 * 60 * 60)
-      await verificationEmail.send('auth.verification')
+      const now = new Date()
+      await user.update({ emailVerifiedAt: now }, { transaction })
+      await transaction.commit()
+      await RedisCache.del(key)
+      return user
     } catch (error) {
+      await transaction.rollback()
       throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
     }
   }

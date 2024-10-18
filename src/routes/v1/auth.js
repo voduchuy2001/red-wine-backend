@@ -14,6 +14,7 @@ import refreshTokenRequest from '@requests/refresh.token.request'
 import logoutRequest from '@requests/logout.request'
 import sendVerifyEmailRequest from '@requests/send.verify.email.request'
 import VerificationController from '@controllers/auth/verification.controller'
+import verifyEmailRequest from '@requests/verify.email.request'
 
 const router = express.Router()
 const authLimiter = limiter(5 * 60 * 1000, 10)
@@ -31,6 +32,7 @@ router.post('/logout', auth, validate(logoutRequest), logoutController.logout.bi
 router.post('/register', validate(registerRequest), registerController.register.bind(registerController))
 router.get('/authenticated', auth, authenticatedController.auth.bind(authenticatedController))
 router.post('/refresh-token', validate(refreshTokenRequest), authenticatedController.refreshToken.bind(authenticatedController))
-router.post('/send-verify-email', validate(sendVerifyEmailRequest), verificationController.sendResetLinkEmail.bind(verificationController))
+router.post('/email/verify', validate(sendVerifyEmailRequest), verificationController.sendVerifyEmail.bind(verificationController))
+router.post('/email/verified', validate(verifyEmailRequest), verificationController.verifyEmail.bind(verificationController))
 
 export default router

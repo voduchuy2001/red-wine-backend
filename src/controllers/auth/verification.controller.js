@@ -7,12 +7,23 @@ class VerificationController extends BaseController {
     this.authService = authService
   }
 
-  async sendResetLinkEmail(req, res, next) {
+  async sendVerifyEmail(req, res, next) {
     const { email } = req.body
 
     try {
-      await this.authService.sendResetLinkEmail(email)
-      return this.json(res, OK, __('Password recovery code has been sent to email'))
+      await this.authService.sendVerifyEmail(email)
+      return this.json(res, OK, __('A fresh verification OTP has been sent to your email address.'))
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async verifyEmail(req, res, next) {
+    const { email, otp } = req.body
+
+    try {
+      await this.authService.verifyEmail(email, otp)
+      return this.json(res, OK, __('Your email has been verified'))
     } catch (error) {
       next(error)
     }

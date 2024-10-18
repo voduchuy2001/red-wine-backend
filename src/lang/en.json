@@ -67,5 +67,16 @@
 	"Not found file path": " %s",
 	"Must be boolean": "Must be boolean",
 	"Attribute already exists": "Attribute already exists",
-	"Password recovery code has been sent to email": "Password recovery code has been sent to email"
+	"Password recovery code has been sent to email": "Password recovery code has been sent to email",
+	"Verification Email": "Verification Email",
+	"Email Verification": "Email Verification",
+	"Your OTP is": "Your OTP is",
+	"This OTP will expire in": "This OTP will expire in",
+	"Thank you for verifying your email!": "Thank you for verifying your email!",
+	"A fresh verification OTP has been sent to your email address.": "A fresh verification OTP has been sent to your email address.",
+	"notEmpty": "notEmpty",
+	"Invalid OTP": "Invalid OTP",
+	"Your email has been verified": "Your email has been verified",
+	"OTP not found or expired": "OTP not found or expired",
+	"Not found user or user has been verified": "Not found user or user has been verified"
 }

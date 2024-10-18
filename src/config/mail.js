@@ -7,16 +7,16 @@ import { INTERNAL_SERVER_ERROR } from '@constants/http.status.code'
 import SystemException from '@exceptions/system.exception'
 
 class Mail {
-  constructor(mailData) {
-    this.mailData = mailData
+  constructor(data) {
+    this.data = data
     this.transporter = nodemailer.createTransport(MAIL_CONFIGURATION)
   }
 
   envelop() {
     return {
-      from: this.mailData.from || process.env.MAIL_FROM_ADDRESS,
-      to: this.mailData.to,
-      subject: this.mailData.subject
+      from: this.data.from || process.env.MAIL_FROM_ADDRESS,
+      to: this.data.to,
+      subject: this.data.subject
     }
   }
 
