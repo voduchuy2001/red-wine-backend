@@ -41,18 +41,19 @@ class AuthService extends BaseService {
 
     const transaction = await db.sequelize.transaction()
     try {
-      await this.repository.updateLastLoginAt(userId, transaction)
+      const current = new Date()
+      await user.update({ lastLoginAt: current }, { transaction })
       await transaction.commit()
+
+      const accessToken = JWT.generate(userId, '30m')
+      const sessionId = 'session-' + uuidv4()
+      const refreshToken = JWT.generate({ userId, sessionId }, '7d', 'refreshToken')
+      await RedisCache.set(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
+      return { accessToken, refreshToken, sessionId }
     } catch (error) {
       await transaction.rollback()
       throw new SystemException(INTERNAL_SERVER_ERROR, error.message)
     }
-
-    const accessToken = JWT.generate(userId, '30m')
-    const sessionId = 'session-' + uuidv4()
-    const refreshToken = JWT.generate({ userId, sessionId }, '7d', 'refreshToken')
-    await RedisCache.set(`auth:user:${userId}:${sessionId}`, refreshToken, 7 * 24 * 60 * 60)
-    return { accessToken, refreshToken, sessionId }
   }
 
   async register(data) {

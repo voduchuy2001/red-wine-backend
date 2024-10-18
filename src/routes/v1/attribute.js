@@ -1,8 +1,8 @@
 import express from 'express'
 import auth from '@middlewares/authenticated'
 import validate from '@middlewares/validation'
-import AttributeController from '@controllers/backend/attribute.controller'
-import AttributeService from '@services/backend/attribute.service'
+import AttributeController from '@controllers/attribute.controller'
+import AttributeService from '@services/attribute.service'
 import AttributeRepository from '@repositories/attribute.repository'
 import getAttributeRequest from '@requests/get.attribute.request'
 import createAttributeRequest from '@requests/create.attribute.request'
@@ -14,9 +14,9 @@ const attributeRepository = new AttributeRepository()
 const attributeService = new AttributeService(attributeRepository)
 const attributeController = new AttributeController(attributeService)
 
-router.get('/attribute', auth, validate(getAttributeRequest), attributeController.index.bind(attributeController))
-router.post('/attribute', auth, validate(createAttributeRequest), attributeController.create.bind(attributeController))
-router.put('/attribute/:id', auth, validate(updateAttributeRequest), attributeController.update.bind(attributeController))
-router.delete('/attribute/:id', auth, attributeController.delete.bind(attributeController))
+router.get('/', auth, validate(getAttributeRequest), attributeController.index.bind(attributeController))
+router.post('/', auth, validate(createAttributeRequest), attributeController.create.bind(attributeController))
+router.put('/:id', auth, validate(updateAttributeRequest), attributeController.update.bind(attributeController))
+router.delete('/:id', auth, attributeController.delete.bind(attributeController))
 
 export default router

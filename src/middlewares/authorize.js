@@ -13,7 +13,7 @@ const authorize =
   (permissions, option = 'every', userRepository = new UserRepository()) =>
   async (req, res, next) => {
     const { data: id } = req.auth
-    const userWithPermissions = await userRepository.getPermissions(id)
+    const userWithPermissions = await userRepository.auth(id)
     if (!userWithPermissions) {
       return next(new AuthException(UNAUTHORIZED, __('Not found user')))
     }
